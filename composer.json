@@ -30,7 +30,8 @@
         "psr-4": {
             "": "src/",
             "Tests\\Unit\\": "test/unit",
-            "Tests\\Integration\\": "test/integration"
+            "Tests\\Integration\\": "test/integration",
+            "Tests\\Functional\\": "test/functional"
         }
     }
 }

@@ -8,6 +8,7 @@ default:
     suites:
         functional:
             mink_session: default
+            paths: [ "%paths.base%/test/functional/features"]
             contexts:
-                - FeatureContext
+                - Tests\Functional\FeatureContext
                 - Behat\MinkExtension\Context\MinkContext
