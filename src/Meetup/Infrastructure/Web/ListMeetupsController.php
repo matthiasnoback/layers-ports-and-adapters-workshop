@@ -32,7 +32,7 @@ class ListMeetupsController implements MiddlewareInterface
         $upcomingMeetups = $this->meetupRepository->upcomingMeetups($now);
         $pastMeetups = $this->meetupRepository->pastMeetups($now);
 
-        $response->getBody()->write($this->renderer->render('meetup/list-meetups', [
+        $response->getBody()->write($this->renderer->render('list-meetups.html.twig', [
             'upcomingMeetups' => $upcomingMeetups,
             'pastMeetups' => $pastMeetups
         ]));

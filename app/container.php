@@ -5,6 +5,7 @@ use Meetup\Domain\Model\MeetupRepository;
 use Meetup\Infrastructure\Persistence\Filesystem\FileBasedMeetupRepository;
 use Meetup\Infrastructure\Web\ListMeetupsController;
 use Meetup\Infrastructure\Web\ScheduleMeetupController;
+use Meetup\Infrastructure\Web\View\TwigTemplates;
 use Xtreamwayz\Pimple\Container;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
@@ -22,7 +23,7 @@ $container['config'] = [
     'templates' => [
         'extension' => 'html.twig',
         'paths' => [
-            __DIR__ . '/view'
+            TwigTemplates::getPath()
         ]
     ],
     'twig' => [

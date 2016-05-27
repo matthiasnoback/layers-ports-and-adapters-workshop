@@ -57,7 +57,7 @@ class ScheduleMeetupController
 
         $response->getBody()->write(
             $this->renderer->render(
-                'meetup/schedule-meetup',
+                'schedule-meetup.html.twig',
                 ['submittedData' => $submittedData]
             )
         );
