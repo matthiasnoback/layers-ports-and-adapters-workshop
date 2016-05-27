@@ -10,6 +10,4 @@ $container = require __DIR__ . '/../app/container.php';
 
 /** @var Application $app */
 $app = $container[Application::class];
-$app->pipeRoutingMiddleware();
-$app->pipeDispatchMiddleware();
 $app->run();
