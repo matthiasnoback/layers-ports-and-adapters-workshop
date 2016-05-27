@@ -94,4 +94,13 @@ $container[ListMeetupsController::class] = function (ContainerInterface $contain
     );
 };
 
+/**
+ * CLI
+ */
+$container[\Meetup\Infrastructure\Cli\ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
+    return new \Meetup\Infrastructure\Cli\ScheduleMeetupConsoleHandler(
+        $container->get(MeetupRepository::class)
+    );
+};
+
 return $container;
