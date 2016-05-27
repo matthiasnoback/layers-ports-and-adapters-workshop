@@ -8,7 +8,9 @@
     ],
     "require-dev": {
         "behat/behat": "^3.1",
-        "phpunit/phpunit": "^5.3"
+        "phpunit/phpunit": "^5.3",
+        "behat/mink-extension": "^2.2",
+        "behat/mink-selenium2-driver": "^1.3"
     },
     "require": {
         "zendframework/zend-expressive": "^1.0",
@@ -17,7 +19,9 @@
         "zendframework/zend-expressive-twigrenderer": "^1.1",
         "filp/whoops": "^2.1",
         "beberlei/assert": "^2.5",
-        "ramsey/uuid": "^3.4"
+        "ramsey/uuid": "^3.4",
+        "behat/mink-goutte-driver": "^1.2",
+        "webmozart/console": "~1.0@beta"
     },
     "scripts": {
         "serve": "php -S 0.0.0.0:8080 -t public/"
