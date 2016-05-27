@@ -1,0 +1,32 @@
+{
+    "name": "ibuildingsnl/hexagonal-architecture-workshop-code",
+    "authors": [
+        {
+            "name": "Matthias Noback",
+            "email": "matthiasnoback@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "behat/behat": "^3.1",
+        "phpunit/phpunit": "^5.3"
+    },
+    "require": {
+        "zendframework/zend-expressive": "^1.0",
+        "zendframework/zend-expressive-fastroute": "^1.1",
+        "xtreamwayz/pimple-container-interop": "^1.0",
+        "zendframework/zend-expressive-twigrenderer": "^1.1",
+        "filp/whoops": "^2.1",
+        "beberlei/assert": "^2.5",
+        "ramsey/uuid": "^3.4"
+    },
+    "scripts": {
+        "serve": "php -S 0.0.0.0:8080 -t public/"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/",
+            "Tests\\Unit\\": "test/unit",
+            "Tests\\Integration\\": "test/integration"
+        }
+    }
+}

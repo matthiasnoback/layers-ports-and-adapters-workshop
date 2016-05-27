@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <h1>Upcoming meetups</h1>
+
+    {% for meetup in upcomingMeetups %}
+        {% include "meetup/_meetup.html.twig" with { meetup: meetup } %}
+    {% else %}
+        <p>No upcoming meetups</p>
+    {% endfor %}
+
+    <p><a href="{{ path('schedule_meetup') }}" class="btn btn-success">Schedule a meetup</a></p>
+
+    <h1>Past meetups</h1>
+
+    {% for meetup in pastMeetups %}
+        {% include "meetup/_meetup.html.twig" with { meetup: meetup } %}
+    {% else %}
+        <p>No past meetups</p>
+    {% endfor %}
+{% endblock %}
