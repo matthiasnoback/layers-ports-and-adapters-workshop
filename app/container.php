@@ -5,6 +5,10 @@ use Meetup\Domain\Model\MeetupRepository;
 use Meetup\Infrastructure\Web\ListMeetupsController;
 use Meetup\Infrastructure\Web\ScheduleMeetupController;
 use Meetup\Infrastructure\Web\View\TwigTemplates;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Debug\Debug;
+use Symfony\Component\Debug\ErrorHandler;
 use Xtreamwayz\Pimple\Container;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
@@ -14,6 +18,9 @@ use Zend\Expressive\Router\FastRouteRouter;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Expressive\Twig\TwigRendererFactory;
+
+Debug::enable();
+ErrorHandler::register();
 
 $container = new Container();
 
@@ -49,8 +56,10 @@ $container['config'] = [
  * Application
  */
 $container['Zend\Expressive\FinalHandler'] = function () {
-    return function () {
-        throw func_get_args()[2];
+    return function (RequestInterface $request, ResponseInterface $response, $err = null) {
+        if ($err instanceof \Exception) {
+            throw $err;
+        }
     };
 };
 $container[RouterInterface::class] = function () {
