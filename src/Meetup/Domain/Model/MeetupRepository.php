@@ -2,28 +2,63 @@
 
 namespace Meetup\Domain\Model;
 
-interface MeetupRepository
+class MeetupRepository
 {
     /**
-     * @param Meetup $meetup
-     * @return void
+     * @var string
      */
-    public function add(Meetup $meetup);
+    private $filePath;
 
-    /**
-     * @param MeetupId $meetupId
-     * @return Meetup
-     */
-    public function byId(MeetupId $meetupId);
+    public function __construct($filePath)
+    {
+        $this->filePath = $filePath;
+    }
+
+    public function add(Meetup $meetup)
+    {
+        $meetups = $this->persistedMeetups();
+        $meetups[] = $meetup;
+        file_put_contents($this->filePath, serialize($meetups));
+    }
+
+    public function byId(MeetupId $meetupId)
+    {
+        foreach ($this->persistedMeetups() as $meetup) {
+            if ($meetup->id()->equals($meetupId)) {
+                return $meetup;
+            }
+        }
+
+        throw new \RuntimeException('Meetup not found');
+    }
+
+    public function upcomingMeetups(\DateTimeImmutable $now)
+    {
+        return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {
+            return $meetup->isUpcoming($now);
+        }));
+    }
+
+    public function pastMeetups(\DateTimeImmutable $now)
+    {
+        return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {
+            return !$meetup->isUpcoming($now);
+        }));
+    }
 
     /**
      * @return Meetup[]
      */
-    public function upcomingMeetups(\DateTimeImmutable $now);
+    private function persistedMeetups()
+    {
+        if (!file_exists($this->filePath)) {
+            return [];
+        }
 
-    /**
-     * @param \DateTimeImmutable $now
-     * @return Meetup[]
-     */
-    public function pastMeetups(\DateTimeImmutable $now);
+        if (empty(file_get_contents($this->filePath))) {
+            return [];
+        }
+
+        return unserialize(file_get_contents($this->filePath));
+    }
 }
