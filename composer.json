@@ -6,11 +6,18 @@
             "email": "matthiasnoback@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/matthiasnoback/behat-localwebserverextension"
+        }
+    ],
     "require-dev": {
         "behat/behat": "^3.1",
         "phpunit/phpunit": "^5.3",
         "behat/mink-extension": "^2.2",
-        "behat/mink-selenium2-driver": "^1.3"
+        "behat/mink-selenium2-driver": "^1.3",
+        "ciaranmcnulty/behat-localwebserverextension": "dev-compatibility"
     },
     "require": {
         "zendframework/zend-expressive": "^1.0",
