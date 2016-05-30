@@ -30,9 +30,6 @@
         "webmozart/console": "~1.0@beta",
         "symfony/debug": "^3.0"
     },
-    "scripts": {
-        "serve": "php -S 0.0.0.0:8080 -t public/"
-    },
     "autoload": {
         "psr-4": {
             "": "src/",
