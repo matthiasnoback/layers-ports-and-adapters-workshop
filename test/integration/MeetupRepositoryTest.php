@@ -3,13 +3,13 @@
 namespace Tests\Integration\Meetup\Infrastructure\Persistence\Filesystem;
 
 use Meetup\Domain\Model\MeetupId;
-use Meetup\Infrastructure\Persistence\Filesystem\FileBasedMeetupRepository;
+use Meetup\Domain\Model\MeetupRepository;
 use Tests\Unit\Meetup\Domain\Model\Util\MeetupFactory;
 
-class FileBasedMeetupRepositoryTest extends \PHPUnit_Framework_TestCase
+class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var FileBasedMeetupRepository
+     * @var MeetupRepository
      */
     private $repository;
 
@@ -18,7 +18,7 @@ class FileBasedMeetupRepositoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->filePath = tempnam(sys_get_temp_dir(), 'meetups');
-        $this->repository = new FileBasedMeetupRepository($this->filePath);
+        $this->repository = new MeetupRepository($this->filePath);
     }
 
     /**
