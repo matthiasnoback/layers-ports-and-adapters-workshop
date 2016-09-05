@@ -32,10 +32,15 @@
     },
     "autoload": {
         "psr-4": {
-            "": "src/",
+            "": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Tests\\Unit\\": "test/unit",
             "Tests\\Integration\\": "test/integration",
-            "Tests\\Functional\\": "test/functional"
+            "Tests\\Functional\\": "test/functional",
+            "Tests\\Acceptance\\": "test/acceptance"
         }
     }
 }
