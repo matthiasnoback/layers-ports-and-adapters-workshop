@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Meetup\Infrastructure\Cli\MeetupApplicationConfig;
+use Meetup\Command\MeetupApplicationConfig;
 use Webmozart\Console\ConsoleApplication;
 
 require_once __DIR__ . '/../vendor/autoload.php';

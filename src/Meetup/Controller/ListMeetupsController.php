@@ -1,8 +1,8 @@
 <?php
 
-namespace Meetup\Infrastructure\Web;
+namespace Meetup\Controller;
 
-use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Model\MeetupRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Expressive\Template\TemplateRendererInterface;
