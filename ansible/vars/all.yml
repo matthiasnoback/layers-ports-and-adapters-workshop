@@ -1,0 +1,21 @@
+---
+server:
+    install: '1'
+    timezone: Europe/Amsterdam
+    locale: en_US.UTF-8
+vagrant_local:
+    install: '1'
+    vm: { base_box: trusty64, hostname: default, ip: 192.168.44.56, memory: '512', sharedfolder: ./, useVagrantCloud: '1', syncType: nfs }
+nginx:
+    install: '1'
+    docroot: /vagrant/public
+    servername: hexagonal-architecture-workshop.dev
+php:
+    install: '1'
+    ppa: php5-5.6
+    packages: [php5-cli, php5-intl, php5-mcrypt]
+xdebug:
+    install: '1'
+composer:
+    install: '1'
+
