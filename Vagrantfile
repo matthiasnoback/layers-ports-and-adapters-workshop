@@ -25,10 +25,10 @@ end
 Vagrant.configure("2") do |config|
 
     config.vm.provider :virtualbox do |v|
-        v.name = "default"
+        v.name = "hexagonal_architecture_workshop"
         v.customize [
             "modifyvm", :id,
-            "--name", "default",
+            "--name", "hexagonal_architecture_workshop",
             "--memory", 512,
             "--natdnshostresolver1", "on",
             "--cpus", 1,
