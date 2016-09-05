@@ -1,2 +1,3 @@
 ---
-# application tasks to be customized and to run after the main provision
+- name: Install deptrac
+  shell: curl -LS http://get.sensiolabs.de/deptrac.phar -o deptrac.phar && sudo chmod +x deptrac.phar && sudo mv deptrac.phar /usr/local/bin/deptrac creates=/usr/local/bin/deptrac

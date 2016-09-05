@@ -3,6 +3,7 @@ server:
     install: '1'
     timezone: Europe/Amsterdam
     locale: en_US.UTF-8
+    packages: [graphviz]
 vagrant_local:
     install: '1'
     vm: { base_box: trusty64, hostname: default, ip: 192.168.44.56, memory: '512', sharedfolder: ./, useVagrantCloud: '1', syncType: nfs }
