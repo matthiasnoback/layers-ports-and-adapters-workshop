@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Meetup\Domain\Model;
 
-use Meetup\Model\MeetupId;
+use Meetup\Entity\MeetupId;
 
 class MeetupIdTest extends \PHPUnit_Framework_TestCase
 {

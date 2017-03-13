@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Meetup\Domain\Model;
 
-use Meetup\Model\Description;
+use Meetup\Entity\Description;
 
 class DescriptionTest extends \PHPUnit_Framework_TestCase
 {

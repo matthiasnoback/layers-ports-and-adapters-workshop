@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    web:
+        build: docker/web/
+        volumes:
+            - ./:/opt
+        ports:
+            - 80:8080
+        environment:
+            XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
+        user: ${HOST_UID}:${HOST_GID}
+
+    devtools:
+        build: docker/devtools/
+        volumes:
+            - ./:/opt
+            - ${HOME}/.composer:/home/.composer
+        environment:
+            COMPOSER_HOME: /home/.composer
+        user: ${HOST_UID}:${HOST_GID}

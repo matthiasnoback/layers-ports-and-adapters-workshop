@@ -2,8 +2,8 @@
 
 namespace Tests\Integration\Meetup\Infrastructure\Persistence\Filesystem;
 
-use Meetup\Model\MeetupId;
-use Meetup\Model\MeetupRepository;
+use Meetup\Entity\MeetupId;
+use Meetup\Entity\MeetupRepository;
 use Tests\Unit\Meetup\Domain\Model\Util\MeetupFactory;
 
 class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase

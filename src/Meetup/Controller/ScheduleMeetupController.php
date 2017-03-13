@@ -2,11 +2,11 @@
 
 namespace Meetup\Controller;
 
-use Meetup\Model\Description;
-use Meetup\Model\Meetup;
-use Meetup\Model\MeetupId;
-use Meetup\Model\MeetupRepository;
-use Meetup\Model\Name;
+use Meetup\Entity\Description;
+use Meetup\Entity\Meetup;
+use Meetup\Entity\MeetupId;
+use Meetup\Entity\MeetupRepository;
+use Meetup\Entity\Name;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
@@ -20,7 +20,7 @@ class ScheduleMeetupController
      * @var TemplateRendererInterface
      */
     private $renderer;
-    
+
     /**
      * @var RouterInterface
      */

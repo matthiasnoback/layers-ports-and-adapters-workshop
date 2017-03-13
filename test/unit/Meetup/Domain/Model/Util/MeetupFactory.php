@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Meetup\Domain\Model\Util;
 
-use Meetup\Model\Description;
-use Meetup\Model\Meetup;
-use Meetup\Model\MeetupId;
-use Meetup\Model\Name;
+use Meetup\Entity\Description;
+use Meetup\Entity\Meetup;
+use Meetup\Entity\MeetupId;
+use Meetup\Entity\Name;
 
 class MeetupFactory
 {

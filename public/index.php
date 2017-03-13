@@ -3,7 +3,7 @@
 use Interop\Container\ContainerInterface;
 use Zend\Expressive\Application;
 
-require '../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /** @var ContainerInterface $container */
 $container = require __DIR__ . '/../app/container.php';

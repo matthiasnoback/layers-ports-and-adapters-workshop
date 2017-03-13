@@ -1,10 +1,7 @@
 default:
     extensions:
-        Cjm\Behat\LocalWebserverExtension:
-            docroot: %paths.base%/public
-            suites: [functional]
         Behat\MinkExtension:
-            base_url:  'http://127.0.0.1:8080'
+            base_url:  'http://web:8080/'
             sessions:
                 default:
                     goutte: ~

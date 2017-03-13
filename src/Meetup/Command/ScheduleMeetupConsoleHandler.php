@@ -2,11 +2,11 @@
 
 namespace Meetup\Command;
 
-use Meetup\Model\Description;
-use Meetup\Model\Meetup;
-use Meetup\Model\MeetupId;
-use Meetup\Model\MeetupRepository;
-use Meetup\Model\Name;
+use Meetup\Entity\Description;
+use Meetup\Entity\Meetup;
+use Meetup\Entity\MeetupId;
+use Meetup\Entity\MeetupRepository;
+use Meetup\Entity\Name;
 use Ramsey\Uuid\Uuid;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
@@ -34,7 +34,7 @@ class ScheduleMeetupConsoleHandler
         $this->repository->add($meetup);
 
         $io->writeLine('<success>Scheduled the meetup successfully</success>');
-        
+
         return 0;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Interop\Container\ContainerInterface;
-use Meetup\Model\MeetupRepository;
+use Meetup\Entity\MeetupRepository;
 use Meetup\Controller\ListMeetupsController;
 use Meetup\Controller\ScheduleMeetupController;
 use Meetup\Resources\Views\TwigTemplates;

@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Meetup\Domain\Model;
 
-use Meetup\Model\Meetup;
-use Meetup\Model\MeetupId;
-use Meetup\Model\MemberId;
-use Meetup\Model\Name;
-use Meetup\Model\Rsvp;
-use Meetup\Model\Description;
+use Meetup\Entity\Meetup;
+use Meetup\Entity\MeetupId;
+use Meetup\Entity\MemberId;
+use Meetup\Entity\Name;
+use Meetup\Entity\Rsvp;
+use Meetup\Entity\Description;
 
 class MeetupTest extends \PHPUnit_Framework_TestCase
 {
