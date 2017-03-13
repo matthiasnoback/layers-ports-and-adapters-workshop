@@ -1,6 +1,7 @@
 <?php
+declare(strict_types = 1);
 
-namespace Tests\Unit\Meetup\Domain\Model;
+namespace Tests\Unit\Meetup\Entity;
 
 use Meetup\Entity\Meetup;
 use Meetup\Entity\MeetupId;
@@ -9,7 +10,7 @@ use Meetup\Entity\Name;
 use Meetup\Entity\Rsvp;
 use Meetup\Entity\Description;
 
-class MeetupTest extends \PHPUnit_Framework_TestCase
+final class MeetupTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test

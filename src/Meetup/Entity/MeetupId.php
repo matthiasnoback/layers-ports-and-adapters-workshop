@@ -1,7 +1,9 @@
 <?php
+declare(strict_types = 1);
 
 namespace Meetup\Entity;
 
-final class MeetupId extends AggregateId
+final class MeetupId
 {
+    use AggregateId;
 }

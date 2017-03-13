@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Meetup\Command;
 
@@ -7,7 +8,7 @@ use Webmozart\Console\Api\Args\Format\Argument;
 use Webmozart\Console\Api\Formatter\Style;
 use Webmozart\Console\Config\DefaultApplicationConfig;
 
-class MeetupApplicationConfig extends DefaultApplicationConfig
+final class MeetupApplicationConfig extends DefaultApplicationConfig
 {
     /**
      * @var ContainerInterface
@@ -21,7 +22,7 @@ class MeetupApplicationConfig extends DefaultApplicationConfig
         $this->container = $container;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 

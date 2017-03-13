@@ -10,7 +10,7 @@ use Behat\Gherkin\Node\TableNode;
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext implements Context, SnippetAcceptingContext
+final class FeatureContext implements Context, SnippetAcceptingContext
 {
     /**
      * Initializes context.

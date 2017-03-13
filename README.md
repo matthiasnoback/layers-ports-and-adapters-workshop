@@ -1,9 +1,15 @@
 # Installation
 
-- Run `vagrant up`, then `vagrant ssh` and `cd /vagrant`
-- Go to [http://192.168.44.56/](http://192.168.44.56/) in a browser and see the application run.
+- Run `docker-compose pull` to pull all container images.
+- Run `docker-compose up -d` to start the web server.
+- Go to [http://localhost/](http://localhost/) in a browser. You should see the homepage of the meetup application.
 
-# Running the tests
+# Running development tools
 
-- Run `vendor/bin/behat` and see the functional test pass.
-- Run `vendor/bin/phpunit` and see the unit test pass.
+- `bin/run_tests.sh` to run all the tests
+- `bin/composer.sh` to use Composer to install extra packages, etc.
+- `bin/deptrac.sh` to analyze dependencies
+
+# XDebug & PhpStorm
+
+Follow [these instructions](https://github.com/matthiasnoback/php-workshop-tools#setting-up-xdebug-with-phpstorm) to get it working.

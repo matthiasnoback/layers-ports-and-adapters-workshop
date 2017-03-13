@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Meetup\Controller;
 
@@ -14,7 +15,7 @@ use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class ScheduleMeetupController
+final class ScheduleMeetupController
 {
     /**
      * @var TemplateRendererInterface
@@ -37,13 +38,13 @@ class ScheduleMeetupController
         $this->repository = $repository;
     }
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
         if ($request->getMethod() === 'POST') {
             $submittedData = $request->getParsedBody();
 
             $meetup = Meetup::schedule(
-                MeetupId::fromString((string) Uuid::uuid4()),
+                MeetupId::fromString((string)Uuid::uuid4()),
                 Name::fromString($submittedData['name']),
                 Description::fromString($submittedData['description']),
                 new \DateTimeImmutable($submittedData['scheduledFor'])

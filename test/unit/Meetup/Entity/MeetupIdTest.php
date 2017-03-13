@@ -1,10 +1,11 @@
 <?php
+declare(strict_types = 1);
 
-namespace Tests\Unit\Meetup\Domain\Model;
+namespace Tests\Unit\Meetup\Entity;
 
 use Meetup\Entity\MeetupId;
 
-class MeetupIdTest extends \PHPUnit_Framework_TestCase
+final class MeetupIdTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test

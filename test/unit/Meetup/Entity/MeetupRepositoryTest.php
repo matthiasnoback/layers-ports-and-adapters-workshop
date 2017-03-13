@@ -1,12 +1,13 @@
 <?php
+declare(strict_types = 1);
 
-namespace Tests\Integration\Meetup\Infrastructure\Persistence\Filesystem;
+namespace Tests\Unit\Meetup\Entity;
 
 use Meetup\Entity\MeetupId;
 use Meetup\Entity\MeetupRepository;
-use Tests\Unit\Meetup\Domain\Model\Util\MeetupFactory;
+use Tests\Unit\Meetup\Entity\Util\MeetupFactory;
 
-class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase
+final class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var MeetupRepository

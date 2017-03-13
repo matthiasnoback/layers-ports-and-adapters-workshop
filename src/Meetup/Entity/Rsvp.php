@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Meetup\Entity;
 
@@ -38,17 +39,17 @@ class Rsvp
         $this->answer = $answer;
     }
 
-    public function meetupId()
+    public function meetupId(): MeetupId
     {
         return $this->meetupId;
     }
 
-    public function memberId()
+    public function memberId(): MemberId
     {
         return $this->memberId;
     }
 
-    public function answer()
+    public function answer(): string
     {
         return $this->answer;
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Meetup\Command;
 
@@ -11,7 +12,7 @@ use Ramsey\Uuid\Uuid;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 
-class ScheduleMeetupConsoleHandler
+final class ScheduleMeetupConsoleHandler
 {
     /**
      * @var MeetupRepository
@@ -23,10 +24,10 @@ class ScheduleMeetupConsoleHandler
         $this->repository = $repository;
     }
 
-    public function handle(Args $args, IO $io)
+    public function handle(Args $args, IO $io): int
     {
         $meetup = Meetup::schedule(
-            MeetupId::fromString((string) Uuid::uuid4()),
+            MeetupId::fromString((string)Uuid::uuid4()),
             Name::fromString($args->getArgument('name')),
             Description::fromString($args->getArgument('description')),
             new \DateTimeImmutable($args->getArgument('scheduledFor'))

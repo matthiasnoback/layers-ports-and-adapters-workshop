@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Meetup\Entity;
 
@@ -35,32 +36,32 @@ final class Meetup
         return $meetup;
     }
 
-    public function rsvpYes(MemberId $memberId)
+    public function rsvpYes(MemberId $memberId): Rsvp
     {
         return new Rsvp($this->id, $memberId, Rsvp::YES);
     }
 
-    public function id()
+    public function id(): MeetupId
     {
         return $this->id;
     }
 
-    public function name()
+    public function name(): Name
     {
         return $this->name;
     }
 
-    public function description()
+    public function description(): Description
     {
         return $this->description;
     }
 
-    public function scheduledFor()
+    public function scheduledFor(): \DateTimeImmutable
     {
         return $this->scheduledFor;
     }
 
-    public function isUpcoming(\DateTimeImmutable $now)
+    public function isUpcoming(\DateTimeImmutable $now): bool
     {
         return $now < $this->scheduledFor;
     }

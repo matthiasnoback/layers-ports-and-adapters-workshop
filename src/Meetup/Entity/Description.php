@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Meetup\Entity;
 
@@ -8,7 +9,7 @@ final class Description
 {
     private $text;
 
-    public static function fromString($text)
+    public static function fromString($text): Description
     {
         $description = new self();
 
@@ -18,7 +19,7 @@ final class Description
         return $description;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->text;
     }

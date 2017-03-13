@@ -3,6 +3,7 @@ version: '3'
 services:
     web:
         build: docker/web/
+        image: matthiasnoback/layers-ports-and-adapters-workshop-web
         volumes:
             - ./:/opt
         ports:
@@ -14,6 +15,7 @@ services:
 
     devtools:
         build: docker/devtools/
+        image: matthiasnoback/layers-ports-and-adapters-workshop-devtools
         volumes:
             - ./:/opt
             - ${HOME}/.composer:/home/.composer
@@ -21,4 +23,6 @@ services:
             COMPOSER_HOME: /home/.composer
             XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
             PHP_IDE_CONFIG: "serverName=docker"
+        depends_on:
+            - web
         user: ${HOST_UID}:${HOST_GID}

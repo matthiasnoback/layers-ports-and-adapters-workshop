@@ -1,10 +1,11 @@
 <?php
+declare(strict_types = 1);
 
 namespace Meetup\Entity;
 
 use Assert\Assertion;
 
-abstract class AggregateId
+trait AggregateId
 {
     private $id;
 
@@ -12,24 +13,25 @@ abstract class AggregateId
     {
     }
 
-    public static function fromString($id)
+    public static function fromString($id): self
     {
         Assertion::string($id);
         Assertion::notEmpty($id);
 
-        $meetupId = new static();
-        $meetupId->id = $id;
+        $aggregateId = new static();
+        $aggregateId->id = $id;
 
-        return $meetupId;
+        return $aggregateId;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->id;
     }
 
-    public function equals(MeetupId $otherMeetupId)
+    public function equals($otherAggregateId): bool
     {
-        return (string)$this === (string)$otherMeetupId;
+        return get_class($otherAggregateId) === get_class($this)
+            && (string)$this === (string)$otherAggregateId;
     }
 }
