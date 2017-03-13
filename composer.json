@@ -5,12 +5,6 @@
             "email": "matthiasnoback@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/matthiasnoback/behat-localwebserverextension"
-        }
-    ],
     "require-dev": {
         "behat/behat": "^3.1",
         "phpunit/phpunit": "^5.3",
@@ -36,10 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Unit\\": "test/unit",
-            "Tests\\Integration\\": "test/integration",
-            "Tests\\Functional\\": "test/functional",
-            "Tests\\Acceptance\\": "test/acceptance"
+            "Tests\\": "test/"
         }
     },
     "config": {

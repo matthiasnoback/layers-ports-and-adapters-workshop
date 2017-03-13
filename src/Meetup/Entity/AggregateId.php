@@ -13,7 +13,7 @@ trait AggregateId
     {
     }
 
-    public static function fromString($id): self
+    public static function fromString($id)
     {
         Assertion::string($id);
         Assertion::notEmpty($id);
