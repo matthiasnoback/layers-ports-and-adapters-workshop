@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "31e0b7650f8c0a8c113f339211f77982",
+    "content-hash": "5f53ffdeaf556192a4d7f6614a768ac1",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -2409,60 +2409,6 @@
             "time": "2015-09-28T16:26:35+00:00"
         },
         {
-            "name": "ciaranmcnulty/behat-localwebserverextension",
-            "version": "dev-compatibility",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/matthiasnoback/behat-localwebserverextension.git",
-                "reference": "4e7d4a33c89a3582188338448692a77e24ae1317"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/matthiasnoback/behat-localwebserverextension/zipball/4e7d4a33c89a3582188338448692a77e24ae1317",
-                "reference": "4e7d4a33c89a3582188338448692a77e24ae1317",
-                "shasum": ""
-            },
-            "require": {
-                "behat/behat": "~3.0",
-                "php": "^5.4||~7.0",
-                "symfony/process": "~2.3||~3.0"
-            },
-            "require-dev": {
-                "behat/mink-extension": "~2.0",
-                "behat/mink-goutte-driver": "~1.0",
-                "ciaranmcnulty/phpspec-typehintedmethods": "~1.0",
-                "phpspec/phpspec": "~2.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Cjm\\Behat\\LocalWebserverExtension\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ciaran McNulty",
-                    "email": "mail@ciaranmcnulty.com",
-                    "homepage": "http://ciaranmcnulty.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Extension for behat users who forget to start their webserver",
-            "homepage": "http://github.com/ciaranmcnulty/behat-localwebserverextension",
-            "keywords": [
-                "bdd",
-                "behat",
-                "tdd"
-            ],
-            "support": {
-                "source": "https://github.com/matthiasnoback/behat-localwebserverextension/tree/compatibility"
-            },
-            "time": "2016-05-28T18:21:46+00:00"
-        },
-        {
             "name": "doctrine/instantiator",
             "version": "1.0.5",
             "source": {
@@ -4075,8 +4021,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "webmozart/console": 10,
-        "ciaranmcnulty/behat-localwebserverextension": 20
+        "webmozart/console": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
