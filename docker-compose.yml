@@ -18,7 +18,7 @@ services:
         image: matthiasnoback/layers-ports-and-adapters-workshop-devtools
         volumes:
             - ./:/opt
-            - ${HOME}/.composer:/home/.composer
+            - ${COMPOSER_HOME}:/home/.composer
         environment:
             COMPOSER_HOME: /home/.composer
             XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"

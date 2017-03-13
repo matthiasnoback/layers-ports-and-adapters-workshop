@@ -1,6 +1,7 @@
 # Installation
 
 - Run `docker-compose pull` to pull all container images.
+- Run `bin/composer.sh install --prefer-dist` to install the project's dependencies.
 - Run `docker-compose up -d` to start the web server.
 - Go to [http://localhost/](http://localhost/) in a browser. You should see the homepage of the meetup application.
 
