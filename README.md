@@ -1,4 +1,4 @@
-# Code and assignments for the "CQRS & Event Sourcing" workshop module
+# Code and assignments for the "Layers, Ports & Adapters" workshop module
 
 ## Requirements
 
