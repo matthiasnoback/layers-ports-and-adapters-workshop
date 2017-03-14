@@ -1,0 +1,2 @@
+- Add an assignment about transactions
+- Maybe use `Database` from the `php-workshop-tools`

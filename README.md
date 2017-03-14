@@ -7,9 +7,10 @@
 
 # Running development tools
 
-- `bin/run_tests.sh` to run all the tests
+- `bin/run_tests.sh` to run all the tests.
 - `bin/composer.sh` to use Composer to install extra packages, etc.
-- `bin/deptrac.sh` to analyze dependencies
+- `bin/deptrac.sh` to analyze dependencies.
+- `bin/meetup.sh` to run the CLI tool for scheduling meetups.
 
 # XDebug & PhpStorm
 
