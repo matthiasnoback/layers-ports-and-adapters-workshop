@@ -1,2 +1,3 @@
 - Add an assignment about transactions
 - Maybe use `Database` from the `php-workshop-tools`
+- Move `AggregateId` (and rename?) to `php-workshop-tools`
