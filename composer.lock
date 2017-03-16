@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b6641c8dc1a4b05e73dbb2a8c2b15b9c",
+    "content-hash": "b023e29d9642212b42fbf9764f4d3fb5",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -629,6 +629,52 @@
                 }
             ],
             "time": "2017-02-13T19:13:11+00:00"
+        },
+        {
+            "name": "matthiasnoback/php-workshop-tools",
+            "version": "v0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasnoback/php-workshop-tools.git",
+                "reference": "2e9900fe65b74abb96c10ccfbcd34580174e30ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasnoback/php-workshop-tools/zipball/2e9900fe65b74abb96c10ccfbcd34580174e30ca",
+                "reference": "2e9900fe65b74abb96c10ccfbcd34580174e30ca",
+                "shasum": ""
+            },
+            "require": {
+                "beberlei/assert": "^2.7",
+                "matthiasnoback/naive-serializer": "^0.4",
+                "php": "^7.1",
+                "ramsey/uuid": "^3.4",
+                "symfony/var-dumper": "^3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "": "src/"
+                },
+                "files": [
+                    "src/Common/CommandLine/functions.php",
+                    "src/Common/Resilience/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Noback",
+                    "email": "matthiasnoback@gmail.com"
+                }
+            ],
+            "time": "2017-03-16T12:44:40+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -1594,6 +1640,72 @@
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
             "time": "2017-03-04T12:23:14+00:00"
+        },
+        {
+            "name": "symfony/var-dumper",
+            "version": "v3.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-dumper.git",
+                "reference": "4100f347aff890bc16b0b4b42843b599db257b2d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/4100f347aff890bc16b0b4b42843b599db257b2d",
+                "reference": "4100f347aff890bc16b0b4b42843b599db257b2d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
+            },
+            "require-dev": {
+                "twig/twig": "~1.20|~2.0"
+            },
+            "suggest": {
+                "ext-symfony_debug": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "Resources/functions/dump.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\VarDumper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony mechanism for exploring and dumping PHP variables",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "debug",
+                "dump"
+            ],
+            "time": "2017-02-20T13:45:48+00:00"
         },
         {
             "name": "twig/twig",
