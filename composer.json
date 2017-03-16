@@ -33,8 +33,5 @@
         "psr-4": {
             "Tests\\": "test/"
         }
-    },
-    "config": {
-        "github-protocols": ["git"]
     }
 }
