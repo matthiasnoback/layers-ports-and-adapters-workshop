@@ -1,2 +1,0 @@
-- Add an assignment about transactions
-- Add something about validation.
