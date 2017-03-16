@@ -4,10 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Meetup\Entity;
 
 use Meetup\Entity\Meetup;
-use Meetup\Entity\MeetupId;
-use Meetup\Entity\MemberId;
 use Meetup\Entity\Name;
-use Meetup\Entity\Rsvp;
 use Meetup\Entity\Description;
 
 final class MeetupTest extends \PHPUnit_Framework_TestCase

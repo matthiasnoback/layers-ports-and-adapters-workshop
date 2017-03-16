@@ -3,11 +3,7 @@ declare(strict_types = 1);
 
 namespace Tests\Meetup\Entity;
 
-use Meetup\Entity\Description;
-use Meetup\Entity\Meetup;
-use Meetup\Entity\MeetupId;
 use Meetup\Entity\MeetupRepository;
-use Meetup\Entity\Name;
 use Tests\Meetup\Entity\Util\MeetupFactory;
 
 final class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase

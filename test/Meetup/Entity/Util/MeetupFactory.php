@@ -5,7 +5,6 @@ namespace Tests\Meetup\Entity\Util;
 
 use Meetup\Entity\Description;
 use Meetup\Entity\Meetup;
-use Meetup\Entity\MeetupId;
 use Meetup\Entity\Name;
 
 class MeetupFactory
@@ -19,7 +18,7 @@ class MeetupFactory
         );
     }
 
-    public static function upcomingMeetup(int $meetupId = null)
+    public static function upcomingMeetup()
     {
         return Meetup::schedule(
             Name::fromString('Name'),
@@ -28,13 +27,8 @@ class MeetupFactory
         );
     }
 
-    public static function someMeetup(int $meetupId = null)
+    public static function someMeetup()
     {
-        return self::upcomingMeetup($meetupId);
-    }
-
-    public static function someMeetupWithId(int $meetupId)
-    {
-        return self::someMeetup($meetupId);
+        return self::upcomingMeetup();
     }
 }

@@ -29,7 +29,7 @@ final class MeetupRepository
     public function byId(int $id): Meetup
     {
         foreach ($this->persistedMeetups() as $meetup) {
-            if ($meetup->id() == $id) {
+            if ($meetup->id() === $id) {
                 return $meetup;
             }
         }
