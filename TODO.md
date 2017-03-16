@@ -1,3 +1,5 @@
 - Add an assignment about transactions
 - Maybe use `Database` from the `php-workshop-tools`
 - Move `AggregateId` (and rename?) to `php-workshop-tools`
+- Add an extra output port: sending an email.
+- Add something about validation.

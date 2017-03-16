@@ -7,6 +7,9 @@ use Assert\Assertion;
 
 trait AggregateId
 {
+    /**
+     * @var string
+     */
     private $id;
 
     private function __construct()

@@ -3,6 +3,8 @@ declare(strict_types = 1);
 
 namespace Meetup\Entity;
 
+use NaiveSerializer\Serializer;
+
 final class MeetupRepository
 {
     /**
@@ -19,7 +21,7 @@ final class MeetupRepository
     {
         $meetups = $this->persistedMeetups();
         $meetups[] = $meetup;
-        file_put_contents($this->filePath, serialize($meetups));
+        file_put_contents($this->filePath, Serializer::serialize($meetups));
     }
 
     public function byId(MeetupId $meetupId): Meetup
@@ -64,10 +66,11 @@ final class MeetupRepository
             return [];
         }
 
-        if (empty(file_get_contents($this->filePath))) {
+        $rawJson = file_get_contents($this->filePath);
+        if (empty($rawJson)) {
             return [];
         }
 
-        return unserialize(file_get_contents($this->filePath));
+        return Serializer::deserialize(Meetup::class . '[]', $rawJson);
     }
 }

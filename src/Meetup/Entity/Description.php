@@ -7,6 +7,9 @@ use Assert\Assertion;
 
 final class Description
 {
+    /**
+     * @var string
+     */
     private $text;
 
     public static function fromString($text): Description

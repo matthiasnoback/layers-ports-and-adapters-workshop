@@ -21,7 +21,8 @@
         "ramsey/uuid": "^3.4",
         "behat/mink-goutte-driver": "^1.2",
         "webmozart/console": "~1.0@beta",
-        "symfony/debug": "^3.0"
+        "symfony/debug": "^3.0",
+        "matthiasnoback/naive-serializer": "^0.4.0"
     },
     "autoload": {
         "psr-4": {

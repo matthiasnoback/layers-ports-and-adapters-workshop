@@ -5,6 +5,8 @@ namespace Meetup\Entity;
 
 final class Meetup
 {
+    const DATE_FORMAT = 'Y-m-d\TH:i:s,uO';
+
     /**
      * @var MeetupId
      */
@@ -16,12 +18,12 @@ final class Meetup
     private $name;
 
     /**
-     * @var Description string
+     * @var Description
      */
     private $description;
 
     /**
-     * @var \DateTimeImmutable
+     * @var string
      */
     private $scheduledFor;
 
@@ -31,7 +33,7 @@ final class Meetup
         $meetup->id = $id;
         $meetup->name = $name;
         $meetup->description = $description;
-        $meetup->scheduledFor = $scheduledFor;
+        $meetup->scheduledFor = $scheduledFor->format(self::DATE_FORMAT);
 
         return $meetup;
     }
@@ -58,11 +60,11 @@ final class Meetup
 
     public function scheduledFor(): \DateTimeImmutable
     {
-        return $this->scheduledFor;
+        return \DateTimeImmutable::createFromFormat(self::DATE_FORMAT, $this->scheduledFor);
     }
 
     public function isUpcoming(\DateTimeImmutable $now): bool
     {
-        return $now < $this->scheduledFor;
+        return $now < $this->scheduledFor();
     }
 }
