@@ -7,10 +7,11 @@
 
 ## Getting started
 
+- [Follow the instructions](https://github.com/matthiasnoback/php-workshop-tools/blob/master/README.md) for setting environment variables.
 - Clone this repository and `cd` into it.
 - Run `docker-compose pull`.
 - Run `bin/composer.sh install --prefer-dist` to install the project's dependencies.
-- [Follow the instructions](https://github.com/matthiasnoback/php-workshop-tools/blob/master/README.md) for setting environment variables and configuring PhpStorm for debugging.
+- [Configure PhpStorm for debugging](https://github.com/matthiasnoback/php-workshop-tools/blob/master/README.md) (optional).
 - Run `docker-compose up -d` to start the web server.
 - Go to [http://localhost/](http://localhost/) in a browser. You should see the homepage of the meetup application.
 
