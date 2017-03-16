@@ -1,6 +1,7 @@
 <?php
 
 use Interop\Container\ContainerInterface;
+use Meetup\Controller\MeetupDetailsController;
 use Meetup\Entity\MeetupRepository;
 use Meetup\Controller\ListMeetupsController;
 use Meetup\Controller\ScheduleMeetupController;
@@ -41,6 +42,12 @@ $container['config'] = [
             'name' => 'list_meetups',
             'path' => '/',
             'middleware' => ListMeetupsController::class,
+            'allowed_methods' => ['GET']
+        ],
+        [
+            'name' => 'meetup_details',
+            'path' => '/meetup/{id:\d+}',
+            'middleware' => MeetupDetailsController::class,
             'allowed_methods' => ['GET']
         ],
         [
@@ -98,8 +105,13 @@ $container[ScheduleMeetupController::class] = function (ContainerInterface $cont
 $container[ListMeetupsController::class] = function (ContainerInterface $container) {
     return new ListMeetupsController(
         $container->get(MeetupRepository::class),
-        $container->get(TemplateRendererInterface::class),
-        $container->get(RouterInterface::class)
+        $container->get(TemplateRendererInterface::class)
+    );
+};
+$container[MeetupDetailsController::class] = function (ContainerInterface $container) {
+    return new MeetupDetailsController(
+        $container->get(MeetupRepository::class),
+        $container->get(TemplateRendererInterface::class)
     );
 };
 

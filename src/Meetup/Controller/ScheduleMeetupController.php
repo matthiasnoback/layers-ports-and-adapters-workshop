@@ -5,12 +5,10 @@ namespace Meetup\Controller;
 
 use Meetup\Entity\Description;
 use Meetup\Entity\Meetup;
-use Meetup\Entity\MeetupId;
 use Meetup\Entity\MeetupRepository;
 use Meetup\Entity\Name;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Ramsey\Uuid\Uuid;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
@@ -44,7 +42,6 @@ final class ScheduleMeetupController
             $submittedData = $request->getParsedBody();
 
             $meetup = Meetup::schedule(
-                MeetupId::fromString((string)Uuid::uuid4()),
                 Name::fromString($submittedData['name']),
                 Description::fromString($submittedData['description']),
                 new \DateTimeImmutable($submittedData['scheduledFor'])

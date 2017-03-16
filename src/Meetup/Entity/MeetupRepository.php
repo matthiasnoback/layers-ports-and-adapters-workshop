@@ -20,14 +20,16 @@ final class MeetupRepository
     public function add(Meetup $meetup): void
     {
         $meetups = $this->persistedMeetups();
+        $id = count($meetups) + 1;
+        $meetup->setId($id);
         $meetups[] = $meetup;
         file_put_contents($this->filePath, Serializer::serialize($meetups));
     }
 
-    public function byId(MeetupId $meetupId): Meetup
+    public function byId(int $id): Meetup
     {
         foreach ($this->persistedMeetups() as $meetup) {
-            if ($meetup->id()->equals($meetupId)) {
+            if ($meetup->id() == $id) {
                 return $meetup;
             }
         }
