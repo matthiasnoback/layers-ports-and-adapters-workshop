@@ -24,6 +24,7 @@ final class ScheduleMeetupController
      * @var RouterInterface
      */
     private $router;
+    
     /**
      * @var MeetupRepository
      */
@@ -38,25 +39,48 @@ final class ScheduleMeetupController
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
+        $formErrors = [];
+        $submittedData = [];
+
         if ($request->getMethod() === 'POST') {
             $submittedData = $request->getParsedBody();
 
-            $meetup = Meetup::schedule(
-                Name::fromString($submittedData['name']),
-                Description::fromString($submittedData['description']),
-                new \DateTimeImmutable($submittedData['scheduledFor'])
-            );
-            $this->repository->add($meetup);
+            if (empty($submittedData['name'])) {
+                $formErrors['name'][] = 'Provide a name';
+            }
+            if (empty($submittedData['description'])) {
+                $formErrors['description'][] = 'Provide a description';
+            }
+            if (empty($submittedData['scheduledFor'])) {
+                $formErrors['scheduledFor'][] = 'Provide a scheduled for date';
+            }
 
-            return new RedirectResponse($this->router->generateUri('list_meetups'));
-        } else {
-            $submittedData = [];
+            if (empty($formErrors)) {
+                $meetup = Meetup::schedule(
+                    Name::fromString($submittedData['name']),
+                    Description::fromString($submittedData['description']),
+                    new \DateTimeImmutable($submittedData['scheduledFor'])
+                );
+                $this->repository->add($meetup);
+
+                return new RedirectResponse(
+                    $this->router->generateUri(
+                        'meetup_details',
+                        [
+                            'id' => $meetup->id()
+                        ]
+                    )
+                );
+            }
         }
 
         $response->getBody()->write(
             $this->renderer->render(
                 'schedule-meetup.html.twig',
-                ['submittedData' => $submittedData]
+                [
+                    'submittedData' => $submittedData,
+                    'formErrors' => $formErrors
+                ]
             )
         );
 

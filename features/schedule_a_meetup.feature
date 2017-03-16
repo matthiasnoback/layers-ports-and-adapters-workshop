@@ -7,5 +7,6 @@ Feature:
         | Description | Some description |
         | Schedule for | 2018-10-10 |
     And I press "Schedule this meetup"
+    And I am on "/"
     Then I should see "Upcoming meetups"
     And I should see "Coding Dojo"
