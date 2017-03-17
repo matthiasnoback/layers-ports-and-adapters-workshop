@@ -1,6 +1,6 @@
 <?php
 
-namespace Meetup\Infrastructure;
+namespace Meetup\Infrastructure\Web\View;
 
 class TwigTemplates
 {

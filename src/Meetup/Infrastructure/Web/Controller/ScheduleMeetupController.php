@@ -1,8 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Infrastructure;
+namespace Meetup\Infrastructure\Web\Controller;
 
+use Meetup\Application\ScheduleMeetup;
 use Meetup\Application\ScheduleMeetupHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -42,22 +43,15 @@ final class ScheduleMeetupController
         if ($request->getMethod() === 'POST') {
             $submittedData = $request->getParsedBody();
 
-            if (empty($submittedData['name'])) {
-                $formErrors['name'][] = 'Provide a name';
-            }
-            if (empty($submittedData['description'])) {
-                $formErrors['description'][] = 'Provide a description';
-            }
-            if (empty($submittedData['scheduledFor'])) {
-                $formErrors['scheduledFor'][] = 'Provide a scheduled for date';
-            }
+            $formErrors = ScheduleMeetup::validate($submittedData);
 
             if (empty($formErrors)) {
-                $meetup = $this->scheduleMeetupHandler->handle(
-                    $submittedData['name'],
-                    $submittedData['description'],
-                    $submittedData['scheduledFor']
-                );
+                $scheduleMeetup = new ScheduleMeetup();
+                $scheduleMeetup->name = $submittedData['name'];
+                $scheduleMeetup->description = $submittedData['description'];
+                $scheduleMeetup->scheduledFor = $submittedData['scheduledFor'];
+
+                $meetup = $this->scheduleMeetupHandler->handle($scheduleMeetup);
 
                 return new RedirectResponse(
                     $this->router->generateUri(

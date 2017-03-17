@@ -1,9 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Infrastructure;
+namespace Meetup\Infrastructure\Cli;
 
 use Interop\Container\ContainerInterface;
+use Meetup\Infrastructure\Cli\ScheduleMeetupConsoleHandler;
 use Webmozart\Console\Api\Args\Format\Argument;
 use Webmozart\Console\Api\Formatter\Style;
 use Webmozart\Console\Config\DefaultApplicationConfig;
@@ -34,7 +35,7 @@ final class MeetupApplicationConfig extends DefaultApplicationConfig
                 ->setDescription('Schedule a meetup')
                 ->addArgument('name', Argument::REQUIRED, 'Name')
                 ->addArgument('description', Argument::REQUIRED, 'Description')
-                ->addArgument('scheduledFor', Argument::REQUIRED, 'Scheduled for')
+                ->addArgument('scheduledFor', Argument::NULLABLE, 'Scheduled for')
                 ->setHandler(function () {
                     return $this->container->get(ScheduleMeetupConsoleHandler::class);
                 })
