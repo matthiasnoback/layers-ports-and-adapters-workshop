@@ -32,7 +32,7 @@ final class FilesystemMeetupRepository implements MeetupRepository
     /**
      * @return Meetup[]
      */
-    private function persistedMeetups(): array
+    protected function persistedMeetups(): array
     {
         if (!file_exists($this->filePath)) {
             return [];
