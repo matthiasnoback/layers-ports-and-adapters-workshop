@@ -5,6 +5,7 @@ namespace Meetup\Infrastructure\Web\Controller;
 
 use Meetup\Application\ScheduleMeetup;
 use Meetup\Application\ScheduleMeetupHandler;
+use Meetup\Domain\Repository\MeetupRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -27,12 +28,17 @@ final class ScheduleMeetupController
      * @var ScheduleMeetupHandler
      */
     private $scheduleMeetupHandler;
+    /**
+     * @var MeetupRepository
+     */
+    private $meetupRepository;
 
-    public function __construct(TemplateRendererInterface $renderer, RouterInterface $router, ScheduleMeetupHandler $scheduleMeetupHandler)
+    public function __construct(TemplateRendererInterface $renderer, RouterInterface $router, ScheduleMeetupHandler $scheduleMeetupHandler, MeetupRepository $meetupRepository)
     {
         $this->renderer = $renderer;
         $this->router = $router;
         $this->scheduleMeetupHandler = $scheduleMeetupHandler;
+        $this->meetupRepository = $meetupRepository;
     }
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
@@ -47,17 +53,18 @@ final class ScheduleMeetupController
 
             if (empty($formErrors)) {
                 $scheduleMeetup = new ScheduleMeetup();
+                $scheduleMeetup->id = (string)$this->meetupRepository->nextIdentity();
                 $scheduleMeetup->name = $submittedData['name'];
                 $scheduleMeetup->description = $submittedData['description'];
                 $scheduleMeetup->scheduledFor = $submittedData['scheduledFor'];
 
-                $meetup = $this->scheduleMeetupHandler->handle($scheduleMeetup);
+                $this->scheduleMeetupHandler->handle($scheduleMeetup);
 
                 return new RedirectResponse(
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetup->id()
+                            'id' => $scheduleMeetup->id
                         ]
                     )
                 );

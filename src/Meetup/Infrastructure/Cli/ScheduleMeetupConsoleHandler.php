@@ -5,6 +5,7 @@ namespace Meetup\Infrastructure\Cli;
 
 use Meetup\Application\ScheduleMeetup;
 use Meetup\Application\ScheduleMeetupHandler;
+use Meetup\Domain\Repository\MeetupRepository;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 
@@ -14,10 +15,15 @@ final class ScheduleMeetupConsoleHandler
      * @var ScheduleMeetupHandler
      */
     private $scheduleMeetupHandler;
+    /**
+     * @var MeetupRepository
+     */
+    private $meetupRepository;
 
-    public function __construct(ScheduleMeetupHandler $scheduleMeetupHandler)
+    public function __construct(ScheduleMeetupHandler $scheduleMeetupHandler, MeetupRepository $meetupRepository)
     {
         $this->scheduleMeetupHandler = $scheduleMeetupHandler;
+        $this->meetupRepository = $meetupRepository;
     }
 
     public function handle(Args $args, IO $io): int
@@ -40,6 +46,7 @@ final class ScheduleMeetupConsoleHandler
         }
 
         $scheduleMeetup = new ScheduleMeetup();
+        $scheduleMeetup->id = (string)$this->meetupRepository->nextIdentity();
         $scheduleMeetup->name = $submittedData['name'];
         $scheduleMeetup->description = $submittedData['description'];
         $scheduleMeetup->scheduledFor = $submittedData['scheduledFor'];

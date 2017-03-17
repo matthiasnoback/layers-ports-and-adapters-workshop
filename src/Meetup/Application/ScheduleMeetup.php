@@ -24,6 +24,11 @@ final class ScheduleMeetup
      */
     public $scheduledFor;
 
+    /**
+     * @var string
+     */
+    public $id;
+
     public static function validate(array $data): array
     {
         $errors = [];
