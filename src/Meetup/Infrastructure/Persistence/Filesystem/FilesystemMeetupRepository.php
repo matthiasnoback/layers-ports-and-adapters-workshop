@@ -4,13 +4,14 @@ declare(strict_types = 1);
 namespace Meetup\Infrastructure\Persistence\Filesystem;
 
 use Meetup\Domain\Model\Meetup;
-use Meetup\Domain\Model\MeetupId;
 use Meetup\Domain\Repository\MeetupRepository;
+use Meetup\Infrastructure\Persistence\Common\AbstractMeetupRepository;
 use NaiveSerializer\Serializer;
-use Ramsey\Uuid\Uuid;
 
 final class FilesystemMeetupRepository implements MeetupRepository
 {
+    use AbstractMeetupRepository;
+
     /**
      * @var string
      */
@@ -28,39 +29,6 @@ final class FilesystemMeetupRepository implements MeetupRepository
         file_put_contents($this->filePath, Serializer::serialize($meetups));
     }
 
-    public function byId(MeetupId $id): Meetup
-    {
-        foreach ($this->persistedMeetups() as $meetup) {
-            if ($meetup->id()->equals($id)) {
-                return $meetup;
-            }
-        }
-
-        throw new \RuntimeException('Meetup not found');
-    }
-
-    /**
-     * @param \DateTimeImmutable $now
-     * @return Meetup[]
-     */
-    public function upcomingMeetups(\DateTimeImmutable $now): array
-    {
-        return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {
-            return $meetup->isUpcoming($now);
-        }));
-    }
-
-    /**
-     * @param \DateTimeImmutable $now
-     * @return Meetup[]
-     */
-    public function pastMeetups(\DateTimeImmutable $now): array
-    {
-        return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {
-            return !$meetup->isUpcoming($now);
-        }));
-    }
-
     /**
      * @return Meetup[]
      */
@@ -76,10 +44,5 @@ final class FilesystemMeetupRepository implements MeetupRepository
         }
 
         return Serializer::deserialize(Meetup::class . '[]', $rawJson);
-    }
-
-    public function nextIdentity(): MeetupId
-    {
-        return MeetupId::fromString((string)Uuid::uuid4());
     }
 }
