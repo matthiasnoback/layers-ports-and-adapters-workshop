@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Controller;
+namespace Meetup\Infrastructure;
 
-use Meetup\Entity\MeetupRepository;
+use Meetup\Domain\Model\MeetupRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;

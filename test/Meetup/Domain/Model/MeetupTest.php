@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Meetup\Entity;
+namespace Tests\Meetup\Domain\Model;
 
-use Meetup\Entity\Meetup;
-use Meetup\Entity\Name;
-use Meetup\Entity\Description;
+use Meetup\Domain\Model\Meetup;
+use Meetup\Domain\Model\Name;
+use Meetup\Domain\Model\Description;
 
 final class MeetupTest extends \PHPUnit_Framework_TestCase
 {

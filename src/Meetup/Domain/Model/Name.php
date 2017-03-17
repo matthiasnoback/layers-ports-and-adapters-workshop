@@ -1,25 +1,25 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Entity;
+namespace Meetup\Domain\Model;
 
 use Assert\Assertion;
 
-final class Description
+final class Name
 {
     /**
      * @var string
      */
     private $text;
 
-    public static function fromString($text): Description
+    public static function fromString($text): Name
     {
-        $description = new self();
+        $name = new self();
 
         Assertion::notEmpty($text);
-        $description->text = $text;
+        $name->text = $text;
 
-        return $description;
+        return $name;
     }
 
     public function __toString(): string
