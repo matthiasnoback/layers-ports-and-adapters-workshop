@@ -23,7 +23,8 @@
         "webmozart/console": "~1.0@beta",
         "symfony/debug": "^3.0",
         "matthiasnoback/naive-serializer": "^0.4",
-        "matthiasnoback/php-workshop-tools": "^0.3.0"
+        "matthiasnoback/php-workshop-tools": "^0.3.0",
+        "matthiasnoback/convenient-immutability": "^0.1.0"
     },
     "autoload": {
         "psr-4": {
