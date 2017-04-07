@@ -12,10 +12,15 @@ use Meetup\Domain\Repository\MeetupRepository;
 final class ScheduleMeetupHandler
 {
     private $repository;
+    /**
+     * @var Notify
+     */
+    private $notify;
 
-    public function __construct(MeetupRepository $repository)
+    public function __construct(MeetupRepository $repository, Notify $notify)
     {
         $this->repository = $repository;
+        $this->notify = $notify;
     }
 
     public function handle(ScheduleMeetup $command): void
@@ -27,5 +32,12 @@ final class ScheduleMeetupHandler
             new \DateTimeImmutable($command->scheduledFor)
         );
         $this->repository->add($meetup);
+
+        $this->notify->meetupScheduled(
+            $meetup->id(),
+            $meetup->name(),
+            $meetup->description(),
+            $meetup->scheduledFor()
+        );
     }
 }

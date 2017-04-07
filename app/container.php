@@ -1,8 +1,10 @@
 <?php
 
 use Interop\Container\ContainerInterface;
+use Meetup\Application\Notify;
 use Meetup\Application\ScheduleMeetupHandler;
 use Meetup\Domain\Repository\MeetupRepository;
+use Meetup\Infrastructure\Notifications\ErrorLog\LoggingNotifier;
 use Meetup\Infrastructure\Web\Controller\MeetupDetailsController;
 use Meetup\Infrastructure\Persistence\Filesystem\FilesystemMeetupRepository;
 use Meetup\Infrastructure\Web\Controller\ListMeetupsController;
@@ -95,6 +97,13 @@ $container[MeetupRepository::class] = function () {
 };
 
 /*
+ * Notifications
+ */
+$container[Notify::class] = function () {
+    return new LoggingNotifier();
+};
+
+/*
  * Controllers
  */
 $container[ScheduleMeetupController::class] = function (ContainerInterface $container) {
@@ -133,7 +142,8 @@ $container[\Meetup\Infrastructure\Cli\ScheduleMeetupConsoleHandler::class] = fun
  */
 $container[ScheduleMeetupHandler::class] = function (ContainerInterface $container) {
     return new ScheduleMeetupHandler(
-        $container->get(MeetupRepository::class)
+        $container->get(MeetupRepository::class),
+        $container[Notify::class]
     );
 };
 
