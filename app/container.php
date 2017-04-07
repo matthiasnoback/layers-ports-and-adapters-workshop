@@ -5,6 +5,7 @@ use Meetup\Application\Notify;
 use Meetup\Application\ScheduleMeetupHandler;
 use Meetup\Domain\Repository\MeetupRepository;
 use Meetup\Infrastructure\Notifications\ErrorLog\LoggingNotifier;
+use Meetup\Infrastructure\Notifications\RabbitMQ\MessageNotifier;
 use Meetup\Infrastructure\Web\Controller\MeetupDetailsController;
 use Meetup\Infrastructure\Persistence\Filesystem\FilesystemMeetupRepository;
 use Meetup\Infrastructure\Web\Controller\ListMeetupsController;
@@ -50,7 +51,7 @@ $container['config'] = [
         ],
         [
             'name' => 'meetup_details',
-            'path' => '/meetup/{id:\d+}',
+            'path' => '/meetup/{id:.+}',
             'middleware' => MeetupDetailsController::class,
             'allowed_methods' => ['GET']
         ],
@@ -100,7 +101,8 @@ $container[MeetupRepository::class] = function () {
  * Notifications
  */
 $container[Notify::class] = function () {
-    return new LoggingNotifier();
+//    return new LoggingNotifier();
+    return new MessageNotifier();
 };
 
 /*
