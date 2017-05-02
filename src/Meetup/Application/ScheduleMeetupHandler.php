@@ -7,6 +7,7 @@ use Meetup\Domain\Model\Description;
 use Meetup\Domain\Model\Meetup;
 use Meetup\Domain\Model\MeetupId;
 use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Domain\Model\MeetupScheduled;
 use Meetup\Domain\Model\Name;
 
 final class ScheduleMeetupHandler
@@ -16,9 +17,15 @@ final class ScheduleMeetupHandler
      */
     private $meetupRepository;
 
-    public function __construct(MeetupRepository $meetupRepository)
+    /**
+     * @var Notify
+     */
+    private $notify;
+
+    public function __construct(MeetupRepository $meetupRepository, Notify $notify)
     {
         $this->meetupRepository = $meetupRepository;
+        $this->notify = $notify;
     }
 
     public function handle(ScheduleMeetup $command): void
@@ -31,5 +38,9 @@ final class ScheduleMeetupHandler
         );
 
         $this->meetupRepository->add($meetup);
+
+        $this->notify->meetupScheduled(
+            new MeetupScheduled($meetup->meetupId())
+        );
     }
 }

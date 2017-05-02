@@ -4,8 +4,12 @@ declare(strict_types=1);
 namespace Meetup\Infrastructure\Common;
 
 use Interop\Container\ContainerInterface;
+use Meetup\Application\Notify;
 use Meetup\Application\ScheduleMeetupHandler;
 use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Infrastructure\Notifications\LogNotifications;
+use Meetup\Infrastructure\Notifications\NotifyMany;
+use Meetup\Infrastructure\Notifications\PublishNotificationsToRabbitMQ;
 use Meetup\Infrastructure\UI\Web\MeetupDetailsController;
 use Meetup\Infrastructure\Persistence\FileBased\FileBasedMeetupRepository;
 use Meetup\Infrastructure\UI\Web\Resources\Views\TwigTemplates;
@@ -107,11 +111,22 @@ final class MeetupApplicationContainer extends Container
         };
 
         /*
+         * Notifications
+         */
+        $this[Notify::class] = function () {
+            return new NotifyMany([
+                new LogNotifications(),
+                new PublishNotificationsToRabbitMQ()
+            ]);
+        };
+
+        /*
          * Use cases
          */
-        $this[ScheduleMeetupHandler::class] = function(ContainerInterface $container) {
+        $this[ScheduleMeetupHandler::class] = function (ContainerInterface $container) {
             return new ScheduleMeetupHandler(
-                $container[MeetupRepository::class]
+                $container[MeetupRepository::class],
+                $container[Notify::class]
             );
         };
 

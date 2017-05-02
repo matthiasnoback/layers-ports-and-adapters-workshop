@@ -28,3 +28,9 @@ services:
             - web
         user: ${HOST_UID}:${HOST_GID}
         tty: true
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        ports:
+            # management UI:
+            - 15672:15672
