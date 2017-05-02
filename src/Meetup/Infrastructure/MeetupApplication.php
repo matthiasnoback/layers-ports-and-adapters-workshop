@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Meetup\Infrastructure;
 
 use Interop\Container\ContainerInterface;
-use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Infrastructure\MeetupRepository;
 use Meetup\Infrastructure\Resources\Views\TwigTemplates;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;

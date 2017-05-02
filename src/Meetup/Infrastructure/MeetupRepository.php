@@ -1,8 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Domain\Model;
+namespace Meetup\Infrastructure;
 
+use Meetup\Domain\Model\Meetup;
 use NaiveSerializer\Serializer;
 
 final class MeetupRepository

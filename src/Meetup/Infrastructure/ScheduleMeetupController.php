@@ -5,7 +5,7 @@ namespace Meetup\Infrastructure;
 
 use Meetup\Domain\Model\Description;
 use Meetup\Domain\Model\Meetup;
-use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Infrastructure\MeetupRepository;
 use Meetup\Domain\Model\Name;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
