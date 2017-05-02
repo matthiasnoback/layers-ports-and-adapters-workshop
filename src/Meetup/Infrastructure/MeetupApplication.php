@@ -93,7 +93,7 @@ final class MeetupApplication extends Container
          * Persistence
          */
         $this[MeetupRepository::class] = function () {
-            return new MeetupRepository(__DIR__ . '/../var/meetups.txt');
+            return new MeetupRepository(__DIR__ . '/../../../var/meetups.txt');
         };
 
         /*
