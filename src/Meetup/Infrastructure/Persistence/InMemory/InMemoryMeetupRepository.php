@@ -3,55 +3,19 @@ declare(strict_types=1);
 
 namespace Meetup\Infrastructure\Persistence\InMemory;
 
-use Meetup\Domain\Model\Meetup;
-use Meetup\Domain\Model\MeetupId;
-use Meetup\Domain\Model\MeetupRepository;
-use Ramsey\Uuid\Uuid;
+use Meetup\Infrastructure\Persistence\Common\AbstractMeetupRepository;
 
-final class InMemoryMeetupRepository implements MeetupRepository
+final class InMemoryMeetupRepository extends AbstractMeetupRepository
 {
     private $persistedMeetups = [];
 
-    public function add(Meetup $meetup): void
+    protected function persistMeetups(array $meetups): void
     {
-        $this->persistedMeetups[] = $meetup;
+        $this->persistedMeetups = $meetups;
     }
 
-    public function byId(MeetupId $meetupId): Meetup
+    protected function persistedMeetups(): array
     {
-        foreach ($this->persistedMeetups as $meetup) {
-            if ($meetup->meetupId()->equals($meetupId)) {
-                return $meetup;
-            }
-        }
-
-        throw new \RuntimeException('Meetup not found');
-    }
-
-    /**
-     * @param \DateTimeImmutable $now
-     * @return Meetup[]
-     */
-    public function upcomingMeetups(\DateTimeImmutable $now): array
-    {
-        return array_values(array_filter($this->persistedMeetups, function (Meetup $meetup) use ($now) {
-            return $meetup->isUpcoming($now);
-        }));
-    }
-
-    /**
-     * @param \DateTimeImmutable $now
-     * @return Meetup[]
-     */
-    public function pastMeetups(\DateTimeImmutable $now): array
-    {
-        return array_values(array_filter($this->persistedMeetups, function (Meetup $meetup) use ($now) {
-            return !$meetup->isUpcoming($now);
-        }));
-    }
-
-    public function nextIdentity(): MeetupId
-    {
-        return MeetupId::fromString((string)Uuid::uuid4());
+        return $this->persistedMeetups;
     }
 }

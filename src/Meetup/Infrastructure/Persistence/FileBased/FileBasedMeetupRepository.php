@@ -4,12 +4,10 @@ declare(strict_types = 1);
 namespace Meetup\Infrastructure\Persistence\FileBased;
 
 use Meetup\Domain\Model\Meetup;
-use Meetup\Domain\Model\MeetupId;
-use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Infrastructure\Persistence\Common\AbstractMeetupRepository;
 use NaiveSerializer\Serializer;
-use Ramsey\Uuid\Uuid;
 
-final class FileBasedMeetupRepository implements MeetupRepository
+final class FileBasedMeetupRepository extends AbstractMeetupRepository
 {
     /**
      * @var string
@@ -21,55 +19,15 @@ final class FileBasedMeetupRepository implements MeetupRepository
         $this->filePath = $filePath;
     }
 
-    public function add(Meetup $meetup): void
+    protected function persistMeetups(array $meetups): void
     {
-        $meetups = $this->persistedMeetups();
-        $meetups[] = $meetup;
         file_put_contents($this->filePath, Serializer::serialize($meetups));
     }
 
-    public function byId(MeetupId $meetupId): Meetup
-    {
-        foreach ($this->persistedMeetups() as $meetup) {
-            if ($meetup->meetupId()->equals($meetupId)) {
-                return $meetup;
-            }
-        }
-
-        throw new \RuntimeException('Meetup not found');
-    }
-
-    /**
-     * @param \DateTimeImmutable $now
-     * @return Meetup[]
-     */
-    public function upcomingMeetups(\DateTimeImmutable $now): array
-    {
-        return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {
-            return $meetup->isUpcoming($now);
-        }));
-    }
-
-    /**
-     * @param \DateTimeImmutable $now
-     * @return Meetup[]
-     */
-    public function pastMeetups(\DateTimeImmutable $now): array
-    {
-        return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {
-            return !$meetup->isUpcoming($now);
-        }));
-    }
-
-    public function nextIdentity(): MeetupId
-    {
-        return MeetupId::fromString((string)Uuid::uuid4());
-    }
-
     /**
      * @return Meetup[]
      */
-    private function persistedMeetups(): array
+    protected function persistedMeetups(): array
     {
         if (!file_exists($this->filePath)) {
             return [];
