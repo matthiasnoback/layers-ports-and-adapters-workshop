@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Meetup\Infrastructure;
 
 use Interop\Container\ContainerInterface;
+use Meetup\Application\ScheduleMeetupHandler;
 use Meetup\Infrastructure\MeetupRepository;
 use Meetup\Infrastructure\Resources\Views\TwigTemplates;
 use Psr\Http\Message\RequestInterface;
@@ -69,7 +70,7 @@ final class MeetupApplicationContainer extends Container
          */
         $this['Zend\Expressive\FinalHandler'] = function () {
             return function (RequestInterface $request, ResponseInterface $response, $err = null) {
-                if ($err instanceof \Exception) {
+                if ($err instanceof \Throwable) {
                     throw $err;
                 }
             };
@@ -98,13 +99,22 @@ final class MeetupApplicationContainer extends Container
         };
 
         /*
+         * Use cases
+         */
+        $this[ScheduleMeetupHandler::class] = function(ContainerInterface $container) {
+            return new ScheduleMeetupHandler(
+                $container[MeetupRepository::class]
+            );
+        };
+
+        /*
          * Controllers
          */
         $this[ScheduleMeetupController::class] = function (ContainerInterface $container) {
             return new ScheduleMeetupController(
                 $container->get(TemplateRendererInterface::class),
                 $container->get(RouterInterface::class),
-                $container->get(MeetupRepository::class)
+                $container->get(ScheduleMeetupHandler::class)
             );
         };
         $this[ListMeetupsController::class] = function (ContainerInterface $container) {
@@ -129,7 +139,7 @@ final class MeetupApplicationContainer extends Container
 
         $this[ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
             return new ScheduleMeetupConsoleHandler(
-                $container->get(MeetupRepository::class)
+                $container->get(ScheduleMeetupHandler::class)
             );
         };
     }
