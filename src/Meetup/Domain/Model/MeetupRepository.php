@@ -6,7 +6,7 @@ interface MeetupRepository
 {
     public function add(Meetup $meetup): void;
 
-    public function byId(int $id): Meetup;
+    public function byId(MeetupId $meetupId): Meetup;
 
     /**
      * @param \DateTimeImmutable $now
@@ -19,4 +19,6 @@ interface MeetupRepository
      * @return Meetup[]
      */
     public function pastMeetups(\DateTimeImmutable $now): array;
+
+    public function nextIdentity(): MeetupId;
 }

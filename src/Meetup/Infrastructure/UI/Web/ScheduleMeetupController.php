@@ -5,6 +5,7 @@ namespace Meetup\Infrastructure\UI\Web;
 
 use Meetup\Application\ScheduleMeetup;
 use Meetup\Application\ScheduleMeetupHandler;
+use Meetup\Domain\Model\MeetupRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -27,12 +28,17 @@ final class ScheduleMeetupController
      * @var ScheduleMeetupHandler
      */
     private $scheduleMeetupHandler;
+    /**
+     * @var MeetupRepository
+     */
+    private $meetupRepository;
 
-    public function __construct(TemplateRendererInterface $renderer, RouterInterface $router, ScheduleMeetupHandler $scheduleMeetupHandler)
+    public function __construct(TemplateRendererInterface $renderer, RouterInterface $router, ScheduleMeetupHandler $scheduleMeetupHandler, MeetupRepository $meetupRepository)
     {
         $this->renderer = $renderer;
         $this->router = $router;
         $this->scheduleMeetupHandler = $scheduleMeetupHandler;
+        $this->meetupRepository = $meetupRepository;
     }
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
@@ -55,6 +61,7 @@ final class ScheduleMeetupController
 
             if (empty($formErrors)) {
                 $command = new ScheduleMeetup();
+                $command->id = (string)$this->meetupRepository->nextIdentity();
                 $command->name = $submittedData['name'];
                 $command->description = $submittedData['description'];
                 $command->scheduledFor = $submittedData['scheduledFor'];
@@ -65,7 +72,7 @@ final class ScheduleMeetupController
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetup->id()
+                            'id' => $meetup->meetupId()
                         ]
                     )
                 );

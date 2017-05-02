@@ -60,7 +60,7 @@ final class MeetupApplicationContainer extends Container
                 ],
                 [
                     'name' => 'meetup_details',
-                    'path' => '/meetup/{id:\d+}',
+                    'path' => '/meetup/{id:.+}',
                     'middleware' => MeetupDetailsController::class,
                     'allowed_methods' => ['GET']
                 ],
@@ -122,7 +122,8 @@ final class MeetupApplicationContainer extends Container
             return new ScheduleMeetupController(
                 $container->get(TemplateRendererInterface::class),
                 $container->get(RouterInterface::class),
-                $container->get(ScheduleMeetupHandler::class)
+                $container->get(ScheduleMeetupHandler::class),
+                $container->get(MeetupRepository::class)
             );
         };
         $this[ListMeetupsController::class] = function (ContainerInterface $container) {
@@ -147,7 +148,8 @@ final class MeetupApplicationContainer extends Container
 
         $this[ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
             return new ScheduleMeetupConsoleHandler(
-                $container->get(ScheduleMeetupHandler::class)
+                $container->get(ScheduleMeetupHandler::class),
+                $container->get(MeetupRepository::class)
             );
         };
     }

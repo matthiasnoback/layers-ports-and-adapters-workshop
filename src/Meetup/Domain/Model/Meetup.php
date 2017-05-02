@@ -8,9 +8,9 @@ final class Meetup
     const DATE_FORMAT = 'Y-m-d\TH:i:s,uO';
 
     /**
-     * @var int
+     * @var MeetupId
      */
-    private $id;
+    private $meetupId;
 
     /**
      * @var Name
@@ -27,9 +27,10 @@ final class Meetup
      */
     private $scheduledFor;
 
-    public static function schedule(Name $name, Description $description, \DateTimeImmutable $scheduledFor)
+    public static function schedule(MeetupId $meetupId, Name $name, Description $description, \DateTimeImmutable $scheduledFor)
     {
         $meetup = new self();
+        $meetup->meetupId = $meetupId;
         $meetup->name = $name;
         $meetup->description = $description;
         $meetup->scheduledFor = $scheduledFor->format(self::DATE_FORMAT);
@@ -37,9 +38,9 @@ final class Meetup
         return $meetup;
     }
 
-    public function id(): int
+    public function meetupId(): MeetupId
     {
-        return $this->id;
+        return $this->meetupId;
     }
 
     public function name(): Name
@@ -60,14 +61,5 @@ final class Meetup
     public function isUpcoming(\DateTimeImmutable $now): bool
     {
         return $now < $this->scheduledFor();
-    }
-
-    /**
-     * @param int $id
-     * @internal Only to be used by MeetupRepository
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 }
