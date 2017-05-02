@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Command;
+namespace Meetup\Infrastructure;
 
-use Meetup\Entity\Description;
-use Meetup\Entity\Meetup;
-use Meetup\Entity\MeetupRepository;
-use Meetup\Entity\Name;
+use Meetup\Domain\Model\Description;
+use Meetup\Domain\Model\Meetup;
+use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Domain\Model\Name;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 

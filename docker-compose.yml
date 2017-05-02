@@ -12,6 +12,7 @@ services:
             XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
             PHP_IDE_CONFIG: "serverName=docker"
         user: ${HOST_UID}:${HOST_GID}
+        tty: true
 
     devtools:
         build: docker/devtools/
@@ -26,3 +27,4 @@ services:
         depends_on:
             - web
         user: ${HOST_UID}:${HOST_GID}
+        tty: true
