@@ -1,12 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Meetup\Infrastructure;
+namespace Meetup\Infrastructure\Common;
 
 use Interop\Container\ContainerInterface;
 use Meetup\Application\ScheduleMeetupHandler;
-use Meetup\Infrastructure\MeetupRepository;
-use Meetup\Infrastructure\Resources\Views\TwigTemplates;
+use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Infrastructure\UI\Web\MeetupDetailsController;
+use Meetup\Infrastructure\Persistence\FileBased\FileBasedMeetupRepository;
+use Meetup\Infrastructure\UI\Web\Resources\Views\TwigTemplates;
+use Meetup\Infrastructure\UI\CLI\ScheduleMeetupConsoleHandler;
+use Meetup\Infrastructure\UI\Web\ScheduleMeetupController;
+use Meetup\Infrastructure\UI\CLI\MeetupApplicationConfig;
+use Meetup\Infrastructure\UI\Web\ListMeetupsController;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Debug\Debug;
@@ -24,9 +30,11 @@ use Zend\Expressive\Twig\TwigRendererFactory;
 
 final class MeetupApplicationContainer extends Container
 {
-    public function __construct(array $values = array())
+    public function __construct(string $rootDir)
     {
-        parent::__construct($values);
+        parent::__construct([
+            'root_dir' => $rootDir
+        ]);
 
         Debug::enable();
         ErrorHandler::register();
@@ -94,8 +102,8 @@ final class MeetupApplicationContainer extends Container
         /*
          * Persistence
          */
-        $this[MeetupRepository::class] = function () {
-            return new MeetupRepository(__DIR__ . '/../../../var/meetups.txt');
+        $this[MeetupRepository::class] = function (ContainerInterface $container) {
+            return new FileBasedMeetupRepository($container['root_dir'] . '/var/meetups.txt');
         };
 
         /*
