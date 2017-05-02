@@ -64,7 +64,7 @@ $container['config'] = [
  */
 $container['Zend\Expressive\FinalHandler'] = function () {
     return function (RequestInterface $request, ResponseInterface $response, $err = null) {
-        if ($err instanceof \Exception) {
+        if ($err instanceof \Throwable) {
             throw $err;
         }
     };
