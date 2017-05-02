@@ -1,11 +1,11 @@
 #!/usr/bin/env php
 <?php
+declare(strict_types = 1);
 
-use Meetup\Infrastructure\MeetupApplication;
-use Meetup\Infrastructure\MeetupApplicationConfig;
-use Webmozart\Console\ConsoleApplication;
+use Meetup\Infrastructure\MeetupApplicationContainer;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$cli = new ConsoleApplication(new MeetupApplicationConfig(new MeetupApplication()));
-$cli->run();
+$container = new MeetupApplicationContainer();
+
+$container->getConsoleApplication()->run();

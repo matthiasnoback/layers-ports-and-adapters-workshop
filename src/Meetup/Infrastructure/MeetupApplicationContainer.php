@@ -10,6 +10,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Debug\ErrorHandler;
+use Webmozart\Console\ConsoleApplication;
 use Xtreamwayz\Pimple\Container;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
@@ -20,7 +21,7 @@ use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Expressive\Twig\TwigRendererFactory;
 
-final class MeetupApplication extends Container
+final class MeetupApplicationContainer extends Container
 {
     public function __construct(array $values = array())
     {
@@ -119,13 +120,27 @@ final class MeetupApplication extends Container
             );
         };
 
-        /**
+        /*
          * CLI
          */
+        $this[ConsoleApplication::class] = function (ContainerInterface $container) {
+            return new ConsoleApplication(new MeetupApplicationConfig($container));
+        };
+
         $this[ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
             return new ScheduleMeetupConsoleHandler(
                 $container->get(MeetupRepository::class)
             );
         };
+    }
+
+    public function getConsoleApplication(): ConsoleApplication
+    {
+        return $this[ConsoleApplication::class];
+    }
+
+    public function getWebApplication(): Application
+    {
+        return $this[Application::class];
     }
 }
