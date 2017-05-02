@@ -6,7 +6,7 @@ namespace Tests\Meetup\Entity;
 use Meetup\Infrastructure\Persistence\FileBased\FileBasedMeetupRepository;
 use Tests\Meetup\Entity\Util\MeetupFactory;
 
-final class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase
+final class FileBasedMeetupRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Meetup\Infrastructure\Persistence\FileBased\FileBasedMeetupRepository
@@ -29,10 +29,7 @@ final class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase
         $originalMeetup = MeetupFactory::someMeetup();
         $this->repository->add($originalMeetup);
 
-        $this->assertInternalType('int', $originalMeetup->id());
-        $this->assertGreaterThanOrEqual(1, $originalMeetup->id());
-
-        $restoredMeetup = $this->repository->byId($originalMeetup->id());
+        $restoredMeetup = $this->repository->byId($originalMeetup->meetupId());
 
         $this->assertEquals($originalMeetup, $restoredMeetup);
     }

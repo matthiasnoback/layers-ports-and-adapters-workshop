@@ -66,13 +66,13 @@ final class ScheduleMeetupController
                 $command->description = $submittedData['description'];
                 $command->scheduledFor = $submittedData['scheduledFor'];
 
-                $meetup = $this->scheduleMeetupHandler->handle($command);
+                $this->scheduleMeetupHandler->handle($command);
 
                 return new RedirectResponse(
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetup->meetupId()
+                            'id' => $command->id
                         ]
                     )
                 );

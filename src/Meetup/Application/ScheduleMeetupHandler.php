@@ -21,7 +21,7 @@ final class ScheduleMeetupHandler
         $this->meetupRepository = $meetupRepository;
     }
 
-    public function handle(ScheduleMeetup $command): Meetup
+    public function handle(ScheduleMeetup $command): void
     {
         $meetup = Meetup::schedule(
             MeetupId::fromString($command->id),
@@ -31,7 +31,5 @@ final class ScheduleMeetupHandler
         );
 
         $this->meetupRepository->add($meetup);
-
-        return $meetup;
     }
 }
