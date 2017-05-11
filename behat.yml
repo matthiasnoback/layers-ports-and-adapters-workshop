@@ -8,10 +8,9 @@ default:
     suites:
         system:
             mink_session: default
-            paths: [ "%paths.base%/test/System/features"]
+            paths: [ "%paths.base%/test/Acceptance/features"]
             contexts:
                 - Tests\System\FeatureContext
-                - Behat\MinkExtension\Context\MinkContext
         acceptance:
             paths: [ "%paths.base%/test/Acceptance/features"]
             contexts:

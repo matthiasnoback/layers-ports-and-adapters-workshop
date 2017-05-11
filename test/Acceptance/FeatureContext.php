@@ -3,7 +3,6 @@
 namespace Tests\Acceptance;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
@@ -15,7 +14,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * Defines application features from the specific context.
  */
-final class FeatureContext implements Context, SnippetAcceptingContext
+final class FeatureContext implements Context
 {
     private $meetupRepository;
 
