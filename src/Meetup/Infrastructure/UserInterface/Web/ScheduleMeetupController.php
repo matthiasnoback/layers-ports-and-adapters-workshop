@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Infrastructure;
+namespace Meetup\Infrastructure\UserInterface\Web;
 
 use Meetup\Domain\Description;
 use Meetup\Domain\Meetup;
-use Meetup\Infrastructure\MeetupRepository;
+use Meetup\Infrastructure\Persistence\Filesystem\MeetupRepository;
 use Meetup\Domain\Name;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

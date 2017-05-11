@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Infrastructure;
+namespace Meetup\Infrastructure\UserInterface\Cli;
 
 use Meetup\Domain\Description;
 use Meetup\Domain\Meetup;
-use Meetup\Infrastructure\MeetupRepository;
+use Meetup\Infrastructure\Persistence\Filesystem\MeetupRepository;
 use Meetup\Domain\Name;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
@@ -13,7 +13,7 @@ use Webmozart\Console\Api\IO\IO;
 final class ScheduleMeetupConsoleHandler
 {
     /**
-     * @var MeetupRepository
+     * @var \Meetup\Infrastructure\Persistence\MeetupRepository
      */
     private $repository;
 

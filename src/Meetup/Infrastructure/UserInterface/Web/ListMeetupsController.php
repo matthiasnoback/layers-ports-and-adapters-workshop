@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Infrastructure;
+namespace Meetup\Infrastructure\UserInterface\Web;
 
-use Meetup\Infrastructure\MeetupRepository;
+use Meetup\Infrastructure\Persistence\Filesystem\MeetupRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -13,7 +13,7 @@ use Zend\Stratigility\MiddlewareInterface;
 final class ListMeetupsController implements MiddlewareInterface
 {
     /**
-     * @var MeetupRepository
+     * @var \Meetup\Infrastructure\Persistence\\Meetup\Infrastructure\Persistence\Filesystem\MeetupRepository
      */
     private $meetupRepository;
 
@@ -28,7 +28,7 @@ final class ListMeetupsController implements MiddlewareInterface
         $this->renderer = $renderer;
     }
 
-    public function __invoke(Request $request, Response $response, callable $out = null): ResponseInterface
+    public function __invoke(Request $request, Response $response, callable $out = null): Response
     {
         $now = new \DateTimeImmutable();
         $upcomingMeetups = $this->meetupRepository->upcomingMeetups($now);
