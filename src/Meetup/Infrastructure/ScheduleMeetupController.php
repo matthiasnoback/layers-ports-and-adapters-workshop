@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Controller;
+namespace Meetup\Infrastructure;
 
-use Meetup\Entity\Description;
-use Meetup\Entity\Meetup;
-use Meetup\Entity\MeetupRepository;
-use Meetup\Entity\Name;
+use Meetup\Domain\Description;
+use Meetup\Domain\Meetup;
+use Meetup\Infrastructure\MeetupRepository;
+use Meetup\Domain\Name;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -24,7 +24,7 @@ final class ScheduleMeetupController
      * @var RouterInterface
      */
     private $router;
-    
+
     /**
      * @var MeetupRepository
      */
