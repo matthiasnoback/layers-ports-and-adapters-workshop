@@ -7,8 +7,8 @@
         <testsuite name="Unit tests">
             <directory suffix="Test.php">./test/Unit</directory>
         </testsuite>
-        <testsuite name="System tests">
-            <directory suffix="Test.php">./test/System</directory>
+        <testsuite name="Integration tests">
+            <directory suffix="Test.php">./test/Integration</directory>
         </testsuite>
     </testsuites>
     <filter>
