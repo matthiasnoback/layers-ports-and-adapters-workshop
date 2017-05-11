@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Meetup\Infrastructure\UserInterface\Web;
 
@@ -37,28 +37,20 @@ final class ScheduleMeetupController
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
-        $formErrors = [];
         $submittedData = [];
+        $formErrors = [];
 
         if ($request->getMethod() === 'POST') {
             $submittedData = $request->getParsedBody();
 
-            if (empty($submittedData['name'])) {
-                $formErrors['name'][] = 'Provide a name';
-            }
-            if (empty($submittedData['description'])) {
-                $formErrors['description'][] = 'Provide a description';
-            }
-            if (empty($submittedData['scheduledFor'])) {
-                $formErrors['scheduledFor'][] = 'Provide a scheduled for date';
-            }
+            $command = new ScheduleMeetup();
+            $command->name = $submittedData['name'];
+            $command->description = $submittedData['description'];
+            $command->scheduledFor = $submittedData['scheduledFor'];
+
+            $formErrors = $command->validate();
 
             if (empty($formErrors)) {
-                $command = new ScheduleMeetup();
-                $command->name = $submittedData['name'];
-                $command->description = $submittedData['description'];
-                $command->scheduledFor = $submittedData['scheduledFor'];
-
                 $meetup = $this->scheduleMeetupHandler->handle($command);
 
                 return new RedirectResponse(
@@ -77,11 +69,39 @@ final class ScheduleMeetupController
                 'schedule-meetup.html.twig',
                 [
                     'submittedData' => $submittedData,
-                    'formErrors' => $formErrors
+                    'formErrors' => $this->translateFormErrors($formErrors)
                 ]
             )
         );
 
         return $response;
+    }
+
+    private function translateFormErrors(array $formErrors): array
+    {
+        $translatedErrors = $formErrors;
+        foreach ($translatedErrors as $field => $errors) {
+            foreach ($errors as $index => $error) {
+                $translatedErrors[$field][$index] = $this->translateFormError($error);
+            }
+        }
+
+        return $translatedErrors;
+    }
+
+    private function translateFormError(string $error): string
+    {
+        switch ($error) {
+            case ScheduleMeetup::NAME_SHOULD_NOT_BE_EMPTY:
+                return 'Provide a name';
+            case ScheduleMeetup::DESCRIPTION_SHOULD_NOT_BE_EMPTY:
+                return 'Provide a description';
+            case ScheduleMeetup::SCHEDULED_FOR_SHOULD_NOT_BE_EMPTY:
+                return 'Provide a date';
+            case ScheduleMeetup::INVALID_SCHEDULED_FOR_DATE:
+                return 'Invalid date format';
+        }
+
+        return 'Unknown error';
     }
 }

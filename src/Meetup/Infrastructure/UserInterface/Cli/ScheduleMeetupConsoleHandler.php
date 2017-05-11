@@ -27,6 +27,17 @@ final class ScheduleMeetupConsoleHandler
         $command->description = $args->getArgument('description');
         $command->scheduledFor = $args->getArgument('scheduledFor');
 
+        $errors = $command->validate();
+        if (!empty($errors)) {
+            foreach ($errors as $field => $fieldErrors) {
+                foreach ($fieldErrors as $error) {
+                    $io->errorLine('<error>' . $field . ': ' . $error . '</error>');
+                }
+            }
+
+            return 1;
+        }
+
         $this->handler->handle($command);
 
         $io->writeLine('<success>Scheduled the meetup successfully</success>');
