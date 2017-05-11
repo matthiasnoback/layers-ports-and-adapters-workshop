@@ -1,5 +1,6 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
+    <p><a href="{{ url('list_meetups') }}">&laquo; List meetups</a></p>
     {% include "_meetup.html.twig" with { meetup: meetup } %}
 {% endblock %}
