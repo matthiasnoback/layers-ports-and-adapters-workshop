@@ -3,9 +3,8 @@ declare(strict_types = 1);
 
 namespace Meetup\Infrastructure\UserInterface\Web;
 
-use Meetup\Infrastructure\Persistence\Filesystem\MeetupRepository;
+use Meetup\Domain\MeetupRepository;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Stratigility\MiddlewareInterface;
@@ -13,7 +12,7 @@ use Zend\Stratigility\MiddlewareInterface;
 final class ListMeetupsController implements MiddlewareInterface
 {
     /**
-     * @var \Meetup\Infrastructure\Persistence\\Meetup\Infrastructure\Persistence\Filesystem\MeetupRepository
+     * @var MeetupRepository
      */
     private $meetupRepository;
 

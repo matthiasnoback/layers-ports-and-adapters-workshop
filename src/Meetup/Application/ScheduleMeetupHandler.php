@@ -5,8 +5,8 @@ namespace Meetup\Application;
 
 use Meetup\Domain\Description;
 use Meetup\Domain\Meetup;
+use Meetup\Domain\MeetupRepository;
 use Meetup\Domain\Name;
-use Meetup\Infrastructure\Persistence\Filesystem\MeetupRepository;
 
 final class ScheduleMeetupHandler
 {
@@ -27,7 +27,7 @@ final class ScheduleMeetupHandler
             Description::fromString($command->description),
             new \DateTimeImmutable($command->scheduledFor)
         );
-        
+
         $this->repository->add($meetup);
 
         return $meetup;

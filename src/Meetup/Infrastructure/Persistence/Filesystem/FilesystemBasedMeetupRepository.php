@@ -4,9 +4,10 @@ declare(strict_types = 1);
 namespace Meetup\Infrastructure\Persistence\Filesystem;
 
 use Meetup\Domain\Meetup;
+use Meetup\Domain\MeetupRepository;
 use NaiveSerializer\Serializer;
 
-final class MeetupRepository
+final class FilesystemBasedMeetupRepository implements MeetupRepository
 {
     /**
      * @var string
