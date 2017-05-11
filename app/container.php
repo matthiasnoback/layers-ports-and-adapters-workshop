@@ -60,7 +60,7 @@ $container['config'] = [
 ];
 
 /*
- * Application
+ * Zend Expressive Application
  */
 $container['Zend\Expressive\FinalHandler'] = function () {
     return function (RequestInterface $request, ResponseInterface $response, $err = null) {
@@ -115,7 +115,7 @@ $container[MeetupDetailsController::class] = function (ContainerInterface $conta
     );
 };
 
-/**
+/*
  * CLI
  */
 $container[\Meetup\Command\ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
