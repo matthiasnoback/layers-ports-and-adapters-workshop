@@ -4,8 +4,11 @@
          bootstrap="./test/bootstrap.php"
          colors="true">
     <testsuites>
-        <testsuite name="Tests">
-            <directory suffix="Test.php">./test</directory>
+        <testsuite name="Unit tests">
+            <directory suffix="Test.php">./test/Unit</directory>
+        </testsuite>
+        <testsuite name="System tests">
+            <directory suffix="Test.php">./test/System</directory>
         </testsuite>
     </testsuites>
     <filter>

@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Meetup\Infrastructure;
+namespace Tests\Integration\Meetup\Infrastructure;
 
 use Meetup\Infrastructure\Persistence\Filesystem\FilesystemBasedMeetupRepository;
-use Tests\Meetup\Domain\Util\MeetupFactory;
+use Tests\Unit\Meetup\Domain\Util\MeetupFactory;
 
 final class FilesystemBasedMeetupRepositoryTest extends \PHPUnit_Framework_TestCase
 {
