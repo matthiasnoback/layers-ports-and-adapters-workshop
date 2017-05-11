@@ -1,6 +1,7 @@
 <?php
 
 use Interop\Container\ContainerInterface;
+use Meetup\Application\ScheduleMeetupHandler;
 use Meetup\Infrastructure\UserInterface\Web\MeetupDetailsController;
 use Meetup\Infrastructure\Persistence\Filesystem\MeetupRepository;
 use Meetup\Infrastructure\UserInterface\Web\ListMeetupsController;
@@ -60,7 +61,7 @@ $container['config'] = [
 ];
 
 /*
- * Application
+ * Zend Expressive Application
  */
 $container['Zend\Expressive\FinalHandler'] = function () {
     return function (RequestInterface $request, ResponseInterface $response, $err = null) {
@@ -73,6 +74,13 @@ $container[RouterInterface::class] = function () {
     return new FastRouteRouter();
 };
 $container[Application::class] = new ApplicationFactory();
+
+/*
+ * Application services
+ */
+$container[ScheduleMeetupHandler::class] = function (ContainerInterface $container) {
+    return new ScheduleMeetupHandler($container[MeetupRepository::class]);
+};
 
 /*
  * Templating
@@ -99,7 +107,7 @@ $container[ScheduleMeetupController::class] = function (ContainerInterface $cont
     return new ScheduleMeetupController(
         $container->get(TemplateRendererInterface::class),
         $container->get(RouterInterface::class),
-        $container->get(MeetupRepository::class)
+        $container->get(ScheduleMeetupHandler::class)
     );
 };
 $container[ListMeetupsController::class] = function (ContainerInterface $container) {
@@ -120,7 +128,7 @@ $container[MeetupDetailsController::class] = function (ContainerInterface $conta
  */
 $container[\Meetup\Infrastructure\UserInterface\Cli\ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
     return new \Meetup\Infrastructure\UserInterface\Cli\ScheduleMeetupConsoleHandler(
-        $container->get(MeetupRepository::class)
+        $container->get(ScheduleMeetupHandler::class)
     );
 };
 

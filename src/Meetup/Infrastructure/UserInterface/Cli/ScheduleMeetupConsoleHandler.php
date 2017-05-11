@@ -3,33 +3,31 @@ declare(strict_types = 1);
 
 namespace Meetup\Infrastructure\UserInterface\Cli;
 
-use Meetup\Domain\Description;
-use Meetup\Domain\Meetup;
-use Meetup\Infrastructure\Persistence\Filesystem\MeetupRepository;
-use Meetup\Domain\Name;
+use Meetup\Application\ScheduleMeetup;
+use Meetup\Application\ScheduleMeetupHandler;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 
 final class ScheduleMeetupConsoleHandler
 {
     /**
-     * @var \Meetup\Infrastructure\Persistence\MeetupRepository
+     * @var ScheduleMeetupHandler
      */
-    private $repository;
+    private $handler;
 
-    public function __construct(MeetupRepository $repository)
+    public function __construct(ScheduleMeetupHandler $handler)
     {
-        $this->repository = $repository;
+        $this->handler = $handler;
     }
 
     public function handle(Args $args, IO $io): int
     {
-        $meetup = Meetup::schedule(
-            Name::fromString($args->getArgument('name')),
-            Description::fromString($args->getArgument('description')),
-            new \DateTimeImmutable($args->getArgument('scheduledFor'))
-        );
-        $this->repository->add($meetup);
+        $command = new ScheduleMeetup();
+        $command->name = $args->getArgument('name');
+        $command->description = $args->getArgument('description');
+        $command->scheduledFor = $args->getArgument('scheduledFor');
+
+        $this->handler->handle($command);
 
         $io->writeLine('<success>Scheduled the meetup successfully</success>');
 
