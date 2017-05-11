@@ -29,9 +29,6 @@ final class FilesystemBasedMeetupRepositoryTest extends \PHPUnit_Framework_TestC
         $originalMeetup = MeetupFactory::someMeetup();
         $this->repository->add($originalMeetup);
 
-        $this->assertInternalType('int', $originalMeetup->id());
-        $this->assertGreaterThanOrEqual(1, $originalMeetup->id());
-
         $restoredMeetup = $this->repository->byId($originalMeetup->id());
 
         $this->assertEquals($originalMeetup, $restoredMeetup);

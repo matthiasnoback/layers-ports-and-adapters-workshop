@@ -4,8 +4,10 @@ declare(strict_types = 1);
 namespace Meetup\Infrastructure\Persistence\Filesystem;
 
 use Meetup\Domain\Meetup;
+use Meetup\Domain\MeetupId;
 use Meetup\Domain\MeetupRepository;
 use NaiveSerializer\Serializer;
+use Ramsey\Uuid\Uuid;
 
 final class FilesystemBasedMeetupRepository implements MeetupRepository
 {
@@ -22,16 +24,14 @@ final class FilesystemBasedMeetupRepository implements MeetupRepository
     public function add(Meetup $meetup): void
     {
         $meetups = $this->persistedMeetups();
-        $id = count($meetups) + 1;
-        $meetup->setId($id);
         $meetups[] = $meetup;
         file_put_contents($this->filePath, Serializer::serialize($meetups));
     }
 
-    public function byId(int $id): Meetup
+    public function byId(MeetupId $id): Meetup
     {
         foreach ($this->persistedMeetups() as $meetup) {
-            if ($meetup->id() === $id) {
+            if ($meetup->id()->equals($id)) {
                 return $meetup;
             }
         }
@@ -76,5 +76,10 @@ final class FilesystemBasedMeetupRepository implements MeetupRepository
         }
 
         return Serializer::deserialize(Meetup::class . '[]', $rawJson);
+    }
+
+    public function nextIdentity(): MeetupId
+    {
+        return MeetupId::fromString((string)Uuid::uuid4());
     }
 }

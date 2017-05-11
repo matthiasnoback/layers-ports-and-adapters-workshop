@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Tests\Meetup\Domain;
 
 use Meetup\Domain\Meetup;
+use Meetup\Domain\MeetupId;
 use Meetup\Domain\Name;
 use Meetup\Domain\Description;
 
@@ -14,11 +15,12 @@ final class MeetupTest extends \PHPUnit_Framework_TestCase
      */
     public function it_can_be_scheduled_with_just_a_name_description_and_date()
     {
+        $id = MeetupId::fromString('03e5efff-12e8-4903-ba24-f2e80e118c90');
         $name = Name::fromString('Name');
         $description = Description::fromString('Description');
         $scheduledFor = new \DateTimeImmutable('now');
 
-        $meetup = Meetup::schedule($name, $description, $scheduledFor);
+        $meetup = Meetup::schedule($id, $name, $description, $scheduledFor);
 
         $this->assertInstanceOf(Meetup::class, $meetup);
         $this->assertEquals($name, $meetup->name());
@@ -34,6 +36,7 @@ final class MeetupTest extends \PHPUnit_Framework_TestCase
         $now = new \DateTimeImmutable();
 
         $pastMeetup = Meetup::schedule(
+            MeetupId::fromString('03e5efff-12e8-4903-ba24-f2e80e118c90'),
             Name::fromString('Name'),
             Description::fromString('Description'),
             new \DateTimeImmutable('-5 days')
@@ -41,6 +44,7 @@ final class MeetupTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($pastMeetup->isUpcoming($now));
 
         $upcomingMeetup = Meetup::schedule(
+            MeetupId::fromString('03e5efff-12e8-4903-ba24-f2e80e118c90'),
             Name::fromString('Name'),
             Description::fromString('Description'),
             new \DateTimeImmutable('+5 days')
