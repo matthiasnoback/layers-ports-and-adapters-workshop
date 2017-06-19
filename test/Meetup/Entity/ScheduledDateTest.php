@@ -15,8 +15,8 @@ final class ScheduledDateTest extends \PHPUnit_Framework_TestCase
         $scheduledDate = ScheduledDate::fromPhpDateString('2017-01-01 20:00');
 
         $this->assertEquals(
-            '2017-01-01T20:00:00+00:00',
-            (string)$scheduledDate
+            new \DateTimeImmutable('2017-01-01 20:00'),
+            $scheduledDate->toDateTimeImmutable()
         );
     }
 
@@ -48,8 +48,8 @@ final class ScheduledDateTest extends \PHPUnit_Framework_TestCase
         $scheduledDate = ScheduledDate::fromDateTime(new \DateTimeImmutable('2017-01-01 20:00'));
 
         $this->assertEquals(
-            '2017-01-01T20:00:00+00:00',
-            (string)$scheduledDate
+            new \DateTimeImmutable('2017-01-01 20:00'),
+            $scheduledDate->toDateTimeImmutable()
         );
     }
 }

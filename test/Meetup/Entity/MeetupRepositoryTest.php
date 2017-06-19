@@ -86,6 +86,21 @@ final class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @test
+     */
+    public function it_can_delete_all_meetups()
+    {
+        $meetup = MeetupFactory::upcomingMeetup();
+        $this->repository->add($meetup);
+        $this->assertEquals([$meetup], $this->repository->allMeetups());
+
+        $this->repository->deleteAll();
+
+        $this->assertEquals([], $this->repository->upcomingMeetups(new \DateTimeImmutable()));
+        $this->assertEquals([], $this->repository->pastMeetups(new \DateTimeImmutable()));
+    }
+
     protected function tearDown()
     {
         unlink($this->filePath);

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Meetup\Entity;
 
@@ -59,6 +59,11 @@ final class MeetupRepository
         }));
     }
 
+    public function allMeetups(): array
+    {
+        return $this->persistedMeetups();
+    }
+
     /**
      * @return Meetup[]
      */
@@ -74,5 +79,10 @@ final class MeetupRepository
         }
 
         return Serializer::deserialize(Meetup::class . '[]', $rawJson);
+    }
+
+    public function deleteAll(): void
+    {
+        file_put_contents($this->filePath, '[]');
     }
 }

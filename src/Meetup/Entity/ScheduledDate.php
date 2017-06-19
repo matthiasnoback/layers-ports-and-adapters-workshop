@@ -47,7 +47,7 @@ final class ScheduledDate
         return $now < $this->toDateTimeImmutable();
     }
 
-    private function toDateTimeImmutable(): \DateTimeImmutable
+    public function toDateTimeImmutable(): \DateTimeImmutable
     {
         return \DateTimeImmutable::createFromFormat(self::DATE_TIME_FORMAT, $this->dateTime);
     }
