@@ -24,7 +24,8 @@
         "symfony/debug": "^3.0",
         "matthiasnoback/naive-serializer": "^0.4",
         "matthiasnoback/php-workshop-tools": "^0.11",
-        "matthiasnoback/convenient-immutability": "^0.2.1"
+        "matthiasnoback/convenient-immutability": "^0.2.1",
+        "bunny/bunny": "^0.2.4"
     },
     "autoload": {
         "psr-4": {
