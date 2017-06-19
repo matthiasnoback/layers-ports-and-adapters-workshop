@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b023e29d9642212b42fbf9764f4d3fb5",
+    "content-hash": "1408e033c72ee6161680aaab5383b662",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -591,6 +591,45 @@
             "time": "2016-09-25T13:30:27+00:00"
         },
         {
+            "name": "matthiasnoback/convenient-immutability",
+            "version": "v0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasnoback/convenient-immutability.git",
+                "reference": "15a1916ffe5c085216802932ce3287d368fcdbc0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasnoback/convenient-immutability/zipball/15a1916ffe5c085216802932ce3287d368fcdbc0",
+                "reference": "15a1916ffe5c085216802932ce3287d368fcdbc0",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "ramsey/uuid": "^3.1",
+                "satooshi/php-coveralls": "^1.0",
+                "symfony/form": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ConvenientImmutability\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Noback",
+                    "email": "matthiasnoback@gmail.com"
+                }
+            ],
+            "description": "Make objects initially inconsistent, yet eventually immutable",
+            "time": "2017-04-02T15:34:00+00:00"
+        },
+        {
             "name": "matthiasnoback/naive-serializer",
             "version": "v0.4.0",
             "source": {
@@ -632,16 +671,16 @@
         },
         {
             "name": "matthiasnoback/php-workshop-tools",
-            "version": "v0.3.2",
+            "version": "v0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasnoback/php-workshop-tools.git",
-                "reference": "2e9900fe65b74abb96c10ccfbcd34580174e30ca"
+                "reference": "5f1ae2c299d76145e3dc2909c7c3346193806800"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasnoback/php-workshop-tools/zipball/2e9900fe65b74abb96c10ccfbcd34580174e30ca",
-                "reference": "2e9900fe65b74abb96c10ccfbcd34580174e30ca",
+                "url": "https://api.github.com/repos/matthiasnoback/php-workshop-tools/zipball/5f1ae2c299d76145e3dc2909c7c3346193806800",
+                "reference": "5f1ae2c299d76145e3dc2909c7c3346193806800",
                 "shasum": ""
             },
             "require": {
@@ -674,7 +713,7 @@
                     "email": "matthiasnoback@gmail.com"
                 }
             ],
-            "time": "2017-03-16T12:44:40+00:00"
+            "time": "2017-06-09T14:52:37+00:00"
         },
         {
             "name": "nikic/fast-route",
