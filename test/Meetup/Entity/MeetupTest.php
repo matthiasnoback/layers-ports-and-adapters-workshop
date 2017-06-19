@@ -6,6 +6,7 @@ namespace Tests\Meetup\Entity;
 use Meetup\Entity\Meetup;
 use Meetup\Entity\Name;
 use Meetup\Entity\Description;
+use Meetup\Entity\ScheduledDate;
 
 final class MeetupTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +17,7 @@ final class MeetupTest extends \PHPUnit_Framework_TestCase
     {
         $name = Name::fromString('Name');
         $description = Description::fromString('Description');
-        $scheduledFor = new \DateTimeImmutable('now');
+        $scheduledFor = ScheduledDate::fromPhpDateString('now');
 
         $meetup = Meetup::schedule($name, $description, $scheduledFor);
 
@@ -36,14 +37,14 @@ final class MeetupTest extends \PHPUnit_Framework_TestCase
         $pastMeetup = Meetup::schedule(
             Name::fromString('Name'),
             Description::fromString('Description'),
-            new \DateTimeImmutable('-5 days')
+            ScheduledDate::fromPhpDateString('-5 days')
         );
         $this->assertFalse($pastMeetup->isUpcoming($now));
 
         $upcomingMeetup = Meetup::schedule(
             Name::fromString('Name'),
             Description::fromString('Description'),
-            new \DateTimeImmutable('+5 days')
+            ScheduledDate::fromPhpDateString('+5 days')
         );
         $this->assertTrue($upcomingMeetup->isUpcoming($now));
     }

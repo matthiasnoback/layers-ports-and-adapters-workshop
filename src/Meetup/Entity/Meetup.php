@@ -1,12 +1,10 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Meetup\Entity;
 
 final class Meetup
 {
-    const DATE_FORMAT = 'Y-m-d\TH:i:s,uO';
-
     /**
      * @var int
      */
@@ -23,16 +21,16 @@ final class Meetup
     private $description;
 
     /**
-     * @var string
+     * @var ScheduledDate
      */
     private $scheduledFor;
 
-    public static function schedule(Name $name, Description $description, \DateTimeImmutable $scheduledFor)
+    public static function schedule(Name $name, Description $description, ScheduledDate $scheduledFor): Meetup
     {
         $meetup = new self();
         $meetup->name = $name;
         $meetup->description = $description;
-        $meetup->scheduledFor = $scheduledFor->format(self::DATE_FORMAT);
+        $meetup->scheduledFor = $scheduledFor;
 
         return $meetup;
     }
@@ -52,14 +50,14 @@ final class Meetup
         return $this->description;
     }
 
-    public function scheduledFor(): \DateTimeImmutable
+    public function scheduledFor(): ScheduledDate
     {
-        return \DateTimeImmutable::createFromFormat(self::DATE_FORMAT, $this->scheduledFor);
+        return $this->scheduledFor;
     }
 
     public function isUpcoming(\DateTimeImmutable $now): bool
     {
-        return $now < $this->scheduledFor();
+        return $this->scheduledFor()->isInTheFuture($now);
     }
 
     /**

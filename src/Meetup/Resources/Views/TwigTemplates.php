@@ -2,9 +2,9 @@
 
 namespace Meetup\Resources\Views;
 
-class TwigTemplates
+final class TwigTemplates
 {
-    public static function getPath()
+    public static function getPath(): string
     {
         return __DIR__;
     }

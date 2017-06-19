@@ -7,6 +7,7 @@ use Meetup\Entity\Description;
 use Meetup\Entity\Meetup;
 use Meetup\Entity\MeetupRepository;
 use Meetup\Entity\Name;
+use Meetup\Entity\ScheduledDate;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -24,7 +25,7 @@ final class ScheduleMeetupController
      * @var RouterInterface
      */
     private $router;
-    
+
     /**
      * @var MeetupRepository
      */
@@ -59,7 +60,7 @@ final class ScheduleMeetupController
                 $meetup = Meetup::schedule(
                     Name::fromString($submittedData['name']),
                     Description::fromString($submittedData['description']),
-                    new \DateTimeImmutable($submittedData['scheduledFor'])
+                    ScheduledDate::fromPhpDateString($submittedData['scheduledFor'])
                 );
                 $this->repository->add($meetup);
 

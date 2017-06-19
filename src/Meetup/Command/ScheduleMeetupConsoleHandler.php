@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Meetup\Command;
 
@@ -7,6 +7,7 @@ use Meetup\Entity\Description;
 use Meetup\Entity\Meetup;
 use Meetup\Entity\MeetupRepository;
 use Meetup\Entity\Name;
+use Meetup\Entity\ScheduledDate;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 
@@ -27,7 +28,7 @@ final class ScheduleMeetupConsoleHandler
         $meetup = Meetup::schedule(
             Name::fromString($args->getArgument('name')),
             Description::fromString($args->getArgument('description')),
-            new \DateTimeImmutable($args->getArgument('scheduledFor'))
+            ScheduledDate::fromPhpDateString($args->getArgument('scheduledFor'))
         );
         $this->repository->add($meetup);
 

@@ -6,6 +6,7 @@ namespace Tests\Meetup\Entity\Util;
 use Meetup\Entity\Description;
 use Meetup\Entity\Meetup;
 use Meetup\Entity\Name;
+use Meetup\Entity\ScheduledDate;
 
 class MeetupFactory
 {
@@ -14,7 +15,7 @@ class MeetupFactory
         return Meetup::schedule(
             Name::fromString('Name'),
             Description::fromString('Description'),
-            new \DateTimeImmutable('-5 days')
+            ScheduledDate::fromPhpDateString('-5 days')
         );
     }
 
@@ -23,7 +24,7 @@ class MeetupFactory
         return Meetup::schedule(
             Name::fromString('Name'),
             Description::fromString('Description'),
-            new \DateTimeImmutable('+5 days')
+            ScheduledDate::fromPhpDateString('+5 days')
         );
     }
 
