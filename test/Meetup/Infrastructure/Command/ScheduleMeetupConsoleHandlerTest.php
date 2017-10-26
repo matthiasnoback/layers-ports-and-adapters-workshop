@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Meetup\Infrastructure\Command;
 
-use Meetup\Infrastructure\Command\MeetupApplicationConfig;
+use Meetup\Infrastructure\UserInterface\Cli\MeetupApplicationConfig;
 use Webmozart\Console\Args\StringArgs;
 use Webmozart\Console\ConsoleApplication;
 use Webmozart\Console\IO\OutputStream\BufferedOutputStream;
