@@ -46,7 +46,7 @@ $container['config'] = [
         ],
         [
             'name' => 'meetup_details',
-            'path' => '/meetup/{id:\d+}',
+            'path' => '/meetup/{id}',
             'middleware' => MeetupDetailsController::class,
             'allowed_methods' => ['GET']
         ],
