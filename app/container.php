@@ -1,6 +1,7 @@
 <?php
 
 use Interop\Container\ContainerInterface;
+use Meetup\Application\ScheduleMeetupHandler;
 use Meetup\Infrastructure\Controller\MeetupDetailsController;
 use Meetup\Infrastructure\Persistence\MeetupRepository;
 use Meetup\Infrastructure\Controller\ListMeetupsController;
@@ -93,13 +94,22 @@ $container[MeetupRepository::class] = function () {
 };
 
 /*
+ * Use cases
+ */
+$container[ScheduleMeetupHandler::class] = function(ContainerInterface $container) {
+    return new ScheduleMeetupHandler(
+        $container[MeetupRepository::class]
+    );
+};
+
+/*
  * Controllers
  */
 $container[ScheduleMeetupController::class] = function (ContainerInterface $container) {
     return new ScheduleMeetupController(
         $container->get(TemplateRendererInterface::class),
         $container->get(RouterInterface::class),
-        $container->get(MeetupRepository::class)
+        $container->get(ScheduleMeetupHandler::class)
     );
 };
 $container[ListMeetupsController::class] = function (ContainerInterface $container) {
@@ -120,7 +130,7 @@ $container[MeetupDetailsController::class] = function (ContainerInterface $conta
  */
 $container[\Meetup\Infrastructure\Command\ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
     return new \Meetup\Infrastructure\Command\ScheduleMeetupConsoleHandler(
-        $container->get(MeetupRepository::class)
+        $container->get(ScheduleMeetupHandler::class)
     );
 };
 
