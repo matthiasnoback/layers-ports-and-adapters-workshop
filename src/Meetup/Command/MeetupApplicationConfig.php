@@ -17,7 +17,7 @@ final class MeetupApplicationConfig extends DefaultApplicationConfig
 
     public function __construct(ContainerInterface $container)
     {
-        parent::__construct(null, null);
+        parent::__construct();
 
         $this->container = $container;
     }

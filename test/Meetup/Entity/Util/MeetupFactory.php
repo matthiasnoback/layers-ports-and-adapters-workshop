@@ -10,7 +10,7 @@ use Meetup\Entity\ScheduledDate;
 
 class MeetupFactory
 {
-    public static function pastMeetup()
+    public static function pastMeetup(): Meetup
     {
         return Meetup::schedule(
             Name::fromString('Name'),
@@ -19,7 +19,7 @@ class MeetupFactory
         );
     }
 
-    public static function upcomingMeetup()
+    public static function upcomingMeetup(): Meetup
     {
         return Meetup::schedule(
             Name::fromString('Name'),
@@ -28,7 +28,7 @@ class MeetupFactory
         );
     }
 
-    public static function someMeetup()
+    public static function someMeetup(): Meetup
     {
         return self::upcomingMeetup();
     }
