@@ -48,7 +48,7 @@ $container['config'] = [
         ],
         [
             'name' => 'meetup_details',
-            'path' => '/meetup/{id:\d+}',
+            'path' => '/meetup/{id}',
             'middleware' => MeetupDetailsController::class,
             'allowed_methods' => ['GET']
         ],
@@ -110,7 +110,8 @@ $container[ScheduleMeetupController::class] = function (ContainerInterface $cont
     return new ScheduleMeetupController(
         $container->get(TemplateRendererInterface::class),
         $container->get(RouterInterface::class),
-        $container->get(ScheduleMeetupHandler::class)
+        $container->get(ScheduleMeetupHandler::class),
+        $container->get(MeetupRepository::class)
     );
 };
 $container[ListMeetupsController::class] = function (ContainerInterface $container) {
@@ -131,7 +132,8 @@ $container[MeetupDetailsController::class] = function (ContainerInterface $conta
  */
 $container[\Meetup\Infrastructure\UserInterface\Cli\ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
     return new \Meetup\Infrastructure\UserInterface\Cli\ScheduleMeetupConsoleHandler(
-        $container->get(ScheduleMeetupHandler::class)
+        $container->get(ScheduleMeetupHandler::class),
+        $container->get(MeetupRepository::class)
     );
 };
 
