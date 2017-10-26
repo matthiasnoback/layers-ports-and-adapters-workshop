@@ -63,4 +63,9 @@ final class Meetup
     {
         return $this->scheduledFor()->isInTheFuture($now);
     }
+
+    public function meetupId()
+    {
+        return $this->meetupId;
+    }
 }
