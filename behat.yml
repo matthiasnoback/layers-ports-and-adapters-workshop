@@ -6,9 +6,9 @@ default:
                 default:
                     goutte: ~
     suites:
-        functional:
+        system:
             mink_session: default
-            paths: [ "%paths.base%/features"]
+            paths: [ "%paths.base%/test/System/features"]
             contexts:
-                - FeatureContext
+                - Tests\System\FeatureContext
                 - Behat\MinkExtension\Context\MinkContext
