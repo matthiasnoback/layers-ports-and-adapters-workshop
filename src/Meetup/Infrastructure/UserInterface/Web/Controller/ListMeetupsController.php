@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Meetup\Infrastructure\UserInterface\Web\Controller;
 
-use Meetup\Infrastructure\Persistence\MeetupRepository;
+use Meetup\Domain\Model\MeetupRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
