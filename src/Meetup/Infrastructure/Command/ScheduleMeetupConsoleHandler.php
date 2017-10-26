@@ -5,7 +5,7 @@ namespace Meetup\Infrastructure\Command;
 
 use Meetup\Domain\Model\Description;
 use Meetup\Domain\Model\Meetup;
-use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Infrastructure\Persistence\MeetupRepository;
 use Meetup\Domain\Model\Name;
 use Meetup\Domain\Model\ScheduledDate;
 use Webmozart\Console\Api\Args\Args;
@@ -14,7 +14,7 @@ use Webmozart\Console\Api\IO\IO;
 final class ScheduleMeetupConsoleHandler
 {
     /**
-     * @var MeetupRepository
+     * @var \Meetup\Infrastructure\Persistence\MeetupRepository
      */
     private $repository;
 

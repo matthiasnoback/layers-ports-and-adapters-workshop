@@ -2,7 +2,7 @@
 
 use Interop\Container\ContainerInterface;
 use Meetup\Infrastructure\Controller\MeetupDetailsController;
-use Meetup\Domain\Model\MeetupRepository;
+use Meetup\Infrastructure\Persistence\MeetupRepository;
 use Meetup\Infrastructure\Controller\ListMeetupsController;
 use Meetup\Infrastructure\Controller\ScheduleMeetupController;
 use Meetup\Infrastructure\Resources\Views\TwigTemplates;
