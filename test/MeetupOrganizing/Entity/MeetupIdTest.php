@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Meetup\Entity;
+namespace Tests\MeetupOrganizing\Entity;
 
-use Meetup\Entity\MeetupId;
+use MeetupOrganizing\Entity\MeetupId;
 
 final class MeetupIdTest extends \PHPUnit_Framework_TestCase
 {

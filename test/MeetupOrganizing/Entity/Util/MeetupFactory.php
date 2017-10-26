@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Meetup\Entity\Util;
+namespace Tests\MeetupOrganizing\Entity\Util;
 
-use Meetup\Entity\Description;
-use Meetup\Entity\Meetup;
-use Meetup\Entity\Name;
-use Meetup\Entity\ScheduledDate;
+use MeetupOrganizing\Entity\Description;
+use MeetupOrganizing\Entity\Meetup;
+use MeetupOrganizing\Entity\Name;
+use MeetupOrganizing\Entity\ScheduledDate;
 
 class MeetupFactory
 {

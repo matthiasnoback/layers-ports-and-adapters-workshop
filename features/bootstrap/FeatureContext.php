@@ -4,7 +4,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
-use Meetup\Entity\MeetupRepository;
+use MeetupOrganizing\Entity\MeetupRepository;
 
 /**
  * Defines application features from the specific context.

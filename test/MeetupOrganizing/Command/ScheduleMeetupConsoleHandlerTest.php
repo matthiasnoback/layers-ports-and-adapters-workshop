@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Meetup\Command;
+namespace Tests\MeetupOrganizing\Command;
 
-use Meetup\Command\MeetupApplicationConfig;
+use MeetupOrganizing\Command\MeetupApplicationConfig;
 use Webmozart\Console\Args\StringArgs;
 use Webmozart\Console\ConsoleApplication;
 use Webmozart\Console\IO\OutputStream\BufferedOutputStream;

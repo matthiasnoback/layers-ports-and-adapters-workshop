@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Meetup\Entity;
+namespace MeetupOrganizing\Entity;
 
 final class Meetup
 {

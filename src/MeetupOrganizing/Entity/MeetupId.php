@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Entity;
+namespace MeetupOrganizing\Entity;
 
 use Common\DomainModel\AggregateId;
 
-final class MemberId
+final class MeetupId
 {
     use AggregateId;
 }

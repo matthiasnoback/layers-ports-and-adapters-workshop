@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Meetup\Command;
+namespace MeetupOrganizing\Command;
 
 use Interop\Container\ContainerInterface;
 use Webmozart\Console\Api\Args\Format\Argument;
