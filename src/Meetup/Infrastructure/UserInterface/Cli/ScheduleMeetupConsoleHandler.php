@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Meetup\Infrastructure\Command;
+namespace Meetup\Infrastructure\UserInterface\Cli;
 
 use Meetup\Application\ScheduleMeetup;
 use Meetup\Application\ScheduleMeetupHandler;
