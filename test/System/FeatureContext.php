@@ -3,15 +3,9 @@
 namespace Tests\System;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Context\SnippetAcceptingContext;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Meetup\Domain\Model\MeetupRepository;
 
-/**
- * Defines application features from the specific context.
- */
-final class FeatureContext implements Context, SnippetAcceptingContext
+final class FeatureContext implements Context
 {
     /**
      * Initializes context.
