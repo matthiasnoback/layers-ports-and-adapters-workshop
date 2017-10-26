@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Meetup\Entity;
+namespace Tests\Meetup\Domain\Model;
 
-use Meetup\Entity\Name;
+use Meetup\Domain\Model\Name;
 
 final class NameTest extends \PHPUnit_Framework_TestCase
 {

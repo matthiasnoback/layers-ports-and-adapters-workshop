@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Meetup\Command;
+namespace Tests\Meetup\Infrastructure\Command;
 
-use Meetup\Command\MeetupApplicationConfig;
+use Meetup\Infrastructure\Command\MeetupApplicationConfig;
 use Webmozart\Console\Args\StringArgs;
 use Webmozart\Console\ConsoleApplication;
 use Webmozart\Console\IO\OutputStream\BufferedOutputStream;
@@ -15,7 +15,7 @@ final class ScheduleMeetupConsoleHandlerTest extends \PHPUnit_Framework_TestCase
      */
     public function it_schedules_a_meetup(): void
     {
-        $container = require __DIR__ . '/../../../app/container.php';
+        $container = require __DIR__ . '/../../../../app/container.php';
 
         $config = new MeetupApplicationConfig($container);
         $config->setTerminateAfterRun(false);

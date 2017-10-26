@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Meetup\Entity;
+namespace Tests\Meetup\Domain\Model;
 
-use Meetup\Entity\ScheduledDate;
+use Meetup\Domain\Model\ScheduledDate;
 
 final class ScheduledDateTest extends \PHPUnit_Framework_TestCase
 {
