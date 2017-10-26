@@ -12,6 +12,11 @@ final class ScheduleMeetup
     /**
      * @var string
      */
+    public $id;
+
+    /**
+     * @var string
+     */
     public $name;
 
     /**
