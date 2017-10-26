@@ -51,4 +51,9 @@ final class ScheduledDate
     {
         return \DateTimeImmutable::createFromFormat(self::DATE_TIME_FORMAT, $this->dateTime);
     }
+
+    public function equals(ScheduledDate $other): bool
+    {
+        return $this->dateTime === $other->dateTime;
+    }
 }

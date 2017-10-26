@@ -26,4 +26,9 @@ final class Name
     {
         return $this->text;
     }
+
+    public function equals(Name $name): bool
+    {
+        return $this->text === $name->text;
+    }
 }
