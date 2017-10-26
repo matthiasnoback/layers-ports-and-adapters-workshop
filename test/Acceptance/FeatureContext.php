@@ -5,9 +5,9 @@ namespace Tests\Acceptance;
 use Behat\Behat\Context\Context;
 use Meetup\Application\ScheduleMeetup;
 use Meetup\Application\ScheduleMeetupHandler;
-use Meetup\Domain\Model\MeetupRepository;
 use Meetup\Domain\Model\Name;
 use Meetup\Domain\Model\ScheduledDate;
+use Meetup\Infrastructure\Notifications\Mute\MuteNotifications;
 use Meetup\Infrastructure\Persistence\InMemory\InMemoryMeetupRepository;
 
 final class FeatureContext implements Context
@@ -37,7 +37,7 @@ final class FeatureContext implements Context
         $command->description = $description;
         $command->scheduledFor = $scheduledFor;
 
-        $handler = new ScheduleMeetupHandler($this->repository);
+        $handler = new ScheduleMeetupHandler($this->repository, new MuteNotifications());
         $handler->handle($command);
     }
 
