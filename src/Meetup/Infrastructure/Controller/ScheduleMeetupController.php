@@ -3,11 +3,8 @@ declare(strict_types = 1);
 
 namespace Meetup\Infrastructure\Controller;
 
-use Meetup\Domain\Model\Description;
-use Meetup\Domain\Model\Meetup;
-use Meetup\Infrastructure\Persistence\MeetupRepository;
-use Meetup\Domain\Model\Name;
-use Meetup\Domain\Model\ScheduledDate;
+use Meetup\Application\ScheduleMeetup;
+use Meetup\Application\ScheduleMeetupHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -27,15 +24,15 @@ final class ScheduleMeetupController
     private $router;
 
     /**
-     * @var \Meetup\Infrastructure\Persistence\MeetupRepository
+     * @var ScheduleMeetupHandler
      */
-    private $repository;
+    private $handler;
 
-    public function __construct(TemplateRendererInterface $renderer, RouterInterface $router, MeetupRepository $repository)
+    public function __construct(TemplateRendererInterface $renderer, RouterInterface $router, ScheduleMeetupHandler $handler)
     {
         $this->renderer = $renderer;
         $this->router = $router;
-        $this->repository = $repository;
+        $this->handler = $handler;
     }
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
@@ -57,12 +54,12 @@ final class ScheduleMeetupController
             }
 
             if (empty($formErrors)) {
-                $meetup = Meetup::schedule(
-                    Name::fromString($submittedData['name']),
-                    Description::fromString($submittedData['description']),
-                    ScheduledDate::fromPhpDateString($submittedData['scheduledFor'])
-                );
-                $this->repository->add($meetup);
+                $command = new ScheduleMeetup();
+                $command->name = $submittedData['name'];
+                $command->description = $submittedData['description'];
+                $command->scheduledFor = $submittedData['scheduledFor'];
+
+                $meetup = $this->handler->handle($command);
 
                 return new RedirectResponse(
                     $this->router->generateUri(
