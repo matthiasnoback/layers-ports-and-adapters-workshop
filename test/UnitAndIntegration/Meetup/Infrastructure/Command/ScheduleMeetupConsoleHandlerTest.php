@@ -1,13 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Integration\Meetup\Infrastructure\Command;
+namespace Meetup\Infrastructure\Command;
 
 use Meetup\Infrastructure\UserInterface\Cli\MeetupApplicationConfig;
 use Webmozart\Console\Args\StringArgs;
 use Webmozart\Console\ConsoleApplication;
 use Webmozart\Console\IO\OutputStream\BufferedOutputStream;
 
+/**
+ * @group integration
+ */
 final class ScheduleMeetupConsoleHandlerTest extends \PHPUnit_Framework_TestCase
 {
     /**

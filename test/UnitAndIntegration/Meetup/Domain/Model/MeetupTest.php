@@ -1,15 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Unit\Meetup\Domain\Model;
+namespace Meetup\Domain\Model;
 
-use Meetup\Domain\Model\Meetup;
-use Meetup\Domain\Model\MeetupId;
-use Meetup\Domain\Model\Name;
-use Meetup\Domain\Model\Description;
-use Meetup\Domain\Model\ScheduledDate;
-use Ramsey\Uuid\Uuid;
-
+/**
+ * @group unit
+ */
 final class MeetupTest extends \PHPUnit_Framework_TestCase
 {
     /**

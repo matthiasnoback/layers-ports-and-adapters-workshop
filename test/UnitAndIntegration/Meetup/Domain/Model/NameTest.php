@@ -1,10 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\Unit\Meetup\Domain\Model;
+namespace Meetup\Domain\Model;
 
-use Meetup\Domain\Model\Name;
-
+/**
+ * @group unit
+ */
 final class NameTest extends \PHPUnit_Framework_TestCase
 {
     /**

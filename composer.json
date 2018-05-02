@@ -34,7 +34,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "test/"
+            "": "test/UnitAndIntegration",
+            "Tests\\System\\": "test/System/",
+            "Tests\\Acceptance\\": "test/Acceptance/"
         }
     }
 }

@@ -1,13 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Integration\MeetupManagement\Infrastructure\Persistence;
+namespace Meetup\Infrastructure\Persistence;
 
 use Meetup\Domain\Model\MeetupRepository;
 use Meetup\Infrastructure\Persistence\Filesystem\FileBasedMeetupRepository;
 use Meetup\Infrastructure\Persistence\InMemory\InMemoryMeetupRepository;
-use Tests\Unit\Meetup\Domain\Model\Util\MeetupFactory;
+use Meetup\Domain\Model\Util\MeetupFactory;
 
+/**
+ * @group integration
+ */
 final class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     public function meetupRepositories()
