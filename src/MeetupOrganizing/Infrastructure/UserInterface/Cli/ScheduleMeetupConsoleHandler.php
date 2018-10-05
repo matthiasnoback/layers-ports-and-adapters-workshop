@@ -3,34 +3,31 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure\UserInterface\Cli;
 
-use MeetupOrganizing\Domain\Model\Description;
-use MeetupOrganizing\Domain\Model\Meetup;
-use MeetupOrganizing\Infrastructure\Persistence\FileSystem\MeetupRepository;
-use MeetupOrganizing\Domain\Model\Name;
-use MeetupOrganizing\Domain\Model\ScheduledDate;
+use MeetupOrganizing\Application\ScheduleMeetup;
+use MeetupOrganizing\Application\ScheduleMeetupHandler;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 
 final class ScheduleMeetupConsoleHandler
 {
     /**
-     * @var \MeetupOrganizing\Infrastructure\Persistence\FileSystem\MeetupRepository
+     * @var ScheduleMeetupHandler
      */
-    private $repository;
+    private $scheduleMeetupHandler;
 
-    public function __construct(MeetupRepository $repository)
+    public function __construct(ScheduleMeetupHandler $scheduleMeetupHandler)
     {
-        $this->repository = $repository;
+        $this->scheduleMeetupHandler = $scheduleMeetupHandler;
     }
 
     public function handle(Args $args, IO $io): int
     {
-        $meetup = Meetup::schedule(
-            Name::fromString($args->getArgument('name')),
-            Description::fromString($args->getArgument('description')),
-            ScheduledDate::fromPhpDateString($args->getArgument('scheduledFor'))
-        );
-        $this->repository->add($meetup);
+        $scheduleMeetup = new ScheduleMeetup();
+        $scheduleMeetup->name = $args->getArgument('name');
+        $scheduleMeetup->description = $args->getArgument('description');
+        $scheduleMeetup->scheduledFor = $args->getArgument('scheduledFor');
+
+        $this->scheduleMeetupHandler->handle($scheduleMeetup);
 
         $io->writeLine('<success>Scheduled the meetup successfully</success>');
 
