@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\MeetupOrganizing\Command;
+namespace Tests\MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\Command\MeetupApplicationConfig;
+use MeetupOrganizing\Infrastructure\MeetupApplicationConfig;
 use Webmozart\Console\Args\StringArgs;
 use Webmozart\Console\ConsoleApplication;
 use Webmozart\Console\IO\OutputStream\BufferedOutputStream;
@@ -17,7 +17,7 @@ final class ScheduleMeetupConsoleHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $container = require __DIR__ . '/../../../app/container.php';
 
-        $config = new MeetupApplicationConfig($container);
+        $config = new \MeetupOrganizing\Infrastructure\MeetupApplicationConfig($container);
         $config->setTerminateAfterRun(false);
         $cli = new ConsoleApplication($config);
 

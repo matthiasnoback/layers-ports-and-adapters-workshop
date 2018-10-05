@@ -1,13 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-namespace MeetupOrganizing\Controller;
+namespace MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\Entity\Description;
-use MeetupOrganizing\Entity\Meetup;
-use MeetupOrganizing\Entity\MeetupRepository;
-use MeetupOrganizing\Entity\Name;
-use MeetupOrganizing\Entity\ScheduledDate;
+use MeetupOrganizing\Domain\Model\Description;
+use MeetupOrganizing\Domain\Model\Meetup;
+use MeetupOrganizing\Domain\Model\MeetupRepository;
+use MeetupOrganizing\Domain\Model\Name;
+use MeetupOrganizing\Domain\Model\ScheduledDate;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
