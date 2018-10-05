@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\MeetupOrganizing\Entity\Util;
+namespace MeetupOrganizing\Entity\Util;
 
 use MeetupOrganizing\Entity\Description;
 use MeetupOrganizing\Entity\Meetup;
