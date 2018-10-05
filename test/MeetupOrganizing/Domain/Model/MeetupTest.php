@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Tests\MeetupOrganizing\Domain\Model;
 
 use MeetupOrganizing\Domain\Model\Meetup;
+use MeetupOrganizing\Domain\Model\MeetupId;
 use MeetupOrganizing\Domain\Model\Name;
 use MeetupOrganizing\Domain\Model\Description;
 use MeetupOrganizing\Domain\Model\ScheduledDate;
@@ -19,9 +20,13 @@ final class MeetupTest extends \PHPUnit_Framework_TestCase
         $description = Description::fromString('Description');
         $scheduledFor = ScheduledDate::fromPhpDateString('now');
 
-        $meetup = Meetup::schedule($name, $description, $scheduledFor);
+        $meetup = Meetup::schedule(
+            MeetupId::fromString('2e9e389b-516e-4578-b087-7e4948cfe57b'),
+            $name,
+            $description,
+            $scheduledFor
+        );
 
-        $this->assertInstanceOf(Meetup::class, $meetup);
         $this->assertEquals($name, $meetup->name());
         $this->assertEquals($description, $meetup->description());
         $this->assertEquals($scheduledFor, $meetup->scheduledFor());
@@ -35,6 +40,7 @@ final class MeetupTest extends \PHPUnit_Framework_TestCase
         $now = new \DateTimeImmutable();
 
         $pastMeetup = Meetup::schedule(
+            MeetupId::fromString('2e9e389b-516e-4578-b087-7e4948cfe57b'),
             Name::fromString('Name'),
             Description::fromString('Description'),
             ScheduledDate::fromPhpDateString('-5 days')
@@ -42,6 +48,7 @@ final class MeetupTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($pastMeetup->isUpcoming($now));
 
         $upcomingMeetup = Meetup::schedule(
+            MeetupId::fromString('3fed0527-98bd-4cc0-9b29-98140509a1de'),
             Name::fromString('Name'),
             Description::fromString('Description'),
             ScheduledDate::fromPhpDateString('+5 days')
