@@ -3,13 +3,13 @@ declare(strict_types = 1);
 
 namespace Tests\MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\Domain\Model\MeetupRepository;
+use MeetupOrganizing\Infrastructure\Persistence\FileSystem\MeetupRepository;
 use Tests\MeetupOrganizing\Domain\Model\Util\MeetupFactory;
 
 final class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var MeetupRepository
+     * @var \MeetupOrganizing\Infrastructure\Persistence\FileSystem\MeetupRepository
      */
     private $repository;
 
