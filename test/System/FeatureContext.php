@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\System;
+
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;

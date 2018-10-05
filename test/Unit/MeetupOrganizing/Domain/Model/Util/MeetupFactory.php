@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace Tests\MeetupOrganizing\Domain\Model\Util;
+namespace Tests\Unit\MeetupOrganizing\Domain\Model\Util;
 
 use MeetupOrganizing\Domain\Model\Description;
 use MeetupOrganizing\Domain\Model\Meetup;
