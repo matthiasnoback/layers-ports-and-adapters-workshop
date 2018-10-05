@@ -43,28 +43,20 @@ final class ScheduleMeetupController
         ResponseInterface $response,
         callable $next
     ): ResponseInterface {
-        $formErrors = [];
+        $validationErrors = [];
         $submittedData = [];
 
         if ($request->getMethod() === 'POST') {
             $submittedData = $request->getParsedBody();
 
-            if (empty($submittedData['name'])) {
-                $formErrors['name'][] = 'Provide a name';
-            }
-            if (empty($submittedData['description'])) {
-                $formErrors['description'][] = 'Provide a description';
-            }
-            if (empty($submittedData['scheduledFor'])) {
-                $formErrors['scheduledFor'][] = 'Provide a scheduled for date';
-            }
+            $scheduleMeetup = new ScheduleMeetup();
+            $scheduleMeetup->name = $submittedData['name'];
+            $scheduleMeetup->description = $submittedData['description'];
+            $scheduleMeetup->scheduledFor = $submittedData['scheduledFor'];
 
-            if (empty($formErrors)) {
-                $scheduleMeetup = new ScheduleMeetup();
-                $scheduleMeetup->name = $submittedData['name'];
-                $scheduleMeetup->description = $submittedData['description'];
-                $scheduleMeetup->scheduledFor = $submittedData['scheduledFor'];
+            $validationErrors = $scheduleMeetup->validate();
 
+            if (empty($validationErrors)) {
                 $meetup = $this->scheduleMeetupHandler->handle($scheduleMeetup);
 
                 return new RedirectResponse(
@@ -83,7 +75,7 @@ final class ScheduleMeetupController
                 'schedule-meetup.html.twig',
                 [
                     'submittedData' => $submittedData,
-                    'formErrors' => $formErrors
+                    'formErrors' => $validationErrors
                 ]
             )
         );
