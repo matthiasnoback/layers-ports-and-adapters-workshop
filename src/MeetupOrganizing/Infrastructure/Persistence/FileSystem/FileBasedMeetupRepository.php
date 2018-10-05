@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure\Persistence\FileSystem;
 
 use MeetupOrganizing\Domain\Model\Meetup;
+use MeetupOrganizing\Domain\Model\MeetupRepository;
 use NaiveSerializer\Serializer;
 
-final class MeetupRepository
+final class FileBasedMeetupRepository implements MeetupRepository
 {
     /**
      * @var string
@@ -38,10 +39,6 @@ final class MeetupRepository
         throw new \RuntimeException('Meetup not found');
     }
 
-    /**
-     * @param \DateTimeImmutable $now
-     * @return Meetup[]
-     */
     public function upcomingMeetups(\DateTimeImmutable $now): array
     {
         return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {
@@ -49,10 +46,6 @@ final class MeetupRepository
         }));
     }
 
-    /**
-     * @param \DateTimeImmutable $now
-     * @return Meetup[]
-     */
     public function pastMeetups(\DateTimeImmutable $now): array
     {
         return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {

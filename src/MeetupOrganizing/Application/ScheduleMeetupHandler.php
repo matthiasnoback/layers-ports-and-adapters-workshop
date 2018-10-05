@@ -7,7 +7,7 @@ use MeetupOrganizing\Domain\Model\Description;
 use MeetupOrganizing\Domain\Model\Meetup;
 use MeetupOrganizing\Domain\Model\Name;
 use MeetupOrganizing\Domain\Model\ScheduledDate;
-use MeetupOrganizing\Infrastructure\Persistence\FileSystem\MeetupRepository;
+use MeetupOrganizing\Domain\Model\MeetupRepository;
 
 final class ScheduleMeetupHandler
 {

@@ -4,7 +4,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
-use MeetupOrganizing\Infrastructure\Persistence\FileSystem\MeetupRepository;
+use MeetupOrganizing\Domain\Model\MeetupRepository;
 
 /**
  * Defines application features from the specific context.
@@ -29,7 +29,7 @@ final class FeatureContext implements Context, SnippetAcceptingContext
     {
         $container = require __DIR__ . '/../../app/container.php';
 
-        /** @var \MeetupOrganizing\Infrastructure\Persistence\FileSystem\MeetupRepository $meetupRepository */
+        /** @var MeetupRepository $meetupRepository */
         $meetupRepository = $container[MeetupRepository::class];
         $meetupRepository->deleteAll();
     }
