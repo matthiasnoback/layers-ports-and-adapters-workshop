@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace MeetupOrganizing\Entity;
+namespace MeetupOrganizing\Domain\Model;
 
 final class MeetupIdTest extends \PHPUnit_Framework_TestCase
 {

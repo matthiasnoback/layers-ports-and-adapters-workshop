@@ -1,9 +1,9 @@
 <?php
 declare(strict_types = 1);
 
-namespace MeetupOrganizing\Controller;
+namespace MeetupOrganizing\Infrastructure\Controller;
 
-use MeetupOrganizing\Entity\MeetupRepository;
+use MeetupOrganizing\Infrastructure\MeetupRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -13,7 +13,7 @@ use Zend\Stratigility\MiddlewareInterface;
 final class ListMeetupsController implements MiddlewareInterface
 {
     /**
-     * @var MeetupRepository
+     * @var \MeetupOrganizing\Infrastructure\MeetupRepository
      */
     private $meetupRepository;
 
