@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace MeetupOrganizing\Infrastructure\UserInterface\Web\Controller;
 
-use MeetupOrganizing\Infrastructure\Persistence\Filesystem\MeetupRepository;
+use MeetupOrganizing\Domain\Model\MeetupRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
@@ -11,7 +11,7 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 final class MeetupDetailsController
 {
     /**
-     * @var \MeetupOrganizing\Infrastructure\Persistence\Filesystem\MeetupRepository
+     * @var MeetupRepository
      */
     private $meetupRepository;
 

@@ -2,9 +2,10 @@
 
 use Interop\Container\ContainerInterface;
 use MeetupOrganizing\Application\ScheduleMeetupService;
+use MeetupOrganizing\Domain\Model\MeetupRepository;
 use MeetupOrganizing\Infrastructure\UserInterface\Cli\ScheduleMeetupConsoleHandler;
 use MeetupOrganizing\Infrastructure\UserInterface\Web\Controller\MeetupDetailsController;
-use MeetupOrganizing\Infrastructure\Persistence\Filesystem\MeetupRepository;
+use MeetupOrganizing\Infrastructure\Persistence\Filesystem\FilesystemMeetupRepository;
 use MeetupOrganizing\Infrastructure\UserInterface\Web\Controller\ListMeetupsController;
 use MeetupOrganizing\Infrastructure\UserInterface\Web\Controller\ScheduleMeetupController;
 use MeetupOrganizing\Infrastructure\UserInterface\Web\Resources\Views\TwigTemplates;
@@ -91,7 +92,7 @@ $container[UrlHelper::class] = function (ContainerInterface $container) {
  * Persistence
  */
 $container[MeetupRepository::class] = function () {
-    return new MeetupRepository(__DIR__ . '/../var/meetups.txt');
+    return new FilesystemMeetupRepository(__DIR__ . '/../var/meetups.txt');
 };
 
 /*

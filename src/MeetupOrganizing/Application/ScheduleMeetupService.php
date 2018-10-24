@@ -5,9 +5,9 @@ namespace MeetupOrganizing\Application;
 
 use MeetupOrganizing\Domain\Model\Description;
 use MeetupOrganizing\Domain\Model\Meetup;
+use MeetupOrganizing\Domain\Model\MeetupRepository;
 use MeetupOrganizing\Domain\Model\Name;
 use MeetupOrganizing\Domain\Model\ScheduledDate;
-use MeetupOrganizing\Infrastructure\Persistence\Filesystem\MeetupRepository;
 
 final class ScheduleMeetupService
 {
