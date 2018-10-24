@@ -1,11 +1,11 @@
 <?php
 declare(strict_types = 1);
 
-namespace MeetupOrganizing\Infrastructure\Controller;
+namespace MeetupOrganizing\Infrastructure\UserInterface\Web\Controller;
 
 use MeetupOrganizing\Domain\Model\Description;
 use MeetupOrganizing\Domain\Model\Meetup;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
+use MeetupOrganizing\Infrastructure\Persistence\Filesystem\MeetupRepository;
 use MeetupOrganizing\Domain\Model\Name;
 use MeetupOrganizing\Domain\Model\ScheduledDate;
 use Psr\Http\Message\ResponseInterface;
@@ -27,7 +27,7 @@ final class ScheduleMeetupController
     private $router;
 
     /**
-     * @var \MeetupOrganizing\Infrastructure\MeetupRepository
+     * @var \MeetupOrganizing\Infrastructure\Persistence\Filesystem\MeetupRepository
      */
     private $repository;
 

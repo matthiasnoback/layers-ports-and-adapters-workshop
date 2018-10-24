@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure\Command;
+namespace MeetupOrganizing\Infrastructure\UserInterface\Cli;
 
 use MeetupOrganizing\Domain\Model\Description;
 use MeetupOrganizing\Domain\Model\Meetup;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
+use MeetupOrganizing\Infrastructure\Persistence\Filesystem\MeetupRepository;
 use MeetupOrganizing\Domain\Model\Name;
 use MeetupOrganizing\Domain\Model\ScheduledDate;
 use Webmozart\Console\Api\Args\Args;

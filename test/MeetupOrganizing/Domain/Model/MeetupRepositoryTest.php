@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace MeetupOrganizing\Domain\Model;
 
 use MeetupOrganizing\Domain\Model\Util\MeetupFactory;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
+use MeetupOrganizing\Infrastructure\Persistence\Filesystem\MeetupRepository;
 
 final class MeetupRepositoryTest extends \PHPUnit_Framework_TestCase
 {

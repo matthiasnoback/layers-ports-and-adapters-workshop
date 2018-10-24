@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure;
+namespace MeetupOrganizing\Infrastructure\Persistence\Filesystem;
 
 use MeetupOrganizing\Domain\Model\Meetup;
 use NaiveSerializer\Serializer;
