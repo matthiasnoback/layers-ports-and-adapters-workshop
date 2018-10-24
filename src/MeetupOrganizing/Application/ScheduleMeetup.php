@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Application;
 
+use InvalidArgumentException;
+use MeetupOrganizing\Domain\Model\ScheduledDate;
+
 final class ScheduleMeetup
 {
     /**
@@ -19,4 +22,27 @@ final class ScheduleMeetup
      * @var string
      */
     public $scheduledFor;
+
+    public function validate(): array
+    {
+        $formErrors = [];
+
+        if (empty($this->name)) {
+            $formErrors['name'][] = 'Provide a name';
+        }
+        if (empty($this->description)) {
+            $formErrors['description'][] = 'Provide a description';
+        }
+        if (empty($this->scheduledFor)) {
+            $formErrors['scheduledFor'][] = 'Provide a scheduled for date';
+        } else {
+            try {
+                ScheduledDate::fromPhpDateString($this->scheduledFor);
+            } catch (InvalidArgumentException $exception) {
+                $formErrors['scheduledFor'][] = 'Provide a valid date';
+            }
+        }
+
+        return $formErrors;
+    }
 }

@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace MeetupOrganizing\Infrastructure\UserInterface\Cli;
 
 use Interop\Container\ContainerInterface;
-use MeetupOrganizing\Infrastructure\UserInterface\Cli\ScheduleMeetupConsoleHandler;
 use Webmozart\Console\Api\Args\Format\Argument;
 use Webmozart\Console\Api\Formatter\Style;
 use Webmozart\Console\Config\DefaultApplicationConfig;

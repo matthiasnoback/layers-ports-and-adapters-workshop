@@ -46,22 +46,13 @@ final class ScheduleMeetupController
         if ($request->getMethod() === 'POST') {
             $submittedData = $request->getParsedBody();
 
-            if (empty($submittedData['name'])) {
-                $formErrors['name'][] = 'Provide a name';
-            }
-            if (empty($submittedData['description'])) {
-                $formErrors['description'][] = 'Provide a description';
-            }
-            if (empty($submittedData['scheduledFor'])) {
-                $formErrors['scheduledFor'][] = 'Provide a scheduled for date';
-            }
+            $command = new ScheduleMeetup();
+            $command->name = $submittedData['name'];
+            $command->description = $submittedData['description'];
+            $command->scheduledFor = $submittedData['scheduledFor'];
 
+            $formErrors = $command->validate();
             if (empty($formErrors)) {
-                $command = new ScheduleMeetup();
-                $command->name = $submittedData['name'];
-                $command->description = $submittedData['description'];
-                $command->scheduledFor = $submittedData['scheduledFor'];
-
                 $meetup = $this->scheduleMeetupService->handle($command);
 
                 return new RedirectResponse(

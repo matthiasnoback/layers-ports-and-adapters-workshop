@@ -24,7 +24,7 @@ final class ScheduledDate
         } catch (\Throwable $throwable) {
             throw new \InvalidArgumentException(
                 'Invalid PHP date time format',
-                null,
+                0,
                 $throwable
             );
         }
