@@ -53,13 +53,13 @@ final class ScheduleMeetupController
 
             $formErrors = $command->validate();
             if (empty($formErrors)) {
-                $meetup = $this->scheduleMeetupService->handle($command);
+                $meetupId = $this->scheduleMeetupService->handle($command);
 
                 return new RedirectResponse(
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetup->id()
+                            'id' => (string)$meetupId
                         ]
                     )
                 );
