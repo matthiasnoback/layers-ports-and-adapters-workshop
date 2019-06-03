@@ -18,6 +18,7 @@ services:
             - ~/.composer:/home/.composer
         environment:
             COMPOSER_HOME: /home/.composer
+            WEB_HOSTNAME: web
         depends_on:
             - web
         user: ${HOST_UID}:${HOST_GID}
