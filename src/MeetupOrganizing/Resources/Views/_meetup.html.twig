@@ -1,4 +1,3 @@
-<a name="meetup-{{ meetup.id }}"></a>
 <h2><a href="{{ path("meetup_details", { 'id' : meetup.id }) }}">{{ meetup.name }}</a></h2>
 <p>Scheduled for {{ meetup.scheduledFor|date('Y-m-d') }}</p>
 <p>{{ meetup.description }}</p>

@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use function count;
+use DateTimeImmutable;
 use NaiveSerializer\Serializer;
+use RuntimeException;
 
 final class MeetupRepository
 {
@@ -20,7 +23,7 @@ final class MeetupRepository
     public function add(Meetup $meetup): void
     {
         $meetups = $this->persistedMeetups();
-        $id = \count($meetups) + 1;
+        $id = count($meetups) + 1;
         $meetup->setId($id);
         $meetups[] = $meetup;
         file_put_contents($this->filePath, Serializer::serialize($meetups));
@@ -34,14 +37,14 @@ final class MeetupRepository
             }
         }
 
-        throw new \RuntimeException('Meetup not found');
+        throw new RuntimeException('Meetup not found');
     }
 
     /**
-     * @param \DateTimeImmutable $now
+     * @param DateTimeImmutable $now
      * @return Meetup[]
      */
-    public function upcomingMeetups(\DateTimeImmutable $now): array
+    public function upcomingMeetups(DateTimeImmutable $now): array
     {
         return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {
             return $meetup->isUpcoming($now);
@@ -49,10 +52,10 @@ final class MeetupRepository
     }
 
     /**
-     * @param \DateTimeImmutable $now
+     * @param DateTimeImmutable $now
      * @return Meetup[]
      */
-    public function pastMeetups(\DateTimeImmutable $now): array
+    public function pastMeetups(DateTimeImmutable $now): array
     {
         return array_values(array_filter($this->persistedMeetups(), function (Meetup $meetup) use ($now) {
             return !$meetup->isUpcoming($now);

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use DateTimeImmutable;
+
 final class Meetup
 {
     /**
@@ -55,7 +57,7 @@ final class Meetup
         return $this->scheduledFor;
     }
 
-    public function isUpcoming(\DateTimeImmutable $now): bool
+    public function isUpcoming(DateTimeImmutable $now): bool
     {
         return $this->scheduledFor()->isInTheFuture($now);
     }
