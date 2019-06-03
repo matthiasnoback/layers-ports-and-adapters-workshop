@@ -33,6 +33,12 @@ On most machines the best way to install this project will be to use Docker. If 
 - Run `bin/deptrac.sh` to analyze dependencies.
 - Run `bin/meetup.sh` to use the CLI tool for scheduling meetups.
 
+#### Cleaning up after the workshop
+
+- Run `docker-compose down --rmi all -v --remove-orphans` to remove all containers for this project, their images, and their volumes.
+- Remove the project directory.
+- If you don't use Docker normally, you can shut it down or uninstall it too.
+
 ### Option 2: With PHP and Composer
 
 #### Requirements
@@ -52,3 +58,7 @@ On most machines the best way to install this project will be to use Docker. If 
 
 - Run `vendor/bin/phpunit && vendor/bin/behat -v` to run all the tests (make sure that you also still have the webserver running). 
 - Run `./meetup` to work with the command-line version of this application.
+
+#### Cleaning up after the workshop
+
+- Just remove the project directory.
