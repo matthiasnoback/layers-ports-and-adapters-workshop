@@ -8,9 +8,6 @@ services:
             - ./:/opt
         ports:
             - 80:8080
-        environment:
-            XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
-            PHP_IDE_CONFIG: "serverName=docker"
         user: ${HOST_UID}:${HOST_GID}
 
     devtools:
@@ -18,11 +15,9 @@ services:
         image: matthiasnoback/layers-ports-and-adapters-workshop-devtools
         volumes:
             - ./:/opt
-            - ${COMPOSER_HOME}:/home/.composer
+            - ~/.composer:/home/.composer
         environment:
             COMPOSER_HOME: /home/.composer
-            XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
-            PHP_IDE_CONFIG: "serverName=docker"
         depends_on:
             - web
         user: ${HOST_UID}:${HOST_GID}
