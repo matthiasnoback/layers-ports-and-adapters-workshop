@@ -63,8 +63,11 @@ final class ScheduleMeetupController
             if (empty($submittedData['description'])) {
                 $formErrors['description'][] = 'Provide a description';
             }
-            if (empty($submittedData['scheduledFor'])) {
-                $formErrors['scheduledFor'][] = 'Provide a scheduled for date';
+            if (empty($submittedData['scheduleForDate'])) {
+                $formErrors['scheduleForDate'][] = 'Provide a date';
+            }
+            if (empty($submittedData['scheduleForTime'])) {
+                $formErrors['scheduleForTime'][] = 'Provide a time';
             }
 
             if (empty($formErrors)) {
@@ -72,7 +75,9 @@ final class ScheduleMeetupController
                     $this->session->getLoggedInUser()->id(),
                     Name::fromString($submittedData['name']),
                     Description::fromString($submittedData['description']),
-                    ScheduledDate::fromPhpDateString($submittedData['scheduledFor'])
+                    ScheduledDate::fromPhpDateString(
+                        $submittedData['scheduleForDate'] . ' ' . $submittedData['scheduleForTime']
+                    )
                 );
                 $this->repository->add($meetup);
 

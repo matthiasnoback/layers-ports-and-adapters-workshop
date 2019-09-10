@@ -3,30 +3,40 @@
 {% block content %}
     <h1>Schedule a meetup</h1>
 
-    <form method="post" action="{{ url('schedule_meetup') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ url('schedule_meetup') }}">
         <div class="form-group{% if formErrors["name"] is defined %} has-error{% endif %}">
             <label class="control-label" for="name">Name:</label>
-            <input class="form-control" id="name" name="name" type="text" value="{{ submittedData["name"]|default("") }}"/>
+            <input class="form-control" id="name" name="name" type="text"
+                   value="{{ submittedData["name"]|default("") }}"/>
             {% for error in formErrors["name"]|default({}) %}
                 <span class="help-block">{{ error }}</span>
             {% endfor %}
         </div>
         <div class="form-group{% if formErrors["description"] is defined %} has-error{% endif %}">
             <label class="control-label" for="description">Description:</label>
-            <textarea class="form-control" id="description" name="description">{{ submittedData["description"]|default("") }}</textarea>
+            <textarea class="form-control" id="description"
+                      name="description">{{ submittedData["description"]|default("") }}</textarea>
             {% for error in formErrors["description"]|default({}) %}
                 <span class="help-block">{{ error }}</span>
             {% endfor %}
         </div>
-        <div class="form-group{% if formErrors["scheduledFor"] is defined %} has-error{% endif %}">
-            <label class="control-label" for="scheduledFor">Schedule for:</label>
-            <input class="form-control" id="scheduledFor" name="scheduledFor" type="datetime" aria-describedby="scheduledForHelpBlock" value="{{ submittedData["scheduledFor"]|default("") }}"/>
-            <span id="scheduledForHelpBlock" class="help-block">Use any PHP <a href="http://php.net/manual/en/datetime.formats.php">date/time format</a>.</span>
-            {% for error in formErrors["scheduledFor"]|default({}) %}
+        <div class="form-group {% if formErrors["scheduleForDate"] is defined %} has-error{% endif %}">
+            <label class="control-label" for="scheduleForDate">Schedule for date: </label>
+            <input class="form-control" name="scheduleForDate" id="scheduleForDate" type="date"
+                   value="{{ submittedData["scheduleForDate"]|default("") }}">
+            {% for error in formErrors["scheduleForDate"]|default({}) %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group {% if formErrors["scheduleForTime"] is defined %} has-error{% endif %}">
+            <label class="control-label" for="scheduleForTime">Time: </label>
+            <input class="form-control" name="scheduleForTime" id="scheduleForTime" type="time"
+                   value="{{ submittedData["scheduleForTime"]|default("") }}">
+            {% for error in formErrors["scheduleForTime"]|default({}) %}
                 <span class="help-block">{{ error }}</span>
             {% endfor %}
         </div>
 
-        <button type="submit"class="btn btn-default">Schedule this meetup</button>
+        <button type="submit" class="btn btn-default">Schedule this meetup</button>
     </form>
 {% endblock %}
