@@ -22,7 +22,7 @@ final class Description
         return $description;
     }
 
-    public function __toString(): string
+    public function asString(): string
     {
         return $this->text;
     }

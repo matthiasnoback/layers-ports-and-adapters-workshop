@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
-use DateTime;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use Throwable;
 
 final class ScheduledDate
 {
-    const DATE_TIME_FORMAT = DateTime::ATOM;
+    const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @var string
@@ -42,7 +41,7 @@ final class ScheduledDate
         return new self($dateTime->format(self::DATE_TIME_FORMAT));
     }
 
-    public function __toString(): string
+    public function asString(): string
     {
         return $this->dateTime;
     }

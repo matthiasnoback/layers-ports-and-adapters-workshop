@@ -12,7 +12,7 @@ final class NameTest extends \PHPUnit_Framework_TestCase
     {
         $nameText = 'Non-empty string';
         $name = Name::fromString($nameText);
-        $this->assertEquals($nameText, (string)$name);
+        $this->assertEquals($nameText, $name->asString());
     }
 
     /**

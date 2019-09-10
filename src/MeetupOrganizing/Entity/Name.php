@@ -22,7 +22,7 @@ final class Name
         return $name;
     }
 
-    public function __toString(): string
+    public function asString(): string
     {
         return $this->text;
     }

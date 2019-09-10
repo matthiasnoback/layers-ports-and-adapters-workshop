@@ -12,7 +12,7 @@ final class DescriptionTest extends \PHPUnit_Framework_TestCase
     {
         $descriptionText = 'Non-empty string';
         $description = Description::fromString($descriptionText);
-        $this->assertEquals($descriptionText, (string)$description);
+        $this->assertEquals($descriptionText, $description->asString());
     }
 
     /**

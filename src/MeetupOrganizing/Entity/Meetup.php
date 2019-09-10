@@ -27,6 +27,10 @@ final class Meetup
      */
     private $scheduledFor;
 
+    private function __construct()
+    {
+    }
+
     public static function schedule(Name $name, Description $description, ScheduledDate $scheduledFor): Meetup
     {
         $meetup = new self();
@@ -69,5 +73,16 @@ final class Meetup
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    public static function fromDatabaseRecord(array $data): Meetup
+    {
+        $meetup = new self();
+        $meetup->id = (int)$data['id'];
+        $meetup->name = Name::fromString($data['name']);
+        $meetup->description = Description::fromString($data['description']);
+        $meetup->scheduledFor = ScheduledDate::fromPhpDateString($data['scheduled_for']);
+
+        return $meetup;
     }
 }

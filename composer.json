@@ -25,7 +25,9 @@
         "matthiasnoback/naive-serializer": "^0.4",
         "matthiasnoback/php-workshop-tools": "^0.11",
         "matthiasnoback/convenient-immutability": "^0.2.1",
-        "bunny/bunny": "^0.2.4"
+        "bunny/bunny": "^0.2.4",
+        "doctrine/dbal": "^2.9",
+        "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {

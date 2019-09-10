@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\DBAL\DriverManager;
 use Interop\Container\ContainerInterface;
 use MeetupOrganizing\Command\ScheduleMeetupConsoleHandler;
 use MeetupOrganizing\Controller\MeetupDetailsController;
@@ -90,7 +91,14 @@ $container[UrlHelper::class] = function (ContainerInterface $container) {
  * Persistence
  */
 $container[MeetupRepository::class] = function () {
-    return new MeetupRepository(__DIR__ . '/../var/meetups.txt');
+    return new MeetupRepository(
+        DriverManager::getConnection(
+            [
+                'driver' => 'pdo_sqlite',
+                'path' => __DIR__ . '/../var/app.sqlite'
+            ]
+        )
+    );
 };
 
 /*
