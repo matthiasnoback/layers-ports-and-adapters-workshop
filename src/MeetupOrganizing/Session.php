@@ -28,7 +28,7 @@ final class Session
             $this->sessionData = [];
         } else {
             session_start();
-            $this->sessionData &= $_SESSION;
+            $this->sessionData = &$_SESSION;
         }
 
         $this->userRepository = $userRepository;

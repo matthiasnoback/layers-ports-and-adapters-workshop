@@ -26,4 +26,12 @@ final class UserRepository
 
         return User::fromDatabaseRecord($this->records[$id->asInt()]);
     }
+
+    /**
+     * @return array&User[]
+     */
+    public function findAll(): array
+    {
+        return array_map(function (array $record) { return User::fromDatabaseRecord($record); }, $this->records);
+    }
 }

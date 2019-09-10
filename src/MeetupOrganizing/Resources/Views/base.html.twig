@@ -7,11 +7,28 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
 </head>
 <body>
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li><a href="{{ url('list_meetups') }}">List meetups</a></li>
+            <li><a href="{{ url('schedule_meetup') }}">Schedule a meetup</a></li>
+        </ul>
+        <form class="navbar-form navbar-right" action="{{ url('switch_user') }}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="userId">Logged in user: </label>
+                <select name="userId" id="userId" class="form-control">
+                    {% for user in allUsers %}
+                        <option value="{{ user.id.asInt }}"{% if loggedInUser.id.asInt == user.id.asInt %} selected{% endif %}>{{ user.name }}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-info">Switch</button>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="container">
-    <div class="row">
         {% block content %}
         {% endblock %}
-    </div>
 </div>
 </body>
 </html>

@@ -4,11 +4,13 @@ use Doctrine\DBAL\DriverManager;
 use Interop\Container\ContainerInterface;
 use MeetupOrganizing\Command\ScheduleMeetupConsoleHandler;
 use MeetupOrganizing\Controller\MeetupDetailsController;
+use MeetupOrganizing\Controller\SwitchUserController;
 use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Controller\ListMeetupsController;
 use MeetupOrganizing\Controller\ScheduleMeetupController;
 use MeetupOrganizing\Entity\UserRepository;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
+use MeetupOrganizing\Resources\Views\UserExtension;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -29,39 +31,48 @@ ErrorHandler::register();
 
 $container = new Container();
 
-$container['config'] = [
-    'debug' => true,
-    'templates' => [
-        'extension' => 'html.twig',
-        'paths' => [
-            TwigTemplates::getPath()
-        ]
-    ],
-    'twig' => [
-        'extensions' => [
-        ]
-    ],
-    'routes' => [
-        [
-            'name' => 'list_meetups',
-            'path' => '/',
-            'middleware' => ListMeetupsController::class,
-            'allowed_methods' => ['GET']
+$container['config'] = function () use ($container) {
+    return [
+        'debug' => true,
+        'templates' => [
+            'extension' => 'html.twig',
+            'paths' => [
+                TwigTemplates::getPath()
+            ]
         ],
-        [
-            'name' => 'meetup_details',
-            'path' => '/meetup/{id}',
-            'middleware' => MeetupDetailsController::class,
-            'allowed_methods' => ['GET']
+        'twig' => [
+            'extensions' => [
+                $container[UserExtension::class]
+            ]
         ],
-        [
-            'name' => 'schedule_meetup',
-            'path' => '/schedule-meetup',
-            'middleware' => ScheduleMeetupController::class,
-            'allowed_methods' => ['GET', 'POST']
+        'routes' => [
+            [
+                'name' => 'list_meetups',
+                'path' => '/',
+                'middleware' => ListMeetupsController::class,
+                'allowed_methods' => ['GET']
+            ],
+            [
+                'name' => 'meetup_details',
+                'path' => '/meetup/{id}',
+                'middleware' => MeetupDetailsController::class,
+                'allowed_methods' => ['GET']
+            ],
+            [
+                'name' => 'schedule_meetup',
+                'path' => '/schedule-meetup',
+                'middleware' => ScheduleMeetupController::class,
+                'allowed_methods' => ['GET', 'POST']
+            ],
+            [
+                'name' => 'switch_user',
+                'path' => '/switch-user',
+                'middleware' => SwitchUserController::class,
+                'allowed_methods' => ['POST']
+            ]
         ]
-    ]
-];
+    ];
+};
 
 /*
  * Zend Expressive Application
@@ -87,6 +98,12 @@ $container[ServerUrlHelper::class] = function () {
 };
 $container[UrlHelper::class] = function (ContainerInterface $container) {
     return new UrlHelper($container[RouterInterface::class]);
+};
+$container[UserExtension::class] = function (ContainerInterface $container) {
+    return new UserExtension(
+        $container[Session::class],
+        $container[UserRepository::class]
+    );
 };
 
 /*
@@ -135,6 +152,12 @@ $container[MeetupDetailsController::class] = function (ContainerInterface $conta
         $container->get(MeetupRepository::class),
         $container->get(UserRepository::class),
         $container->get(TemplateRendererInterface::class)
+    );
+};
+$container[SwitchUserController::class] = function (ContainerInterface $container) {
+    return new SwitchUserController(
+        $container[UserRepository::class],
+        $container[Session::class]
     );
 };
 

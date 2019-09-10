@@ -1,7 +1,6 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    <p><a href="{{ url('list_meetups') }}">&laquo; List meetups</a></p>
     <h1>Schedule a meetup</h1>
 
     <form method="post" action="{{ url('schedule_meetup') }}" enctype="multipart/form-data">
