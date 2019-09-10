@@ -123,6 +123,6 @@ final class MeetupRepository
         $table->setPrimaryKey(['id']);
 
         $synchronizer = new SingleDatabaseSynchronizer($this->connection);
-        $synchronizer->updateSchema($schema);
+        $synchronizer->updateSchema($schema, true);
     }
 }

@@ -1,13 +1,16 @@
 <?php
 
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Interop\Container\ContainerInterface;
 use MeetupOrganizing\Command\ScheduleMeetupConsoleHandler;
 use MeetupOrganizing\Controller\MeetupDetailsController;
+use MeetupOrganizing\Controller\RsvpForMeetupController;
 use MeetupOrganizing\Controller\SwitchUserController;
 use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Controller\ListMeetupsController;
 use MeetupOrganizing\Controller\ScheduleMeetupController;
+use MeetupOrganizing\Entity\RsvpRepository;
 use MeetupOrganizing\Entity\UserRepository;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Resources\Views\UserExtension;
@@ -69,6 +72,12 @@ $container['config'] = function () use ($container) {
                 'path' => '/switch-user',
                 'middleware' => SwitchUserController::class,
                 'allowed_methods' => ['POST']
+            ],
+            [
+                'name' => 'rsvp_for_meetup',
+                'path' => '/rsvp-for-meetup',
+                'middleware' => RsvpForMeetupController::class,
+                'allowed_methods' => ['POST']
             ]
         ]
     ];
@@ -109,18 +118,27 @@ $container[UserExtension::class] = function (ContainerInterface $container) {
 /*
  * Persistence
  */
-$container[MeetupRepository::class] = function () {
+$container[Connection::class] = function () {
+    return DriverManager::getConnection(
+        [
+            'driver' => 'pdo_sqlite',
+            'path' => __DIR__ . '/../var/app.sqlite'
+        ]
+    );
+};
+
+$container[MeetupRepository::class] = function (ContainerInterface $container) {
     return new MeetupRepository(
-        DriverManager::getConnection(
-            [
-                'driver' => 'pdo_sqlite',
-                'path' => __DIR__ . '/../var/app.sqlite'
-            ]
-        )
+        $container[Connection::class]
     );
 };
 $container[UserRepository::class] = function () {
     return new UserRepository();
+};
+$container[RsvpRepository::class] = function (ContainerInterface $container) {
+    return new RsvpRepository(
+        $container[Connection::class]
+    );
 };
 
 /*
@@ -157,6 +175,14 @@ $container[SwitchUserController::class] = function (ContainerInterface $containe
     return new SwitchUserController(
         $container[UserRepository::class],
         $container[Session::class]
+    );
+};
+$container[RsvpForMeetupController::class] = function (ContainerInterface $container) {
+    return new RsvpForMeetupController(
+        $container[Session::class],
+        $container[MeetupRepository::class],
+        $container[RsvpRepository::class],
+        $container[RouterInterface::class]
     );
 };
 

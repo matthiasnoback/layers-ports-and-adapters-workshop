@@ -6,4 +6,9 @@
     <p><small>{{ meetup.scheduledFor.asString|date() }}</small></p>
     <p>{{ meetup.description.asString }}</p>
 
+    <form action="{{ url('rsvp_for_meetup') }}" method="post">
+        <input type="hidden" name="meetup_id" value="{{ meetup.id }}">
+        <button class="btn btn-success">RSVP</button>
+    </form>
+
 {% endblock %}
