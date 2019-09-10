@@ -28,6 +28,7 @@ final class MeetupRepository
         $this->connection->insert(
             'meetups',
             [
+                'organizer_id' => $meetup->organizerId()->asInt(),
                 'name' => $meetup->name()->asString(),
                 'description' => $meetup->description()->asString(),
                 'scheduled_for' => $meetup->scheduledFor()->asString()
@@ -115,6 +116,7 @@ final class MeetupRepository
 
         $table = $schema->createTable('meetups');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
+        $table->addColumn('organizer_id', 'integer');
         $table->addColumn('name', 'string');
         $table->addColumn('description', 'string');
         $table->addColumn('scheduled_for', 'string');

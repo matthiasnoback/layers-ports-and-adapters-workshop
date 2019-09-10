@@ -7,7 +7,9 @@ use MeetupOrganizing\Controller\MeetupDetailsController;
 use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Controller\ListMeetupsController;
 use MeetupOrganizing\Controller\ScheduleMeetupController;
+use MeetupOrganizing\Entity\UserRepository;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
+use MeetupOrganizing\Session;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Debug\Debug;
@@ -66,7 +68,7 @@ $container['config'] = [
  */
 $container['Zend\Expressive\FinalHandler'] = function () {
     return function (RequestInterface $request, ResponseInterface $response, $err = null) {
-        if ($err instanceof \Throwable) {
+        if ($err instanceof Throwable) {
             throw $err;
         }
     };
@@ -100,12 +102,22 @@ $container[MeetupRepository::class] = function () {
         )
     );
 };
+$container[UserRepository::class] = function () {
+    return new UserRepository();
+};
 
 /*
  * Controllers
  */
+$container[Session::class] = function (ContainerInterface $container) {
+    return new Session(
+        $container[UserRepository::class]
+    );
+};
+
 $container[ScheduleMeetupController::class] = function (ContainerInterface $container) {
     return new ScheduleMeetupController(
+        $container->get(Session::class),
         $container->get(TemplateRendererInterface::class),
         $container->get(RouterInterface::class),
         $container->get(MeetupRepository::class)
@@ -114,12 +126,14 @@ $container[ScheduleMeetupController::class] = function (ContainerInterface $cont
 $container[ListMeetupsController::class] = function (ContainerInterface $container) {
     return new ListMeetupsController(
         $container->get(MeetupRepository::class),
+        $container->get(UserRepository::class),
         $container->get(TemplateRendererInterface::class)
     );
 };
 $container[MeetupDetailsController::class] = function (ContainerInterface $container) {
     return new MeetupDetailsController(
         $container->get(MeetupRepository::class),
+        $container->get(UserRepository::class),
         $container->get(TemplateRendererInterface::class)
     );
 };

@@ -31,7 +31,7 @@ final class User
 
     public function id(): UserId
     {
-        return $this->id;
+        return UserId::fromInt($this->id);
     }
 
     public function name(): string

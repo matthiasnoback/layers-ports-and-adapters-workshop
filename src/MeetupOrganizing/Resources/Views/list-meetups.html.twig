@@ -4,7 +4,7 @@
     <h1>Upcoming meetups</h1>
 
     {% for meetup in upcomingMeetups %}
-        {% include "_meetup.html.twig" with { meetup: meetup } %}
+        {% include "_meetup.html.twig" with { meetup: meetup, organizer: organizers[meetup.organizerId.asInt] } %}
     {% else %}
         <p>No upcoming meetups</p>
     {% endfor %}
@@ -14,7 +14,7 @@
     <h1>Past meetups</h1>
 
     {% for meetup in pastMeetups %}
-        {% include "_meetup.html.twig" with { meetup: meetup } %}
+        {% include "_meetup.html.twig" with { meetup: meetup, organizer: organizers[meetup.organizerId.asInt] } %}
     {% else %}
         <p>No past meetups</p>
     {% endfor %}

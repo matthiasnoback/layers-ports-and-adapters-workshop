@@ -11,6 +11,7 @@ final class Session
 {
     private const DEFAULT_USER_ID = 1;
     private const LOGGED_IN_USER_ID = 'logged_in_user_id';
+
     /**
      * @var UserRepository
      */
@@ -19,25 +20,18 @@ final class Session
     /**
      * @var array
      */
-    private $session;
+    private $sessionData;
 
-    public function __construct(UserRepository $userRepository, array &$session)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->session = $session;
-        $this->userRepository = $userRepository;
-    }
-
-    public function start()
-    {
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            return;
-        }
-
         if (php_sapi_name() === 'cli') {
-            return;
+            $this->sessionData = [];
+        } else {
+            session_start();
+            $this->sessionData &= $_SESSION;
         }
 
-        session_start();
+        $this->userRepository = $userRepository;
     }
 
     public function getLoggedInUser(): User
@@ -56,10 +50,8 @@ final class Session
 
     public function get(string $key, $defaultValue = null)
     {
-        $this->start();
-
-        if (isset($this->session[$key])) {
-            return $this->session[$key];
+        if (isset($this->sessionData[$key])) {
+            return $this->sessionData[$key];
         }
 
         return $defaultValue;
@@ -67,8 +59,6 @@ final class Session
 
     public function set(string $key, $value): void
     {
-        $this->start();
-
-        $this->session[$key] = $value;
+        $this->sessionData[$key] = $value;
     }
 }

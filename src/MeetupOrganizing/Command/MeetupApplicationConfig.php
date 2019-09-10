@@ -32,6 +32,7 @@ final class MeetupApplicationConfig extends DefaultApplicationConfig
             ->addStyle(Style::tag('success')->fgGreen())
             ->beginCommand('schedule')
                 ->setDescription('Schedule a meetup')
+                ->addArgument('organizerId', Argument::REQUIRED, 'Organizer ID')
                 ->addArgument('name', Argument::REQUIRED, 'Name')
                 ->addArgument('description', Argument::REQUIRED, 'Description')
                 ->addArgument('scheduledFor', Argument::REQUIRED, 'Scheduled for')

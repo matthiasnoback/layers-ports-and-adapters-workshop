@@ -8,6 +8,7 @@ use MeetupOrganizing\Entity\Meetup;
 use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Entity\Name;
 use MeetupOrganizing\Entity\ScheduledDate;
+use MeetupOrganizing\Entity\UserId;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 
@@ -26,6 +27,7 @@ final class ScheduleMeetupConsoleHandler
     public function handle(Args $args, IO $io): int
     {
         $meetup = Meetup::schedule(
+            UserId::fromInt((int)$args->getArgument('organizerId')),
             Name::fromString($args->getArgument('name')),
             Description::fromString($args->getArgument('description')),
             ScheduledDate::fromPhpDateString($args->getArgument('scheduledFor'))

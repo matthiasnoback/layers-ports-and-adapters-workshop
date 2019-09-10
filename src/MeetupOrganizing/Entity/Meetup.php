@@ -13,6 +13,11 @@ final class Meetup
     private $id;
 
     /**
+     * @var UserId
+     */
+    private $organizerId;
+
+    /**
      * @var Name
      */
     private $name;
@@ -31,9 +36,10 @@ final class Meetup
     {
     }
 
-    public static function schedule(Name $name, Description $description, ScheduledDate $scheduledFor): Meetup
+    public static function schedule(UserId $organizerId, Name $name, Description $description, ScheduledDate $scheduledFor): Meetup
     {
         $meetup = new self();
+        $meetup->organizerId = $organizerId;
         $meetup->name = $name;
         $meetup->description = $description;
         $meetup->scheduledFor = $scheduledFor;
@@ -44,6 +50,11 @@ final class Meetup
     public function id(): int
     {
         return $this->id;
+    }
+
+    public function organizerId(): UserId
+    {
+        return $this->organizerId;
     }
 
     public function name(): Name
@@ -79,6 +90,7 @@ final class Meetup
     {
         $meetup = new self();
         $meetup->id = (int)$data['id'];
+        $meetup->organizerId = UserId::fromInt((int)$data['organizer_id']);
         $meetup->name = Name::fromString($data['name']);
         $meetup->description = Description::fromString($data['description']);
         $meetup->scheduledFor = ScheduledDate::fromPhpDateString($data['scheduled_for']);

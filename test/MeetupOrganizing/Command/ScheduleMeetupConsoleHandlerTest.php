@@ -21,7 +21,7 @@ final class ScheduleMeetupConsoleHandlerTest extends \PHPUnit_Framework_TestCase
         $cli = new ConsoleApplication($config);
 
         $output = new BufferedOutputStream();
-        $args = new StringArgs('schedule Akeneo Meetup "2018-04-20 20:00"');
+        $args = new StringArgs('schedule 1 Akeneo Meetup "2018-04-20 20:00"');
         $cli->run($args, null, $output);
 
         $this->assertContains(

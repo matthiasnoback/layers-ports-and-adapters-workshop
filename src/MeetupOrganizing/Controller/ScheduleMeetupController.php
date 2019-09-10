@@ -8,6 +8,7 @@ use MeetupOrganizing\Entity\Meetup;
 use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Entity\Name;
 use MeetupOrganizing\Entity\ScheduledDate;
+use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
@@ -16,6 +17,11 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 final class ScheduleMeetupController
 {
+    /**
+     * @var Session
+     */
+    private $session;
+
     /**
      * @var TemplateRendererInterface
      */
@@ -31,8 +37,13 @@ final class ScheduleMeetupController
      */
     private $repository;
 
-    public function __construct(TemplateRendererInterface $renderer, RouterInterface $router, MeetupRepository $repository)
-    {
+    public function __construct(
+        Session $session,
+        TemplateRendererInterface $renderer,
+        RouterInterface $router,
+        MeetupRepository $repository
+    ) {
+        $this->session = $session;
         $this->renderer = $renderer;
         $this->router = $router;
         $this->repository = $repository;
@@ -58,6 +69,7 @@ final class ScheduleMeetupController
 
             if (empty($formErrors)) {
                 $meetup = Meetup::schedule(
+                    $this->session->getLoggedInUser()->id(),
                     Name::fromString($submittedData['name']),
                     Description::fromString($submittedData['description']),
                     ScheduledDate::fromPhpDateString($submittedData['scheduledFor'])
