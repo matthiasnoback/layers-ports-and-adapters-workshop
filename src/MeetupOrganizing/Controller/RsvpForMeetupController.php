@@ -67,6 +67,8 @@ final class RsvpForMeetupController
         );
         $this->rsvpRepository->save($rsvp);
 
+        $this->session->addSuccessFlash('You have successfully RSVP-ed to this meetup');
+
         return new RedirectResponse(
             $this->router->generateUri(
                 'meetup_details',

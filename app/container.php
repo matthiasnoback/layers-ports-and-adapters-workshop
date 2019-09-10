@@ -12,6 +12,7 @@ use MeetupOrganizing\Controller\ListMeetupsController;
 use MeetupOrganizing\Controller\ScheduleMeetupController;
 use MeetupOrganizing\Entity\RsvpRepository;
 use MeetupOrganizing\Entity\UserRepository;
+use MeetupOrganizing\Resources\Views\FlashExtension;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Resources\Views\UserExtension;
 use MeetupOrganizing\Session;
@@ -45,7 +46,8 @@ $container['config'] = function () use ($container) {
         ],
         'twig' => [
             'extensions' => [
-                $container[UserExtension::class]
+                $container[UserExtension::class],
+                $container[FlashExtension::class]
             ]
         ],
         'routes' => [
@@ -114,7 +116,11 @@ $container[UserExtension::class] = function (ContainerInterface $container) {
         $container[UserRepository::class]
     );
 };
-
+$container[FlashExtension::class] = function (ContainerInterface $container) {
+    return new FlashExtension(
+        $container[Session::class]
+    );
+};
 /*
  * Persistence
  */

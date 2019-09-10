@@ -1,0 +1,7 @@
+{% for type, flashes in allFlashes %}
+    {% for message in flashes %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+    {%  endfor %}
+{% endfor %}

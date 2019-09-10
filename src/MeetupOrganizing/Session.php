@@ -61,4 +61,28 @@ final class Session
     {
         $this->sessionData[$key] = $value;
     }
+
+    public function addErrorFlash(string $message): void
+    {
+        $this->addFlash('danger', $message);
+    }
+
+    public function addSuccessFlash(string $message): void
+    {
+        $this->addFlash('success', $message);
+    }
+
+    private function addFlash(string $type, string $message): void
+    {
+        $this->sessionData['flashes'][$type][] = $message;
+    }
+
+    public function getFlashes(): array
+    {
+        $flashes = $this->sessionData['flashes'] ?? [];
+
+        $this->sessionData['flashes'] = [];
+
+        return $flashes;
+    }
 }

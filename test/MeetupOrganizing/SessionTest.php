@@ -37,4 +37,27 @@ final class SessionTest extends PHPUnit_Framework_TestCase
             $userRepository->getById(UserId::fromInt(2))
         );
     }
+
+    /**
+     * @test
+     */
+    public function you_can_add_flashes_by_type_and_get_all_of_them_at_once(): void
+    {
+        $session = new Session(new UserRepository());
+        $session->addErrorFlash('Error');
+        $session->addSuccessFlash('Success');
+
+        self::assertEquals(
+            [
+                'danger' => ['Error'],
+                'success' => ['Success']
+            ],
+            $session->getFlashes()
+        );
+    }
+
+    public function you_can_get_the_flashes_only_once(): void
+    {
+
+    }
 }
