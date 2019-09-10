@@ -1,4 +1,11 @@
-<h2><a href="{{ path("meetup_details", { 'id' : meetup.id }) }}">{{ meetup.name.asString }}</a></h2>
-<p>Organizer: {{ organizer.name }}</p>
-<p>Scheduled for {{ meetup.scheduledFor.asString|date('Y-m-d') }}</p>
-<p>{{ meetup.description.asString }}</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <a href="{{ path("meetup_details", { 'id' : meetup.id }) }}">{{ meetup.name.asString }}</a>
+        </h3>
+    </div>
+    <div class="panel-body">
+        <p><small>{{ meetup.scheduledFor.asString|date() }}</small></p>
+        <p>{{ meetup.description.asString }}</p>
+    </div>
+</div>

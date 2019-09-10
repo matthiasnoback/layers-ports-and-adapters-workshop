@@ -1,6 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    <p><a href="{{ url('list_meetups') }}">&laquo; List meetups</a></p>
-    {% include "_meetup.html.twig" with { meetup: meetup } %}
+    <h2>{{ organizer.name }} presents: {{ meetup.name.asString }}</h2>
+
+    <p><small>{{ meetup.scheduledFor.asString|date() }}</small></p>
+    <p>{{ meetup.description.asString }}</p>
+
 {% endblock %}

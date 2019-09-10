@@ -143,7 +143,6 @@ $container[ScheduleMeetupController::class] = function (ContainerInterface $cont
 $container[ListMeetupsController::class] = function (ContainerInterface $container) {
     return new ListMeetupsController(
         $container->get(MeetupRepository::class),
-        $container->get(UserRepository::class),
         $container->get(TemplateRendererInterface::class)
     );
 };
