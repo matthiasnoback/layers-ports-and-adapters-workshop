@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">
             <a href="{{ path("meetup_details", { 'id' : meetup.meetupId }) }}">{{ meetup.name.asString }}</a>
@@ -7,5 +7,6 @@
     <div class="panel-body">
         <p><small>{{ meetup.scheduledFor.asString|date() }}</small></p>
         <p>{{ meetup.description.asString }}</p>
+        <p><a href="{{ path("meetup_details", { 'id' : meetup.meetupId }) }}" class="btn btn-success">Read more</a></p>
     </div>
 </div>
