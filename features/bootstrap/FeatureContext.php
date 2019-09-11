@@ -4,7 +4,7 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
-use MeetupOrganizing\Entity\MeetupRepository;
+use MeetupOrganizing\SchemaManager;
 
 /**
  * Defines application features from the specific context.
@@ -28,15 +28,29 @@ final class FeatureContext extends MinkContext
     }
 
     /**
+     * @BeforeSuite
+     */
+    public static function updateSchema(): void
+    {
+        self::schemaManager()->updateSchema();
+    }
+
+    /**
      * @BeforeFeature
      */
     public static function purgeDatabase(): void
     {
+        self::schemaManager()->truncateTables();
+    }
+
+    /**
+     * @return SchemaManager
+     */
+    private static function schemaManager(): SchemaManager
+    {
         $container = require __DIR__ . '/../../app/container.php';
 
-        /** @var MeetupRepository $meetupRepository */
-        $meetupRepository = $container[MeetupRepository::class];
-        $meetupRepository->deleteAll();
+        return $container[SchemaManager::class];
     }
 
     /**

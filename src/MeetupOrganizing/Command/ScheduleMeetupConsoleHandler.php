@@ -3,36 +3,31 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Command;
 
-use MeetupOrganizing\Entity\Description;
-use MeetupOrganizing\Entity\Meetup;
-use MeetupOrganizing\Entity\MeetupRepository;
-use MeetupOrganizing\Entity\Name;
-use MeetupOrganizing\Entity\ScheduledDate;
-use MeetupOrganizing\Entity\UserId;
+use Doctrine\DBAL\Connection;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 
 final class ScheduleMeetupConsoleHandler
 {
     /**
-     * @var MeetupRepository
+     * @var Connection
      */
-    private $repository;
+    private $connection;
 
-    public function __construct(MeetupRepository $repository)
+    public function __construct(Connection $connection)
     {
-        $this->repository = $repository;
+        $this->connection = $connection;
     }
 
     public function handle(Args $args, IO $io): int
     {
-        $meetup = Meetup::schedule(
-            UserId::fromInt((int)$args->getArgument('organizerId')),
-            Name::fromString($args->getArgument('name')),
-            Description::fromString($args->getArgument('description')),
-            ScheduledDate::fromPhpDateString($args->getArgument('scheduledFor'))
-        );
-        $this->repository->add($meetup);
+        $record = [
+            'organizer_id' => (int)$args->getArgument('organizerId'),
+            'name' => $args->getArgument('name'),
+            'description' => $args->getArgument('description'),
+            'scheduled_for' => $args->getArgument('scheduledFor')
+        ];
+        $this->connection->insert('meetups', $record);
 
         $io->writeLine('<success>Scheduled the meetup successfully</success>');
 

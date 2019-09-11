@@ -15,6 +15,7 @@ use MeetupOrganizing\Entity\UserRepository;
 use MeetupOrganizing\Resources\Views\FlashExtension;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Resources\Views\UserExtension;
+use MeetupOrganizing\SchemaManager;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -132,6 +133,9 @@ $container[Connection::class] = function () {
         ]
     );
 };
+$container[SchemaManager::class] = function (ContainerInterface $container) {
+    return new SchemaManager($container[Connection::class]);
+};
 
 $container[MeetupRepository::class] = function (ContainerInterface $container) {
     return new MeetupRepository(
@@ -161,7 +165,7 @@ $container[ScheduleMeetupController::class] = function (ContainerInterface $cont
         $container->get(Session::class),
         $container->get(TemplateRendererInterface::class),
         $container->get(RouterInterface::class),
-        $container->get(MeetupRepository::class)
+        $container->get(Connection::class)
     );
 };
 $container[ListMeetupsController::class] = function (ContainerInterface $container) {
@@ -198,7 +202,7 @@ $container[RsvpForMeetupController::class] = function (ContainerInterface $conta
  */
 $container[ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
     return new ScheduleMeetupConsoleHandler(
-        $container->get(MeetupRepository::class)
+        $container[Connection::class]
     );
 };
 

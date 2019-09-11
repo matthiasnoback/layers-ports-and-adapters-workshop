@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Entity\Util\MeetupFactory;
+use MeetupOrganizing\SchemaManager;
 use PHPUnit_Framework_TestCase;
 
 final class MeetupRepositoryTest extends PHPUnit_Framework_TestCase
@@ -28,6 +29,8 @@ final class MeetupRepositoryTest extends PHPUnit_Framework_TestCase
                 'driver' => 'pdo_sqlite'
             ]
         );
+        $schemaManager = new SchemaManager($this->connection);
+        $schemaManager->updateSchema();
 
         $this->repository = new MeetupRepository($this->connection);
     }
@@ -37,6 +40,8 @@ final class MeetupRepositoryTest extends PHPUnit_Framework_TestCase
      */
     public function it_persists_and_retrieves_meetups(): void
     {
+        $this->markTestIncomplete('Re-enable this test once you have a created the Meetup entity');
+
         $originalMeetup = MeetupFactory::someMeetup();
         $this->repository->add($originalMeetup);
 
@@ -94,20 +99,6 @@ final class MeetupRepositoryTest extends PHPUnit_Framework_TestCase
             ],
             $this->repository->pastMeetups($now)
         );
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_delete_all_meetups(): void
-    {
-        $this->repository->add(MeetupFactory::upcomingMeetup());
-        $this->repository->add(MeetupFactory::pastMeetup());
-
-        $this->repository->deleteAll();
-
-        $this->assertEquals([], $this->repository->upcomingMeetups(new DateTimeImmutable()));
-        $this->assertEquals([], $this->repository->pastMeetups(new DateTimeImmutable()));
     }
 
     protected function tearDown()

@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Entity;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Schema\Schema;
-use Doctrine\DBAL\Schema\Synchronizer\SingleDatabaseSynchronizer;
 use PDO;
 use DateTimeImmutable;
 use RuntimeException;
@@ -20,7 +18,6 @@ final class MeetupRepository
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->prepareSchema();
     }
 
     public function add(Meetup $meetup): void
@@ -99,30 +96,5 @@ final class MeetupRepository
             },
             $records
         );
-    }
-
-    public function deleteAll(): void
-    {
-        $this->connection->executeQuery('DELETE FROM meetups');
-    }
-
-    private function prepareSchema(): void
-    {
-        /*
-         * Not exactly a best practice. But for the scope of this project: make sure the table we need exists.
-         */
-
-        $schema = new Schema();
-
-        $table = $schema->createTable('meetups');
-        $table->addColumn('meetup_id', 'integer', ['autoincrement' => true]);
-        $table->addColumn('organizer_id', 'integer');
-        $table->addColumn('name', 'string');
-        $table->addColumn('description', 'string');
-        $table->addColumn('scheduled_for', 'string');
-        $table->setPrimaryKey(['meetup_id']);
-
-        $synchronizer = new SingleDatabaseSynchronizer($this->connection);
-        $synchronizer->updateSchema($schema, true);
     }
 }
