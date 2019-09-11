@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
@@ -49,8 +49,11 @@ final class ScheduleMeetupController
         $this->repository = $repository;
     }
 
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
-    {
+    public function __invoke(
+        ServerRequestInterface $request,
+        ResponseInterface $response,
+        callable $next
+    ): ResponseInterface {
         $formErrors = [];
         $formData = [
             'scheduleForTime' => '20:00'

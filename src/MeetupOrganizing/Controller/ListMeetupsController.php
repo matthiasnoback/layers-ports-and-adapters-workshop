@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
@@ -37,10 +37,13 @@ final class ListMeetupsController implements MiddlewareInterface
         $upcomingMeetups = $this->meetupRepository->upcomingMeetups($now);
         $pastMeetups = $this->meetupRepository->pastMeetups($now);
 
-        $response->getBody()->write($this->renderer->render('list-meetups.html.twig', [
-            'upcomingMeetups' => $upcomingMeetups,
-            'pastMeetups' => $pastMeetups
-        ]));
+        $response->getBody()->write(
+            $this->renderer->render(
+                'list-meetups.html.twig',
+                [
+                    'upcomingMeetups' => $upcomingMeetups,
+                    'pastMeetups' => $pastMeetups
+                ]));
 
         return $response;
     }
