@@ -60,7 +60,7 @@ final class RsvpForMeetupController
 
         $meetup = $this->meetupRepository->byId((int)$postData['meetup_id']);
         $meetupId = $meetup->id();
-        $rsvp = new Rsvp(
+        $rsvp = Rsvp::create(
             Uuid::uuid4(),
             $meetupId,
             $this->session->getLoggedInUser()->id()

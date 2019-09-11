@@ -6,6 +6,7 @@ namespace MeetupOrganizing\Entity;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Schema\Synchronizer\SingleDatabaseSynchronizer;
+use PDO;
 
 final class RsvpRepository
 {
@@ -49,5 +50,28 @@ final class RsvpRepository
 
         $synchronizer = new SingleDatabaseSynchronizer($this->connection);
         $synchronizer->updateSchema($schema, true);
+    }
+
+    /**
+     * @param int $meetupId
+     * @return array&Rsvp[]
+     */
+    public function getByMeetupId(int $meetupId): array
+    {
+        $records = $this->connection
+            ->createQueryBuilder()
+            ->select('*')
+            ->from('rsvps')
+            ->where('meetup_id = :meetupId')
+            ->setParameter('meetupId', $meetupId)
+            ->execute()
+            ->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map(
+            function (array $record) {
+                return Rsvp::fromDatabaseRecord($record);
+            },
+            $records
+        );
     }
 }

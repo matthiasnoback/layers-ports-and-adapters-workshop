@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 final class Rsvp
@@ -22,7 +23,7 @@ final class Rsvp
      */
     private $userId;
 
-    public function __construct(
+    private function __construct(
         UuidInterface $rsvpId,
         int $meetupId,
         UserId $userId
@@ -30,6 +31,23 @@ final class Rsvp
         $this->rsvpId = $rsvpId;
         $this->meetupId = $meetupId;
         $this->userId = $userId;
+    }
+
+    public static function create(
+        UuidInterface $rsvpId,
+        int $meetupId,
+        UserId $userId
+    ): Rsvp {
+        return new self($rsvpId, $meetupId, $userId);
+    }
+
+    public static function fromDatabaseRecord(array $record): Rsvp
+    {
+        return new self(
+            Uuid::fromString($record['id']),
+            (int)$record['meetup_id'],
+            UserId::fromInt((int)$record['user_id'])
+        );
     }
 
     public function rsvpId(): UuidInterface

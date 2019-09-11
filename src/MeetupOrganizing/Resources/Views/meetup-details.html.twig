@@ -6,6 +6,17 @@
     <p><small>{{ meetup.scheduledFor.asString|date() }}</small></p>
     <p>{{ meetup.description.asString }}</p>
 
+    <h3>Attendees</h3>
+    {% if attendees|length > 0 %}
+        <ul class="attendees">
+        {% for user in attendees %}
+            <li>{{ user.name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No attendees yet.</p>
+    {% endif %}
+
     <form action="{{ url('rsvp_for_meetup') }}" method="post">
         <input type="hidden" name="meetup_id" value="{{ meetup.id }}">
         <button class="btn btn-success">RSVP</button>

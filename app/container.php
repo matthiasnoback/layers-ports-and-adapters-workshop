@@ -174,6 +174,7 @@ $container[MeetupDetailsController::class] = function (ContainerInterface $conta
     return new MeetupDetailsController(
         $container->get(MeetupRepository::class),
         $container->get(UserRepository::class),
+        $container->get(RsvpRepository::class),
         $container->get(TemplateRendererInterface::class)
     );
 };
