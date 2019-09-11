@@ -10,7 +10,6 @@ use MeetupOrganizing\Session;
 use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Ramsey\Uuid\Uuid;
 use RuntimeException;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
@@ -73,7 +72,6 @@ final class RsvpForMeetupController
         }
 
         $rsvp = Rsvp::create(
-            Uuid::uuid4(),
             (int)$postData['meetupId'],
             $this->session->getLoggedInUser()->userId()
         );

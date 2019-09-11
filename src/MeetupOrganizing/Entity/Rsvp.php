@@ -33,12 +33,9 @@ final class Rsvp
         $this->userId = $userId;
     }
 
-    public static function create(
-        UuidInterface $rsvpId,
-        int $meetupId,
-        UserId $userId
-    ): Rsvp {
-        return new self($rsvpId, $meetupId, $userId);
+    public static function create(int $meetupId, UserId $userId): Rsvp
+    {
+        return new self(Uuid::uuid4(), $meetupId, $userId);
     }
 
     public static function fromDatabaseRecord(array $record): Rsvp
