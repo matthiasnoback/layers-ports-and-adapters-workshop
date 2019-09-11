@@ -56,6 +56,7 @@ final class ScheduleMeetupController
     ): ResponseInterface {
         $formErrors = [];
         $formData = [
+            // This is a nice place to set some defaults
             'scheduleForTime' => '20:00'
         ];
 
@@ -103,7 +104,7 @@ final class ScheduleMeetupController
             $this->renderer->render(
                 'schedule-meetup.html.twig',
                 [
-                    'submittedData' => $formData,
+                    'formData' => $formData,
                     'formErrors' => $formErrors
                 ]
             )

@@ -7,7 +7,7 @@
         <div class="form-group{% if formErrors["name"] is defined %} has-error{% endif %}">
             <label class="control-label" for="name">Name:</label>
             <input class="form-control" id="name" name="name" type="text"
-                   value="{{ submittedData["name"]|default("") }}"/>
+                   value="{{ formData["name"]|default("") }}"/>
             {% for error in formErrors["name"]|default({}) %}
                 <span class="help-block">{{ error }}</span>
             {% endfor %}
@@ -15,7 +15,7 @@
         <div class="form-group{% if formErrors["description"] is defined %} has-error{% endif %}">
             <label class="control-label" for="description">Description:</label>
             <textarea class="form-control" id="description"
-                      name="description">{{ submittedData["description"]|default("") }}</textarea>
+                      name="description">{{ formData["description"]|default("") }}</textarea>
             {% for error in formErrors["description"]|default({}) %}
                 <span class="help-block">{{ error }}</span>
             {% endfor %}
@@ -23,7 +23,7 @@
         <div class="form-group {% if formErrors["scheduleForDate"] is defined %} has-error{% endif %}">
             <label class="control-label" for="scheduleForDate">Schedule for date: </label>
             <input class="form-control" name="scheduleForDate" id="scheduleForDate" type="date"
-                   value="{{ submittedData["scheduleForDate"]|default("") }}">
+                   value="{{ formData["scheduleForDate"]|default("") }}">
             {% for error in formErrors["scheduleForDate"]|default({}) %}
                 <span class="help-block">{{ error }}</span>
             {% endfor %}
@@ -31,7 +31,7 @@
         <div class="form-group {% if formErrors["scheduleForTime"] is defined %} has-error{% endif %}">
             <label class="control-label" for="scheduleForTime">Time: </label>
             <input class="form-control" name="scheduleForTime" id="scheduleForTime" type="time"
-                   value="{{ submittedData["scheduleForTime"]|default("") }}">
+                   value="{{ formData["scheduleForTime"]|default("") }}">
             {% for error in formErrors["scheduleForTime"]|default({}) %}
                 <span class="help-block">{{ error }}</span>
             {% endfor %}
