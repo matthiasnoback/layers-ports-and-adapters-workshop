@@ -18,7 +18,7 @@
                 <label for="userId">Logged in user: </label>
                 <select name="userId" id="userId" class="form-control">
                     {% for user in allUsers %}
-                        <option value="{{ user.id.asInt }}"{% if loggedInUser.id.asInt == user.id.asInt %} selected{% endif %}>{{ user.name }}</option>
+                        <option value="{{ user.userId.asInt }}"{% if loggedInUser.userId.asInt == user.userId.asInt %} selected{% endif %}>{{ user.name }}</option>
                     {% endfor %}
                 </select>
                 <button class="btn btn-info">Switch</button>

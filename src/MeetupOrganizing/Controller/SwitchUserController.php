@@ -44,7 +44,7 @@ final class SwitchUserController
         $user = $this->userRepository->getById(
             UserId::fromInt((int)$postData['userId'])
         );
-        $this->session->setLoggedInUserId($user->id());
+        $this->session->setLoggedInUserId($user->userId());
 
         return new RedirectResponse('/');
     }

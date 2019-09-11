@@ -44,7 +44,7 @@ final class Rsvp
     public static function fromDatabaseRecord(array $record): Rsvp
     {
         return new self(
-            Uuid::fromString($record['id']),
+            Uuid::fromString($record['rsvp_id']),
             (int)$record['meetup_id'],
             UserId::fromInt((int)$record['user_id'])
         );

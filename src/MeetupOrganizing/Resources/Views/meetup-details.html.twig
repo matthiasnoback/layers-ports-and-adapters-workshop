@@ -18,7 +18,7 @@
     {% endif %}
 
     <form action="{{ url('rsvp_for_meetup') }}" method="post">
-        <input type="hidden" name="meetup_id" value="{{ meetup.id }}">
+        <input type="hidden" name="meetup_id" value="{{ meetup.meetupId }}">
         <button class="btn btn-success">RSVP</button>
     </form>
 

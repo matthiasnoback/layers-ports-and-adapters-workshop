@@ -8,7 +8,7 @@ final class User
     /**
      * @var int
      */
-    private $id;
+    private $userId;
 
     /**
      * @var string
@@ -23,15 +23,15 @@ final class User
     {
         $user = new self();
 
-        $user->id = (int)$record['id'];
+        $user->userId = (int)$record['user_id'];
         $user->name = $record['name'];
 
         return $user;
     }
 
-    public function id(): UserId
+    public function userId(): UserId
     {
-        return UserId::fromInt($this->id);
+        return UserId::fromInt($this->userId);
     }
 
     public function name(): string

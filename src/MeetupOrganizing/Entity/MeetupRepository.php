@@ -36,7 +36,7 @@ final class MeetupRepository
         );
         $id = (int)$this->connection->lastInsertId();
 
-        $meetup->setId($id);
+        $meetup->setMeetupId($id);
     }
 
     public function byId(int $id): Meetup
@@ -45,8 +45,8 @@ final class MeetupRepository
             ->createQueryBuilder()
             ->select('*')
             ->from('meetups')
-            ->where('id = :id')
-            ->setParameter('id', $id)
+            ->where('meetup_id = :meetup_id')
+            ->setParameter('meetup_id', $id)
             ->execute()
             ->fetch(PDO::FETCH_ASSOC);
 
@@ -115,12 +115,12 @@ final class MeetupRepository
         $schema = new Schema();
 
         $table = $schema->createTable('meetups');
-        $table->addColumn('id', 'integer', ['autoincrement' => true]);
+        $table->addColumn('meetup_id', 'integer', ['autoincrement' => true]);
         $table->addColumn('organizer_id', 'integer');
         $table->addColumn('name', 'string');
         $table->addColumn('description', 'string');
         $table->addColumn('scheduled_for', 'string');
-        $table->setPrimaryKey(['id']);
+        $table->setPrimaryKey(['meetup_id']);
 
         $synchronizer = new SingleDatabaseSynchronizer($this->connection);
         $synchronizer->updateSchema($schema, true);

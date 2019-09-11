@@ -59,11 +59,11 @@ final class RsvpForMeetupController
         }
 
         $meetup = $this->meetupRepository->byId((int)$postData['meetup_id']);
-        $meetupId = $meetup->id();
+        $meetupId = $meetup->meetupId();
         $rsvp = Rsvp::create(
             Uuid::uuid4(),
             $meetupId,
-            $this->session->getLoggedInUser()->id()
+            $this->session->getLoggedInUser()->userId()
         );
         $this->rsvpRepository->save($rsvp);
 
@@ -73,7 +73,7 @@ final class RsvpForMeetupController
             $this->router->generateUri(
                 'meetup_details',
                 [
-                    'id' => $meetup->id()
+                    'id' => $meetup->meetupId()
                 ]
             )
         );

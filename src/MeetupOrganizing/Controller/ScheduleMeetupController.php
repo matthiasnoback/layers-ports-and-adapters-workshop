@@ -72,7 +72,7 @@ final class ScheduleMeetupController
 
             if (empty($formErrors)) {
                 $meetup = Meetup::schedule(
-                    $this->session->getLoggedInUser()->id(),
+                    $this->session->getLoggedInUser()->userId(),
                     Name::fromString($submittedData['name']),
                     Description::fromString($submittedData['description']),
                     ScheduledDate::fromPhpDateString(
@@ -87,7 +87,7 @@ final class ScheduleMeetupController
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetup->id()
+                            'id' => $meetup->meetupId()
                         ]
                     )
                 );

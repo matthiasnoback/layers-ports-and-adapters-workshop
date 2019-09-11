@@ -10,7 +10,7 @@ final class Meetup
     /**
      * @var int
      */
-    private $id;
+    private $meetupId;
 
     /**
      * @var UserId
@@ -47,9 +47,9 @@ final class Meetup
         return $meetup;
     }
 
-    public function id(): int
+    public function meetupId(): int
     {
-        return $this->id;
+        return $this->meetupId;
     }
 
     public function organizerId(): UserId
@@ -78,18 +78,18 @@ final class Meetup
     }
 
     /**
-     * @param int $id
+     * @param int $meetupId
      * @internal Only to be used by MeetupRepository
      */
-    public function setId(int $id): void
+    public function setMeetupId(int $meetupId): void
     {
-        $this->id = $id;
+        $this->meetupId = $meetupId;
     }
 
     public static function fromDatabaseRecord(array $data): Meetup
     {
         $meetup = new self();
-        $meetup->id = (int)$data['id'];
+        $meetup->meetupId = (int)$data['meetup_id'];
         $meetup->organizerId = UserId::fromInt((int)$data['organizer_id']);
         $meetup->name = Name::fromString($data['name']);
         $meetup->description = Description::fromString($data['description']);
