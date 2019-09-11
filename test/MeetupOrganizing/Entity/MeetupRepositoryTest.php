@@ -42,7 +42,7 @@ final class MeetupRepositoryTest extends PHPUnit_Framework_TestCase
 
         $this->assertGreaterThanOrEqual(1, $originalMeetup->meetupId());
 
-        $restoredMeetup = $this->repository->byId($originalMeetup->meetupId());
+        $restoredMeetup = $this->repository->getById($originalMeetup->meetupId());
 
         $this->assertEquals($originalMeetup, $restoredMeetup);
     }

@@ -58,7 +58,7 @@ final class RsvpForMeetupController
             throw new RuntimeException('Bad request');
         }
 
-        $meetup = $this->meetupRepository->byId((int)$postData['meetup_id']);
+        $meetup = $this->meetupRepository->getById((int)$postData['meetup_id']);
         $meetupId = $meetup->meetupId();
         $rsvp = Rsvp::create(
             Uuid::uuid4(),

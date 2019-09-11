@@ -50,7 +50,7 @@ final class MeetupDetailsController
         ResponseInterface $response,
         callable $out = null
     ): ResponseInterface {
-        $meetup = $this->meetupRepository->byId((int)$request->getAttribute('id'));
+        $meetup = $this->meetupRepository->getById((int)$request->getAttribute('id'));
         $organizer = $this->userRepository->getById($meetup->organizerId());
         $rsvps = $this->rsvpRepository->getByMeetupId($meetup->meetupId());
         $users = array_map(

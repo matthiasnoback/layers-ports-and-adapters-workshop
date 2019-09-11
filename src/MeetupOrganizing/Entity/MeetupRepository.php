@@ -39,7 +39,7 @@ final class MeetupRepository
         $meetup->setMeetupId($id);
     }
 
-    public function byId(int $id): Meetup
+    public function getById(int $id): Meetup
     {
         $record = $this->connection
             ->createQueryBuilder()
