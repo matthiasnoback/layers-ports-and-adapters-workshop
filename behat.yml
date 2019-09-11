@@ -12,4 +12,3 @@ default:
             paths: [ "%paths.base%/features"]
             contexts:
                 - FeatureContext
-                - Behat\MinkExtension\Context\MinkContext

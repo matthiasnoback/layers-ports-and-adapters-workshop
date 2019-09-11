@@ -37,6 +37,9 @@
     "autoload-dev": {
         "psr-4": {
             "": "test/"
-        }
+        },
+        "files": [
+            "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"
+        ]
     }
 }
