@@ -23,7 +23,7 @@ final class User
     {
         $user = new self();
 
-        $user->userId = (int)$record['user_id'];
+        $user->userId = (int)$record['userId'];
         $user->name = $record['name'];
 
         return $user;

@@ -39,19 +39,19 @@ final class SchemaManager
         $schema = new Schema();
 
         $meetupsTable = $schema->createTable('meetups');
-        $meetupsTable->addColumn('meetup_id', 'integer', ['autoincrement' => true]);
-        $meetupsTable->addColumn('organizer_id', 'integer');
+        $meetupsTable->addColumn('meetupId', 'integer', ['autoincrement' => true]);
+        $meetupsTable->addColumn('organizerId', 'integer');
         $meetupsTable->addColumn('name', 'string');
         $meetupsTable->addColumn('description', 'string');
-        $meetupsTable->addColumn('scheduled_for', 'string');
-        $meetupsTable->setPrimaryKey(['meetup_id']);
+        $meetupsTable->addColumn('scheduledFor', 'string');
+        $meetupsTable->setPrimaryKey(['meetupId']);
 
         $rsvpsTable = $schema->createTable('rsvps');
-        $rsvpsTable->addColumn('rsvp_id', 'string');
-        $rsvpsTable->addColumn('meetup_id', 'integer');
-        $rsvpsTable->addColumn('user_id', 'integer');
-        $rsvpsTable->setPrimaryKey(['rsvp_id']);
-        $rsvpsTable->addUniqueIndex(['meetup_id', 'user_id']);
+        $rsvpsTable->addColumn('rsvpId', 'string');
+        $rsvpsTable->addColumn('meetupId', 'integer');
+        $rsvpsTable->addColumn('userId', 'integer');
+        $rsvpsTable->setPrimaryKey(['rsvpId']);
+        $rsvpsTable->addUniqueIndex(['meetupId', 'userId']);
 
         return $schema;
     }

@@ -22,10 +22,10 @@ final class ScheduleMeetupConsoleHandler
     public function handle(Args $args, IO $io): int
     {
         $record = [
-            'organizer_id' => (int)$args->getArgument('organizerId'),
+            'organizerId' => (int)$args->getArgument('organizerId'),
             'name' => $args->getArgument('name'),
             'description' => $args->getArgument('description'),
-            'scheduled_for' => $args->getArgument('scheduledFor')
+            'scheduledFor' => $args->getArgument('scheduledFor')
         ];
         $this->connection->insert('meetups', $record);
 

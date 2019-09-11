@@ -3,20 +3,23 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
-use MeetupOrganizing\Entity\MeetupRepository;
+use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Entity\Rsvp;
 use MeetupOrganizing\Entity\RsvpRepository;
+use MeetupOrganizing\Entity\UserId;
 use MeetupOrganizing\Entity\UserRepository;
+use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 final class MeetupDetailsController
 {
     /**
-     * @var MeetupRepository
+     * @var Connection
      */
-    private $meetupRepository;
+    private $connection;
 
     /**
      * @var UserRepository
@@ -34,12 +37,12 @@ final class MeetupDetailsController
     private $rsvpRepository;
 
     public function __construct(
-        MeetupRepository $meetupRepository,
+        Connection $connection,
         UserRepository $userRepository,
         RsvpRepository $rsvpRepository,
         TemplateRendererInterface $renderer
     ) {
-        $this->meetupRepository = $meetupRepository;
+        $this->connection = $connection;
         $this->renderer = $renderer;
         $this->userRepository = $userRepository;
         $this->rsvpRepository = $rsvpRepository;
@@ -50,9 +53,22 @@ final class MeetupDetailsController
         ResponseInterface $response,
         callable $out = null
     ): ResponseInterface {
-        $meetup = $this->meetupRepository->getById((int)$request->getAttribute('id'));
-        $organizer = $this->userRepository->getById($meetup->organizerId());
-        $rsvps = $this->rsvpRepository->getByMeetupId($meetup->meetupId());
+
+        $meetup = $this->connection
+            ->createQueryBuilder()
+            ->select('*')
+            ->from('meetups')
+            ->where('meetupId = :meetupId')
+            ->setParameter('meetupId', (int)$request->getAttribute('id'))
+            ->execute()
+            ->fetch(PDO::FETCH_ASSOC);
+
+        if ($meetup === false) {
+            throw new RuntimeException('Meetup not found');
+        };
+
+        $organizer = $this->userRepository->getById(UserId::fromInt((int)$meetup['organizerId']));
+        $rsvps = $this->rsvpRepository->getByMeetupId((int)$meetup['meetupId']);
         $users = array_map(
             function (Rsvp $rsvp) {
                 return $this->userRepository->getById($rsvp->userId());

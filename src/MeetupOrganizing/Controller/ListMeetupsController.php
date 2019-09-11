@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Controller;
 
 use DateTimeImmutable;
-use MeetupOrganizing\Entity\MeetupRepository;
+use Doctrine\DBAL\Connection;
+use MeetupOrganizing\Entity\ScheduledDate;
+use PDO;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,9 +16,9 @@ use Zend\Stratigility\MiddlewareInterface;
 final class ListMeetupsController implements MiddlewareInterface
 {
     /**
-     * @var MeetupRepository
+     * @var Connection
      */
-    private $meetupRepository;
+    private $connection;
 
     /**
      * @var TemplateRendererInterface
@@ -24,18 +26,32 @@ final class ListMeetupsController implements MiddlewareInterface
     private $renderer;
 
     public function __construct(
-        MeetupRepository $meetupRepository,
+        Connection $connection,
         TemplateRendererInterface $renderer
     ) {
-        $this->meetupRepository = $meetupRepository;
+        $this->connection = $connection;
         $this->renderer = $renderer;
     }
 
     public function __invoke(Request $request, Response $response, callable $out = null): ResponseInterface
     {
         $now = new DateTimeImmutable();
-        $upcomingMeetups = $this->meetupRepository->upcomingMeetups($now);
-        $pastMeetups = $this->meetupRepository->pastMeetups($now);
+
+        $upcomingMeetups = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from('meetups')
+            ->where('scheduledFor >= :now')
+            ->setParameter('now', $now->format(ScheduledDate::DATE_TIME_FORMAT))
+            ->execute()
+            ->fetchAll(PDO::FETCH_ASSOC);
+
+        $pastMeetups = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from('meetups')
+            ->where('scheduledFor < :now')
+            ->setParameter('now', $now->format(ScheduledDate::DATE_TIME_FORMAT))
+            ->execute()
+            ->fetchAll(PDO::FETCH_ASSOC);;
 
         $response->getBody()->write(
             $this->renderer->render(

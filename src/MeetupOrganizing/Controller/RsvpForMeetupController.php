@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
-use MeetupOrganizing\Entity\MeetupRepository;
+use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Entity\Rsvp;
 use MeetupOrganizing\Entity\RsvpRepository;
 use MeetupOrganizing\Session;
+use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
@@ -17,14 +18,14 @@ use Zend\Expressive\Router\RouterInterface;
 final class RsvpForMeetupController
 {
     /**
+     * @var Connection
+     */
+    private $connection;
+
+    /**
      * @var Session
      */
     private $session;
-
-    /**
-     * @var MeetupRepository
-     */
-    private $meetupRepository;
 
     /**
      * @var RsvpRepository
@@ -37,13 +38,13 @@ final class RsvpForMeetupController
     private $router;
 
     public function __construct(
+        Connection $connection,
         Session $session,
-        MeetupRepository $meetupRepository,
         RsvpRepository $rsvpRepository,
         RouterInterface $router
     ) {
+        $this->connection = $connection;
         $this->session = $session;
-        $this->meetupRepository = $meetupRepository;
         $this->rsvpRepository = $rsvpRepository;
         $this->router = $router;
     }
@@ -54,15 +55,26 @@ final class RsvpForMeetupController
         callable $next
     ): ResponseInterface {
         $postData = $request->getParsedBody();
-        if (!isset($postData['meetup_id'])) {
+        if (!isset($postData['meetupId'])) {
             throw new RuntimeException('Bad request');
         }
 
-        $meetup = $this->meetupRepository->getById((int)$postData['meetup_id']);
-        $meetupId = $meetup->meetupId();
+        $record = $this->connection
+            ->createQueryBuilder()
+            ->select('*')
+            ->from('meetups')
+            ->where('meetupId = :meetupId')
+            ->setParameter('meetupId', (int)$postData['meetupId'])
+            ->execute()
+            ->fetch(PDO::FETCH_ASSOC);
+
+        if ($record === false) {
+            throw new RuntimeException('Meetup not found');
+        }
+
         $rsvp = Rsvp::create(
             Uuid::uuid4(),
-            $meetupId,
+            (int)$postData['meetupId'],
             $this->session->getLoggedInUser()->userId()
         );
         $this->rsvpRepository->save($rsvp);
@@ -73,7 +85,7 @@ final class RsvpForMeetupController
             $this->router->generateUri(
                 'meetup_details',
                 [
-                    'id' => $meetup->meetupId()
+                    'id' => (int)$postData['meetupId']
                 ]
             )
         );

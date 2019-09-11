@@ -9,8 +9,8 @@ use MeetupOrganizing\Entity\UserRepository;
 
 final class Session
 {
-    private const DEFAULT_USER_ID = 1;
-    private const LOGGED_IN_USER_ID = 'logged_in_user_id';
+    private const DEFAULT_userId = 1;
+    private const LOGGED_IN_userId = 'logged_in_userId';
 
     /**
      * @var UserRepository
@@ -38,14 +38,14 @@ final class Session
     {
         return $this->userRepository->getById(
             UserId::fromInt(
-                (int)$this->get(self::LOGGED_IN_USER_ID, self::DEFAULT_USER_ID)
+                (int)$this->get(self::LOGGED_IN_userId, self::DEFAULT_userId)
             )
         );
     }
 
     public function setLoggedInUserId(UserId $id): void
     {
-        $this->set(self::LOGGED_IN_USER_ID, $id->asInt());
+        $this->set(self::LOGGED_IN_userId, $id->asInt());
     }
 
     public function get(string $key, $defaultValue = null)

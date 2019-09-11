@@ -1,10 +1,10 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    <h2>{{ organizer.name }} presents: {{ meetup.name.asString }}</h2>
+    <h2>{{ organizer.name }} presents: {{ meetup.name }}</h2>
 
-    <p><small>{{ meetup.scheduledFor.asString|date() }}</small></p>
-    <p>{{ meetup.description.asString }}</p>
+    <p><small>{{ meetup.scheduledFor|date() }}</small></p>
+    <p>{{ meetup.description }}</p>
 
     <h3>Attendees</h3>
     {% if attendees|length > 0 %}
@@ -18,7 +18,7 @@
     {% endif %}
 
     <form action="{{ url('rsvp_for_meetup') }}" method="post">
-        <input type="hidden" name="meetup_id" value="{{ meetup.meetupId }}">
+        <input type="hidden" name="meetupId" value="{{ meetup.meetupId }}">
         <button class="btn btn-success">RSVP</button>
     </form>
 

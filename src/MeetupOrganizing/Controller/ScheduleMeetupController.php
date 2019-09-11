@@ -84,10 +84,10 @@ final class ScheduleMeetupController
 
             if (empty($formErrors)) {
                 $record = [
-                    'organizer_id' => $this->session->getLoggedInUser()->userId()->asInt(),
+                    'organizerId' => $this->session->getLoggedInUser()->userId()->asInt(),
                     'name' => $formData['name'],
                     'description' => $formData['description'],
-                    'scheduled_for' => $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
+                    'scheduledFor' => $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
                 ];
                 $this->connection->insert('meetups', $record);
 

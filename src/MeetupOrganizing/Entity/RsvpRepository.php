@@ -23,9 +23,9 @@ final class RsvpRepository
         $this->connection->insert(
             'rsvps',
             [
-                'rsvp_id' => $rsvp->rsvpId()->toString(),
-                'meetup_id' => $rsvp->meetupId(),
-                'user_id' => $rsvp->userId()->asInt()
+                'rsvpId' => $rsvp->rsvpId()->toString(),
+                'meetupId' => $rsvp->meetupId(),
+                'userId' => $rsvp->userId()->asInt()
             ]
         );
     }
@@ -40,8 +40,8 @@ final class RsvpRepository
             ->createQueryBuilder()
             ->select('*')
             ->from('rsvps')
-            ->where('meetup_id = :meetup_id')
-            ->setParameter('meetup_id', $meetupId)
+            ->where('meetupId = :meetupId')
+            ->setParameter('meetupId', $meetupId)
             ->execute()
             ->fetchAll(PDO::FETCH_ASSOC);
 

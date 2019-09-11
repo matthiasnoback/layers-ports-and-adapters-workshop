@@ -170,13 +170,13 @@ $container[ScheduleMeetupController::class] = function (ContainerInterface $cont
 };
 $container[ListMeetupsController::class] = function (ContainerInterface $container) {
     return new ListMeetupsController(
-        $container->get(MeetupRepository::class),
+        $container->get(Connection::class),
         $container->get(TemplateRendererInterface::class)
     );
 };
 $container[MeetupDetailsController::class] = function (ContainerInterface $container) {
     return new MeetupDetailsController(
-        $container->get(MeetupRepository::class),
+        $container->get(Connection::class),
         $container->get(UserRepository::class),
         $container->get(RsvpRepository::class),
         $container->get(TemplateRendererInterface::class)
@@ -190,8 +190,8 @@ $container[SwitchUserController::class] = function (ContainerInterface $containe
 };
 $container[RsvpForMeetupController::class] = function (ContainerInterface $container) {
     return new RsvpForMeetupController(
+        $container[Connection::class],
         $container[Session::class],
-        $container[MeetupRepository::class],
         $container[RsvpRepository::class],
         $container[RouterInterface::class]
     );

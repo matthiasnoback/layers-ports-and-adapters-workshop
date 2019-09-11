@@ -9,11 +9,11 @@ final class UserRepository
 {
     private $records = [
         1 => [
-            'user_id' => 1,
+            'userId' => 1,
             'name' => 'Organizer'
         ],
         2 => [
-            'user_id' => 2,
+            'userId' => 2,
             'name' => 'Regular user'
         ]
     ];
