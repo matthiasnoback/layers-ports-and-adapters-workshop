@@ -52,31 +52,33 @@ final class ScheduleMeetupController
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next): ResponseInterface
     {
         $formErrors = [];
-        $submittedData = [];
+        $formData = [
+            'scheduleForTime' => '20:00'
+        ];
 
         if ($request->getMethod() === 'POST') {
-            $submittedData = $request->getParsedBody();
+            $formData = $request->getParsedBody();
 
-            if (empty($submittedData['name'])) {
+            if (empty($formData['name'])) {
                 $formErrors['name'][] = 'Provide a name';
             }
-            if (empty($submittedData['description'])) {
+            if (empty($formData['description'])) {
                 $formErrors['description'][] = 'Provide a description';
             }
-            if (empty($submittedData['scheduleForDate'])) {
+            if (empty($formData['scheduleForDate'])) {
                 $formErrors['scheduleForDate'][] = 'Provide a date';
             }
-            if (empty($submittedData['scheduleForTime'])) {
+            if (empty($formData['scheduleForTime'])) {
                 $formErrors['scheduleForTime'][] = 'Provide a time';
             }
 
             if (empty($formErrors)) {
                 $meetup = Meetup::schedule(
                     $this->session->getLoggedInUser()->userId(),
-                    Name::fromString($submittedData['name']),
-                    Description::fromString($submittedData['description']),
+                    Name::fromString($formData['name']),
+                    Description::fromString($formData['description']),
                     ScheduledDate::fromPhpDateString(
-                        $submittedData['scheduleForDate'] . ' ' . $submittedData['scheduleForTime']
+                        $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
                     )
                 );
                 $this->repository->add($meetup);
@@ -98,7 +100,7 @@ final class ScheduleMeetupController
             $this->renderer->render(
                 'schedule-meetup.html.twig',
                 [
-                    'submittedData' => $submittedData,
+                    'submittedData' => $formData,
                     'formErrors' => $formErrors
                 ]
             )
