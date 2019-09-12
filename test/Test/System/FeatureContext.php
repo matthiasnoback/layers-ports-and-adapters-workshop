@@ -1,10 +1,13 @@
 <?php
 
+namespace Test\System;
+
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
 use MeetupOrganizing\SchemaManager;
+use RuntimeException;
 
 /**
  * Defines application features from the specific context.
@@ -48,7 +51,7 @@ final class FeatureContext extends MinkContext
      */
     private static function schemaManager(): SchemaManager
     {
-        $container = require __DIR__ . '/../../app/container.php';
+        $container = require __DIR__ . '/../../../app/container.php';
 
         return $container[SchemaManager::class];
     }
@@ -95,7 +98,7 @@ final class FeatureContext extends MinkContext
     /**
      * @Then the list of attendees should contain :name
      */
-    public function theListOfAttendeesShouldContain(string $name)
+    public function theListOfAttendeesShouldContain(string $name): void
     {
         $attendeeElement = $this->getSession()->getPage()->find('css', '.attendees li:contains("' . $name . '")');
         assertNotNull($attendeeElement, 'Could not find the expected attendee element on the page');

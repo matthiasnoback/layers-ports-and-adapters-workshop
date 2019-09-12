@@ -11,4 +11,4 @@ default:
             mink_session: default
             paths: [ "%paths.base%/features"]
             contexts:
-                - FeatureContext
+                - Test\System\FeatureContext
