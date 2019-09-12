@@ -5,15 +5,31 @@ namespace Test\Acceptance;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use MeetupOrganizing\Entity\UserRepository;
 
 final class FeatureContext implements Context
 {
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
+     * @var int|null
+     */
+    private $userId;
+
+    public function __construct()
+    {
+        $this->userRepository = new UserRepository();
+    }
+
     /**
      * @Given I am an organizer
      */
     public function iAmAnOrganizer()
     {
-        throw new PendingException();
+        $this->userId = $this->userRepository->getOrganizerId()->asInt();
     }
 
     /**
