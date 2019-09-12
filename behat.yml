@@ -7,9 +7,13 @@ default:
                 default:
                     goutte: ~
     suites:
-        functional:
+        acceptance:
+            paths: [ "%paths.base%/test/Test/Acceptance/Features"]
+            contexts:
+                - Test\Acceptance\FeatureContext
+        system:
             mink_session: default
             paths: [ "%paths.base%/test/Test/System/Features"]
             contexts:
                 - Test\System\FeatureContext:
-                    projectRootDir: "%paths.base%"
+                      projectRootDir: "%paths.base%"
