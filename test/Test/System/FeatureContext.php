@@ -7,6 +7,7 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
 use MeetupOrganizing\SchemaManager;
+use MeetupOrganizing\ServiceContainer;
 use RuntimeException;
 
 /**
@@ -51,7 +52,7 @@ final class FeatureContext extends MinkContext
      */
     private static function schemaManager(): SchemaManager
     {
-        $container = require __DIR__ . '/../../../app/container.php';
+        $container = new ServiceContainer(__DIR__ . '/../../../');
 
         return $container[SchemaManager::class];
     }

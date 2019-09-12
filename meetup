@@ -2,11 +2,12 @@
 <?php
 
 use MeetupOrganizing\Command\MeetupApplicationConfig;
+use MeetupOrganizing\ServiceContainer;
 use Webmozart\Console\ConsoleApplication;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$container = require __DIR__ . '/app/container.php';
+$container = new ServiceContainer(__DIR__);
 
 $cli = new ConsoleApplication(new MeetupApplicationConfig($container));
 $cli->run();
