@@ -7,7 +7,6 @@ use MeetupOrganizing\Command\ScheduleMeetupConsoleHandler;
 use MeetupOrganizing\Controller\MeetupDetailsController;
 use MeetupOrganizing\Controller\RsvpForMeetupController;
 use MeetupOrganizing\Controller\SwitchUserController;
-use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Controller\ListMeetupsController;
 use MeetupOrganizing\Controller\ScheduleMeetupController;
 use MeetupOrganizing\Entity\RsvpRepository;
@@ -137,11 +136,6 @@ $container[SchemaManager::class] = function (ContainerInterface $container) {
     return new SchemaManager($container[Connection::class]);
 };
 
-$container[MeetupRepository::class] = function (ContainerInterface $container) {
-    return new MeetupRepository(
-        $container[Connection::class]
-    );
-};
 $container[UserRepository::class] = function () {
     return new UserRepository();
 };
