@@ -9,6 +9,6 @@ default:
     suites:
         functional:
             mink_session: default
-            paths: [ "%paths.base%/features"]
+            paths: [ "%paths.base%/test/Test/System/Features"]
             contexts:
                 - Test\System\FeatureContext
