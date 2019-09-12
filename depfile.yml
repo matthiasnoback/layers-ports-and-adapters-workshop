@@ -7,14 +7,14 @@ layers:
     collectors:
       - type: className
         regex: .*\\Infrastructure\\.*
-  - name: Domain
-    collectors:
-      - type: className
-        regex: .*\\Domain\\.*
   - name: Application
     collectors:
       - type: className
         regex: .*\\Application\\.*
+  - name: Domain
+    collectors:
+      - type: className
+        regex: .*\\Domain\\.*
 ruleset:
   Infrastructure:
     - Application
