@@ -71,6 +71,8 @@ final class FeatureContext extends MinkContext
      */
     public function aMeetupWasScheduled(): void
     {
+        $this->iAmLoggedInAs('Organizer');
+
         $this->visit('/schedule-meetup');
         $this->fillField('Name', 'Meetup');
         $this->fillField('Description', 'Description');
