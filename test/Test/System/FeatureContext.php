@@ -21,38 +21,37 @@ final class FeatureContext extends MinkContext
     private $scheduledMeetupId;
 
     /**
+     * @var string
+     */
+    private $projectRootDir;
+
+    /**
      * Initializes context.
      *
      * Every scenario gets its own context instance.
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
      */
-    public function __construct()
+    public function __construct(string $projectRootDir)
     {
+        $this->projectRootDir = $projectRootDir;
     }
 
     /**
-     * @BeforeSuite
+     * @BeforeScenario
      */
-    public static function updateSchema(): void
+    public function updateSchema(): void
     {
         self::schemaManager()->updateSchema();
-    }
-
-    /**
-     * @BeforeFeature
-     */
-    public static function purgeDatabase(): void
-    {
         self::schemaManager()->truncateTables();
     }
 
     /**
      * @return SchemaManager
      */
-    private static function schemaManager(): SchemaManager
+    private function schemaManager(): SchemaManager
     {
-        $container = new ServiceContainer(__DIR__ . '/../../../');
+        $container = new ServiceContainer($this->projectRootDir);
 
         return $container[SchemaManager::class];
     }

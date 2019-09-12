@@ -5,7 +5,7 @@
          colors="true">
     <testsuites>
         <testsuite name="Tests">
-            <directory suffix="Test.php">./test</directory>
+            <directory>./test</directory>
         </testsuite>
     </testsuites>
     <filter>
@@ -13,4 +13,7 @@
             <directory>src/</directory>
         </whitelist>
     </filter>
+    <php>
+        <env name="PROJECT_ROOT_DIR" value="./"/>
+    </php>
 </phpunit>

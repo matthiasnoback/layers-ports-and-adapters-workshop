@@ -4,18 +4,19 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Command;
 
 use MeetupOrganizing\ServiceContainer;
+use PHPUnit_Framework_TestCase;
 use Webmozart\Console\Args\StringArgs;
 use Webmozart\Console\ConsoleApplication;
 use Webmozart\Console\IO\OutputStream\BufferedOutputStream;
 
-final class ScheduleMeetupConsoleHandlerTest extends \PHPUnit_Framework_TestCase
+final class ScheduleMeetupConsoleHandlerTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
     public function it_schedules_a_meetup(): void
     {
-        $container = new ServiceContainer(__DIR__ . '/../../../');
+        $container = new ServiceContainer(getenv('PROJECT_ROOT_DIR'));
 
         $config = new MeetupApplicationConfig($container);
         $config->setTerminateAfterRun(false);
