@@ -75,8 +75,7 @@ final class ScheduleMeetup
         try {
             $this->scheduledFor();
         } catch (InvalidArgumentException $exception) {
-            $formErrors['scheduleForDate'][] = 'Invalid date/time';
-            $formErrors['scheduleForTime'][] = 'Invalid date/time';
+            $formErrors['scheduleFor'][] = 'Invalid date/time';
         }
 
         return $formErrors;
