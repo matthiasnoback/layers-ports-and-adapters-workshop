@@ -5,9 +5,9 @@ namespace MeetupOrganizing\Infrastructure\Controller;
 
 use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Domain\Rsvp;
+use MeetupOrganizing\Domain\UserRepository;
 use MeetupOrganizing\Infrastructure\RsvpRepository;
 use MeetupOrganizing\Domain\UserId;
-use MeetupOrganizing\Domain\UserRepository;
 use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

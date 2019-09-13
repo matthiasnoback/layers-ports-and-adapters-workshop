@@ -6,22 +6,20 @@ namespace MeetupOrganizing\Infrastructure;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Interop\Container\ContainerInterface;
+use MeetupOrganizing\Domain\MeetupRepository;
+use MeetupOrganizing\Domain\UserRepository;
 use MeetupOrganizing\Infrastructure\Command\ScheduleMeetupConsoleHandler;
 use MeetupOrganizing\Infrastructure\Controller\ListMeetupsController;
 use MeetupOrganizing\Infrastructure\Controller\MeetupDetailsController;
 use MeetupOrganizing\Infrastructure\Controller\RsvpForMeetupController;
 use MeetupOrganizing\Infrastructure\Controller\ScheduleMeetupController;
 use MeetupOrganizing\Infrastructure\Controller\SwitchUserController;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
-use MeetupOrganizing\Infrastructure\RsvpRepository;
-use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Infrastructure\HardCodedUserRepository;
 use MeetupOrganizing\Infrastructure\ReadModel\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Infrastructure\Resources\Views\FlashExtension;
 use MeetupOrganizing\Infrastructure\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Infrastructure\Resources\Views\UserExtension;
-use MeetupOrganizing\Infrastructure\SchemaManager;
-use MeetupOrganizing\Infrastructure\Session;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Debug\ErrorHandler;
 use Xtreamwayz\Pimple\Container;
@@ -155,7 +153,7 @@ final class ServiceContainer extends Container
         };
 
         $this[UserRepository::class] = function () {
-            return new UserRepository();
+            return new HardCodedUserRepository();
         };
         $this[RsvpRepository::class] = function (ContainerInterface $container) {
             return new RsvpRepository(
@@ -163,7 +161,7 @@ final class ServiceContainer extends Container
             );
         };
         $this[MeetupRepository::class] = function (ContainerInterface $container) {
-            return new MeetupRepository(
+            return new MeetupRepositorySql(
                 $this[Connection::class]
             );
         };

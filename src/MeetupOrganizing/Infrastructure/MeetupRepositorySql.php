@@ -5,8 +5,9 @@ namespace MeetupOrganizing\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Domain\Meetup;
+use MeetupOrganizing\Domain\MeetupRepository;
 
-final class MeetupRepository
+final class MeetupRepositorySql implements MeetupRepository
 {
     /**
      * @var Connection

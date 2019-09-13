@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure\Controller;
 
 use MeetupOrganizing\Domain\UserId;
-use RuntimeException;
 use MeetupOrganizing\Domain\UserRepository;
+use RuntimeException;
 use MeetupOrganizing\Infrastructure\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
