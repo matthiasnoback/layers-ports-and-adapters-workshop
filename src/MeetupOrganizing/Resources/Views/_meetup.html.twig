@@ -6,7 +6,6 @@
     </div>
     <div class="panel-body">
         <p><small>{{ meetup.scheduledFor|date() }}</small></p>
-        <p>{{ meetup.description }}</p>
         <p><a href="{{ path("meetup_details", { 'id' : meetup.meetupId }) }}" class="btn btn-success">Read more</a></p>
     </div>
 </div>
