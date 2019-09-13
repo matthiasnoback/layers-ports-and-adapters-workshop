@@ -13,6 +13,7 @@ use MeetupOrganizing\Controller\MeetupDetailsController;
 use MeetupOrganizing\Controller\RsvpForMeetupController;
 use MeetupOrganizing\Controller\ScheduleMeetupController;
 use MeetupOrganizing\Controller\SwitchUserController;
+use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Entity\RsvpRepository;
 use MeetupOrganizing\Entity\UserRepository;
 use MeetupOrganizing\Resources\Views\FlashExtension;
@@ -158,6 +159,11 @@ final class ServiceContainer extends Container
                 $this[Connection::class]
             );
         };
+        $this[MeetupRepository::class] = function (ContainerInterface $container) {
+            return new MeetupRepository(
+                $this[Connection::class]
+            );
+        };
 
         /*
          * Controllers
@@ -173,7 +179,7 @@ final class ServiceContainer extends Container
                 $container->get(Session::class),
                 $container->get(TemplateRendererInterface::class),
                 $container->get(RouterInterface::class),
-                $container->get(Connection::class)
+                $container->get(MeetupRepository::class)
             );
         };
         $this[ListMeetupsController::class] = function (ContainerInterface $container) {
@@ -210,7 +216,7 @@ final class ServiceContainer extends Container
          */
         $this[ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
             return new ScheduleMeetupConsoleHandler(
-                $this[Connection::class]
+                $this[MeetupRepository::class]
             );
         };
     }

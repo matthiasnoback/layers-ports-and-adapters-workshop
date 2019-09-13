@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Command;
 
-use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Entity\Meetup;
+use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Entity\UserId;
 use Webmozart\Console\Api\Args\Args;
@@ -13,13 +13,13 @@ use Webmozart\Console\Api\IO\IO;
 final class ScheduleMeetupConsoleHandler
 {
     /**
-     * @var Connection
+     * @var MeetupRepository
      */
-    private $connection;
+    private $meetupRepository;
 
-    public function __construct(Connection $connection)
+    public function __construct(MeetupRepository $meetupRepository)
     {
-        $this->connection = $connection;
+        $this->meetupRepository = $meetupRepository;
     }
 
     public function handle(Args $args, IO $io): int
@@ -31,7 +31,7 @@ final class ScheduleMeetupConsoleHandler
             ScheduledDate::fromPhpDateString($args->getArgument('scheduledFor'))
         );
 
-        $this->connection->insert('meetups', $meetup->getData());
+        $this->meetupRepository->add($meetup);
 
         $io->writeLine('<success>Scheduled the meetup successfully</success>');
 

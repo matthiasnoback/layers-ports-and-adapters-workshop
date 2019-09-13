@@ -6,6 +6,11 @@ namespace MeetupOrganizing\Entity;
 final class Meetup
 {
     /**
+     * @var int
+     */
+    private $meetupId;
+
+    /**
      * @var UserId
      */
     private $organizerId;
@@ -45,5 +50,19 @@ final class Meetup
             'description' => $this->description,
             'scheduledFor' => $this->scheduledFor->asString()
         ];
+    }
+
+    /**
+     * @param int $meetupId
+     * @internal Only to be used by MeetupRepository
+     */
+    public function setId(int $meetupId): void
+    {
+        $this->meetupId = $meetupId;
+    }
+
+    public function getId(): int
+    {
+        return $this->meetupId;
     }
 }
