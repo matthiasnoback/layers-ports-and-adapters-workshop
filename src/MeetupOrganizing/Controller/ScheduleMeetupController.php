@@ -62,35 +62,18 @@ final class ScheduleMeetupController
         if ($request->getMethod() === 'POST') {
             $formData = $request->getParsedBody();
 
-            if (empty($formData['name'])) {
-                $formErrors['name'][] = 'Provide a name';
-            }
-            if (empty($formData['description'])) {
-                $formErrors['description'][] = 'Provide a description';
-            }
-            if (empty($formData['scheduleForDate'])) {
-                $formErrors['scheduleForDate'][] = 'Provide a date';
-            }
-            if (empty($formData['scheduleForTime'])) {
-                $formErrors['scheduleForTime'][] = 'Provide a time';
-            }
-            try {
-                ScheduledDate::fromPhpDateString(
-                    $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
-                );
-            } catch (InvalidArgumentException $exception) {
-                $formErrors['scheduleForDate'][] = 'Invalid date/time';
-                $formErrors['scheduleForTime'][] = 'Invalid date/time';
-            }
+            $command = new ScheduleMeetup(
+                $this->session->getLoggedInUser()->userId()->asInt(),
+                $formData['name'],
+                $formData['description'],
+                $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
+            );
+
+            $formErrors = $command->validate();
 
             if (empty($formErrors)) {
                 $meetupId = $this->meetupService->scheduleMeetup(
-                    new ScheduleMeetup(
-                        $this->session->getLoggedInUser()->userId()->asInt(),
-                        $formData['name'],
-                        $formData['description'],
-                        $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
-                    )
+                    $command
                 );
 
                 $this->session->addSuccessFlash('Your meetup was scheduled successfully');
