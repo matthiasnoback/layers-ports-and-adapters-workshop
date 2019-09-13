@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing;
 
-use Assert\Assertion;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Interop\Container\ContainerInterface;
@@ -179,7 +178,7 @@ final class ServiceContainer extends Container
                 $container->get(Session::class),
                 $container->get(TemplateRendererInterface::class),
                 $container->get(RouterInterface::class),
-                $container->get(MeetupRepository::class)
+                $container->get(MeetupService::class)
             );
         };
         $this[ListMeetupsController::class] = function (ContainerInterface $container) {
@@ -216,6 +215,16 @@ final class ServiceContainer extends Container
          */
         $this[ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
             return new ScheduleMeetupConsoleHandler(
+                $this[MeetupService::class]
+            );
+        };
+
+        /*
+         * Application services
+         */
+        $this[MeetupService::class] = function () {
+            return new MeetupService(
+                $this[UserRepository::class],
                 $this[MeetupRepository::class]
             );
         };
