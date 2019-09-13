@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace MeetupOrganizing\Entity;
 
-use MeetupOrganizing\Domain\MeetupId;
+use MeetupOrganizing\Domain\Meetup\MeetupId;
 use PHPUnit_Framework_TestCase;
 
 final class MeetupIdTest extends PHPUnit_Framework_TestCase

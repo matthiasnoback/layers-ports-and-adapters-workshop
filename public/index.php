@@ -2,7 +2,7 @@
 declare(strict_types = 1);
 
 use Interop\Container\ContainerInterface;
-use MeetupOrganizing\Infrastructure\SchemaManager;
+use MeetupOrganizing\Infrastructure\Sql\SchemaManager;
 use MeetupOrganizing\Infrastructure\ServiceContainer;
 use Zend\Expressive\Application;
 

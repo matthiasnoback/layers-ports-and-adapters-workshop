@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\Domain\User;
-use MeetupOrganizing\Domain\UserId;
-use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Domain\User\User;
+use MeetupOrganizing\Domain\User\UserId;
+use MeetupOrganizing\Domain\User\UserRepository;
 use RuntimeException;
 
 final class HardCodedUserRepository implements UserRepository

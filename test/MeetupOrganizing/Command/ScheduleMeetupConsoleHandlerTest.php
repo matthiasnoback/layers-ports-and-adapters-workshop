@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure\Command;
+namespace MeetupOrganizing\Infrastructure\Cli;
 
 use MeetupOrganizing\Infrastructure\ServiceContainer;
 use PHPUnit_Framework_TestCase;

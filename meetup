@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use MeetupOrganizing\Infrastructure\Command\MeetupApplicationConfig;
+use MeetupOrganizing\Infrastructure\Cli\MeetupApplicationConfig;
 use MeetupOrganizing\Infrastructure\ServiceContainer;
 use Webmozart\Console\ConsoleApplication;
 
