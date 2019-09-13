@@ -6,6 +6,7 @@ namespace MeetupOrganizing\Infrastructure;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Interop\Container\ContainerInterface;
+use MeetupOrganizing\Application\ReadModel\ListMeetupsRepository;
 use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
 use MeetupOrganizing\Infrastructure\Command\ScheduleMeetupConsoleHandler;
@@ -14,8 +15,6 @@ use MeetupOrganizing\Infrastructure\Controller\MeetupDetailsController;
 use MeetupOrganizing\Infrastructure\Controller\RsvpForMeetupController;
 use MeetupOrganizing\Infrastructure\Controller\ScheduleMeetupController;
 use MeetupOrganizing\Infrastructure\Controller\SwitchUserController;
-use MeetupOrganizing\Infrastructure\HardCodedUserRepository;
-use MeetupOrganizing\Infrastructure\ReadModel\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Infrastructure\Resources\Views\FlashExtension;
 use MeetupOrganizing\Infrastructure\Resources\Views\TwigTemplates;
@@ -166,7 +165,7 @@ final class ServiceContainer extends Container
             );
         };
         $this[ListMeetupsRepository::class] = function () {
-            return new ListMeetupsRepository(
+            return new MeetupRepositorySql(
                 $this[Connection::class]
             );
         };
