@@ -2,8 +2,8 @@
 declare(strict_types = 1);
 
 use Interop\Container\ContainerInterface;
-use MeetupOrganizing\SchemaManager;
-use MeetupOrganizing\ServiceContainer;
+use MeetupOrganizing\Infrastructure\SchemaManager;
+use MeetupOrganizing\Infrastructure\ServiceContainer;
 use Zend\Expressive\Application;
 
 require __DIR__ . '/../vendor/autoload.php';
