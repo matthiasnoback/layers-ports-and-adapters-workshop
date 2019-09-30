@@ -6,6 +6,7 @@ namespace MeetupOrganizing;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Command\ScheduleMeetupConsoleHandler;
+use MeetupOrganizing\Controller\CancelMeetupController;
 use MeetupOrganizing\Controller\ListMeetupsController;
 use MeetupOrganizing\Controller\MeetupDetailsController;
 use MeetupOrganizing\Controller\RsvpForMeetupController;
@@ -80,6 +81,12 @@ final class ServiceContainer extends Container
                         'path' => '/schedule-meetup',
                         'middleware' => ScheduleMeetupController::class,
                         'allowed_methods' => ['GET', 'POST']
+                    ],
+                    [
+                        'name' => 'cancel_meetup',
+                        'path' => '/cancel-meetup',
+                        'middleware' => CancelMeetupController::class,
+                        'allowed_methods' => ['POST']
                     ],
                     [
                         'name' => 'switch_user',
@@ -172,6 +179,13 @@ final class ServiceContainer extends Container
                 $this[TemplateRendererInterface::class],
                 $this[RouterInterface::class],
                 $this[Connection::class]
+            );
+        };
+        $this[CancelMeetupController::class] = function () {
+            return new CancelMeetupController(
+                $this[Connection::class],
+                $this[Session::class],
+                $this[RouterInterface::class]
             );
         };
         $this[ListMeetupsController::class] = function () {

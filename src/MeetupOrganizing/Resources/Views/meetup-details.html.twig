@@ -17,9 +17,16 @@
         <p>No attendees yet.</p>
     {% endif %}
 
-    <form action="{{ url('rsvp_for_meetup') }}" method="post">
-        <input type="hidden" name="meetupId" value="{{ meetup.meetupId }}">
-        <button class="btn btn-success">RSVP</button>
-    </form>
+    {% if loggedInUser.userId.asInt == meetup.organizerId %}
+        <form action="{{ url('cancel_meetup') }}" method="post">
+            <input type="hidden" name="meetupId" value="{{ meetup.meetupId }}">
+            <button class="btn btn-danger">Cancel this meetup</button>
+        </form>
+    {% else %}
+        <form action="{{ url('rsvp_for_meetup') }}" method="post">
+            <input type="hidden" name="meetupId" value="{{ meetup.meetupId }}">
+            <button class="btn btn-success">RSVP</button>
+        </form>
+    {% endif %}
 
 {% endblock %}

@@ -42,6 +42,8 @@ final class ListMeetupsController implements MiddlewareInterface
             ->from('meetups')
             ->where('scheduledFor >= :now')
             ->setParameter('now', $now->format(ScheduledDate::DATE_TIME_FORMAT))
+            ->andWhere('wasCancelled = :wasNotCancelled')
+            ->setParameter('wasNotCancelled', 0)
             ->execute()
             ->fetchAll(PDO::FETCH_ASSOC);
 
@@ -50,6 +52,8 @@ final class ListMeetupsController implements MiddlewareInterface
             ->from('meetups')
             ->where('scheduledFor < :now')
             ->setParameter('now', $now->format(ScheduledDate::DATE_TIME_FORMAT))
+            ->andWhere('wasCancelled = :wasNotCancelled')
+            ->setParameter('wasNotCancelled', 0)
             ->execute()
             ->fetchAll(PDO::FETCH_ASSOC);;
 

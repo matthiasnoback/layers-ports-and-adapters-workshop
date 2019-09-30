@@ -80,7 +80,8 @@ final class ScheduleMeetupController
                     'organizerId' => $this->session->getLoggedInUser()->userId()->asInt(),
                     'name' => $formData['name'],
                     'description' => $formData['description'],
-                    'scheduledFor' => $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
+                    'scheduledFor' => $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime'],
+                    'wasCancelled' => 0
                 ];
                 $this->connection->insert('meetups', $record);
 

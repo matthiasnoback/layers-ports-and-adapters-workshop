@@ -61,7 +61,7 @@ final class FeatureContext extends MinkContext
     public function iAmLoggedInAs(string $name): void
     {
         $this->visit('/');
-        $this->selectOption('Logged in user', 'Regular user');
+        $this->selectOption('Logged in user', $name);
         $this->pressButton('Switch');
     }
 

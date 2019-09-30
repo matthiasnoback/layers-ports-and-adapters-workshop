@@ -44,6 +44,7 @@ final class SchemaManager
         $meetupsTable->addColumn('name', 'string');
         $meetupsTable->addColumn('description', 'string');
         $meetupsTable->addColumn('scheduledFor', 'string');
+        $meetupsTable->addColumn('wasCancelled', 'integer', ['default' => 0]);
         $meetupsTable->setPrimaryKey(['meetupId']);
 
         $rsvpsTable = $schema->createTable('rsvps');

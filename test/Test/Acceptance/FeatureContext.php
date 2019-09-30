@@ -34,6 +34,7 @@ final class FeatureContext implements Context
 
     /**
      * @When I schedule a :name on :date at :time
+     * @Given I have scheduled a :name on :date at :time
      */
     public function iScheduleAWithTheDescriptionOnAt(string $name, string $date, string $time): void
     {
@@ -44,6 +45,22 @@ final class FeatureContext implements Context
      * @Then there will be an upcoming meetup called :name
      */
     public function thereWillBeAnUpcomingMeetupCalled(string $name): void
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When I cancel it
+     */
+    public function iCancelIt()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then it will no longer show up in the list of upcoming meetups
+     */
+    public function itWillNoLongerShowUpInTheListOfUpcomingMeetups()
     {
         throw new PendingException();
     }
