@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Command;
 
+use MeetupOrganizing\SchemaManager;
 use MeetupOrganizing\ServiceContainer;
 use PHPUnit_Framework_TestCase;
 use Webmozart\Console\Args\StringArgs;
@@ -17,6 +18,9 @@ final class ScheduleMeetupConsoleHandlerTest extends PHPUnit_Framework_TestCase
     public function it_schedules_a_meetup(): void
     {
         $container = new ServiceContainer(getenv('PROJECT_ROOT_DIR'));
+        /** @var SchemaManager $schemaManager */
+        $schemaManager = $container[SchemaManager::class];
+        $schemaManager->updateSchema();
 
         $config = new MeetupApplicationConfig($container);
         $config->setTerminateAfterRun(false);
