@@ -17,10 +17,10 @@ use MeetupOrganizing\Entity\UserRepository;
 use MeetupOrganizing\Resources\Views\FlashExtension;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Resources\Views\UserExtension;
+use Psr\Http\Message\RequestInterface;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Debug\ErrorHandler;
 use Xtreamwayz\Pimple\Container;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 use Zend\Expressive\Application;
@@ -30,6 +30,7 @@ use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Router\FastRouteRouter;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
+use Zend\Expressive\TemplatedErrorHandler;
 use Zend\Expressive\Twig\TwigRendererFactory;
 
 final class ServiceContainer extends Container
@@ -108,11 +109,24 @@ final class ServiceContainer extends Container
          * Zend Expressive Application
          */
         $this['Zend\Expressive\FinalHandler'] = function () {
-            return function (RequestInterface $request, ResponseInterface $response, $err = null) {
+            return function (
+                RequestInterface $request,
+                ResponseInterface $response,
+                $err = null
+            ) {
                 if ($err instanceof Throwable) {
                     throw $err;
                 }
+
+                return $this[TemplatedErrorHandler::class]($request, $response, $err);
             };
+        };
+        $this[TemplatedErrorHandler::class] = function () {
+            return new TemplatedErrorHandler(
+                $this[TemplateRendererInterface::class],
+                'error404.html.twig',
+                'error.html.twig'
+            );
         };
         $this[RouterInterface::class] = function () {
             return new FastRouteRouter();
