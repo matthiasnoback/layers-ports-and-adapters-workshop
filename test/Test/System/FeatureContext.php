@@ -40,9 +40,8 @@ final class FeatureContext extends MinkContext
     /**
      * @BeforeScenario
      */
-    public function updateSchema(): void
+    public function truncateTables(): void
     {
-        self::schemaManager()->updateSchema();
         self::schemaManager()->truncateTables();
     }
 

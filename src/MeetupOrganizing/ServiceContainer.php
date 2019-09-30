@@ -5,7 +5,6 @@ namespace MeetupOrganizing;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use Interop\Container\ContainerInterface;
 use MeetupOrganizing\Command\ScheduleMeetupConsoleHandler;
 use MeetupOrganizing\Controller\ListMeetupsController;
 use MeetupOrganizing\Controller\MeetupDetailsController;
@@ -212,5 +211,12 @@ final class ServiceContainer extends Container
                 $this[Connection::class]
             );
         };
+
+        $this->bootstrap();
+    }
+
+    private function bootstrap(): void
+    {
+        $this[SchemaManager::class]->updateSchema();
     }
 }
