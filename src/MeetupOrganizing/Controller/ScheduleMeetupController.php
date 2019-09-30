@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Controller;
 
 use Doctrine\DBAL\Connection;
-use InvalidArgumentException;
+use Exception;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
@@ -67,19 +67,12 @@ final class ScheduleMeetupController
             if (empty($formData['description'])) {
                 $formErrors['description'][] = 'Provide a description';
             }
-            if (empty($formData['scheduleForDate'])) {
-                $formErrors['scheduleForDate'][] = 'Provide a date';
-            }
-            if (empty($formData['scheduleForTime'])) {
-                $formErrors['scheduleForTime'][] = 'Provide a time';
-            }
             try {
                 ScheduledDate::fromString(
                     $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
                 );
-            } catch (InvalidArgumentException $exception) {
-                $formErrors['scheduleForDate'][] = 'Invalid date/time';
-                $formErrors['scheduleForTime'][] = 'Invalid date/time';
+            } catch (Exception $exception) {
+                $formErrors['scheduleFor'][] = 'Invalid date/time';
             }
 
             if (empty($formErrors)) {

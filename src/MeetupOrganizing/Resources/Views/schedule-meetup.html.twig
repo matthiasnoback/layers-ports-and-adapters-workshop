@@ -24,15 +24,12 @@
             <label class="control-label" for="scheduleForDate">Schedule for date: </label>
             <input class="form-control" name="scheduleForDate" id="scheduleForDate" type="date"
                    value="{{ formData["scheduleForDate"]|default("") }}">
-            {% for error in formErrors["scheduleForDate"]|default({}) %}
-                <span class="help-block">{{ error }}</span>
-            {% endfor %}
         </div>
         <div class="form-group {% if formErrors["scheduleForTime"] is defined %} has-error{% endif %}">
             <label class="control-label" for="scheduleForTime">Time: </label>
             <input class="form-control" name="scheduleForTime" id="scheduleForTime" type="time"
                    value="{{ formData["scheduleForTime"]|default("") }}">
-            {% for error in formErrors["scheduleForTime"]|default({}) %}
+            {% for error in formErrors["scheduleFor"]|default({}) %}
                 <span class="help-block">{{ error }}</span>
             {% endfor %}
         </div>
