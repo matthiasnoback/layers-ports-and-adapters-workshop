@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing;
 
-use Assert\Assertion;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Interop\Container\ContainerInterface;
@@ -121,16 +120,16 @@ final class ServiceContainer extends Container
         $this[ServerUrlHelper::class] = function () {
             return new ServerUrlHelper();
         };
-        $this[UrlHelper::class] = function (ContainerInterface $container) {
+        $this[UrlHelper::class] = function () {
             return new UrlHelper($this[RouterInterface::class]);
         };
-        $this[UserExtension::class] = function (ContainerInterface $container) {
+        $this[UserExtension::class] = function () {
             return new UserExtension(
                 $this[Session::class],
                 $this[UserRepository::class]
             );
         };
-        $this[FlashExtension::class] = function (ContainerInterface $container) {
+        $this[FlashExtension::class] = function () {
             return new FlashExtension(
                 $this[Session::class]
             );
@@ -146,14 +145,14 @@ final class ServiceContainer extends Container
                 ]
             );
         };
-        $this[SchemaManager::class] = function (ContainerInterface $container) {
+        $this[SchemaManager::class] = function () {
             return new SchemaManager($this[Connection::class]);
         };
 
         $this[UserRepository::class] = function () {
             return new UserRepository();
         };
-        $this[RsvpRepository::class] = function (ContainerInterface $container) {
+        $this[RsvpRepository::class] = function () {
             return new RsvpRepository(
                 $this[Connection::class]
             );
@@ -162,41 +161,41 @@ final class ServiceContainer extends Container
         /*
          * Controllers
          */
-        $this[Session::class] = function (ContainerInterface $container) {
+        $this[Session::class] = function () {
             return new Session(
                 $this[UserRepository::class]
             );
         };
 
-        $this[ScheduleMeetupController::class] = function (ContainerInterface $container) {
+        $this[ScheduleMeetupController::class] = function () {
             return new ScheduleMeetupController(
-                $container->get(Session::class),
-                $container->get(TemplateRendererInterface::class),
-                $container->get(RouterInterface::class),
-                $container->get(Connection::class)
+                $this[Session::class],
+                $this[TemplateRendererInterface::class],
+                $this[RouterInterface::class],
+                $this[Connection::class]
             );
         };
-        $this[ListMeetupsController::class] = function (ContainerInterface $container) {
+        $this[ListMeetupsController::class] = function () {
             return new ListMeetupsController(
-                $container->get(Connection::class),
-                $container->get(TemplateRendererInterface::class)
+                $this[Connection::class],
+                $this[TemplateRendererInterface::class]
             );
         };
-        $this[MeetupDetailsController::class] = function (ContainerInterface $container) {
+        $this[MeetupDetailsController::class] = function () {
             return new MeetupDetailsController(
-                $container->get(Connection::class),
-                $container->get(UserRepository::class),
-                $container->get(RsvpRepository::class),
-                $container->get(TemplateRendererInterface::class)
+                $this[Connection::class],
+                $this[UserRepository::class],
+                $this[RsvpRepository::class],
+                $this[TemplateRendererInterface::class]
             );
         };
-        $this[SwitchUserController::class] = function (ContainerInterface $container) {
+        $this[SwitchUserController::class] = function () {
             return new SwitchUserController(
                 $this[UserRepository::class],
                 $this[Session::class]
             );
         };
-        $this[RsvpForMeetupController::class] = function (ContainerInterface $container) {
+        $this[RsvpForMeetupController::class] = function () {
             return new RsvpForMeetupController(
                 $this[Connection::class],
                 $this[Session::class],
@@ -208,7 +207,7 @@ final class ServiceContainer extends Container
         /*
          * CLI
          */
-        $this[ScheduleMeetupConsoleHandler::class] = function (ContainerInterface $container) {
+        $this[ScheduleMeetupConsoleHandler::class] = function () {
             return new ScheduleMeetupConsoleHandler(
                 $this[Connection::class]
             );
