@@ -74,7 +74,7 @@ final class ScheduleMeetupController
                 $formErrors['scheduleForTime'][] = 'Provide a time';
             }
             try {
-                ScheduledDate::fromPhpDateString(
+                ScheduledDate::fromString(
                     $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
                 );
             } catch (InvalidArgumentException $exception) {

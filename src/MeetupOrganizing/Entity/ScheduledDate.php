@@ -5,11 +5,12 @@ namespace MeetupOrganizing\Entity;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
+use RuntimeException;
 use Throwable;
 
 final class ScheduledDate
 {
-    const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+    const DATE_TIME_FORMAT = 'Y-m-d H:i';
 
     /**
      * @var string
@@ -21,13 +22,20 @@ final class ScheduledDate
         $this->dateTime = $dateTime;
     }
 
-    public static function fromPhpDateString(string $phpDateString): ScheduledDate
+    public static function fromString(string $dateTime): ScheduledDate
     {
         try {
-            $dateTimeImmutable = new DateTimeImmutable($phpDateString);
+            $dateTimeImmutable = DateTimeImmutable::createFromFormat(self::DATE_TIME_FORMAT, $dateTime);
+            if ($dateTimeImmutable === false) {
+                throw new RuntimeException('The provided date/time string did not match the expected format');
+            }
         } catch (Throwable $throwable) {
             throw new InvalidArgumentException(
-                'Invalid PHP date time format',
+                sprintf(
+                    'Invalid date/time format. Provided: %s, expected format: %s',
+                    $dateTime,
+                    self::DATE_TIME_FORMAT
+                ),
                 0,
                 $throwable
             );
