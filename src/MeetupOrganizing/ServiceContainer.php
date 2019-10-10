@@ -15,6 +15,7 @@ use MeetupOrganizing\Controller\SwitchUserController;
 use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Entity\RsvpRepository;
 use MeetupOrganizing\Entity\UserRepository;
+use MeetupOrganizing\ReadModel\ListMeetupsRepository;
 use MeetupOrganizing\Resources\Views\FlashExtension;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Resources\Views\UserExtension;
@@ -183,6 +184,11 @@ final class ServiceContainer extends Container
                 $this[Connection::class]
             );
         };
+        $this[ListMeetupsRepository::class] = function () {
+            return new ListMeetupsRepository(
+                $this[Connection::class]
+            );
+        };
 
         /*
          * Controllers
@@ -210,7 +216,7 @@ final class ServiceContainer extends Container
         };
         $this[ListMeetupsController::class] = function () {
             return new ListMeetupsController(
-                $this[Connection::class],
+                $this[ListMeetupsRepository::class],
                 $this[TemplateRendererInterface::class]
             );
         };
