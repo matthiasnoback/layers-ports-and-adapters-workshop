@@ -6,6 +6,7 @@ namespace MeetupOrganizing\Controller;
 use Exception;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\MeetupService;
+use MeetupOrganizing\ScheduleMeetup;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -77,10 +78,12 @@ final class ScheduleMeetupController
 
             if (empty($formErrors)) {
                 $meetupId = $this->meetupService->scheduleMeetup(
-                    $this->session->getLoggedInUser()->userId()->asInt(),
-                    $formData['name'],
-                    $formData['description'],
-                    $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
+                    new ScheduleMeetup(
+                        $this->session->getLoggedInUser()->userId()->asInt(),
+                        $formData['name'],
+                        $formData['description'],
+                        $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
+                    )
                 );
 
                 $this->session->addSuccessFlash('Your meetup was scheduled successfully');

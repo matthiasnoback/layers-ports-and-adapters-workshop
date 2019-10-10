@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Command;
 
 use MeetupOrganizing\MeetupService;
+use MeetupOrganizing\ScheduleMeetup;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 
@@ -22,10 +23,12 @@ final class ScheduleMeetupConsoleHandler
     public function handle(Args $args, IO $io): int
     {
         $this->meetupService->scheduleMeetup(
-            (int)$args->getArgument('organizerId'),
-            $args->getArgument('name'),
-            $args->getArgument('description'),
-            $args->getArgument('scheduledFor')
+            new ScheduleMeetup(
+                (int)$args->getArgument('organizerId'),
+                $args->getArgument('name'),
+                $args->getArgument('description'),
+                $args->getArgument('scheduledFor')
+            )
         );
 
         $io->writeLine('<success>Scheduled the meetup successfully</success>');
