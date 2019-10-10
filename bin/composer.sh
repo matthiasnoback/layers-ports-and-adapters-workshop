@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker-compose run --rm devtools /usr/local/bin/composer $@
+docker-compose run --rm devtools php -d memory_limit=-1 /usr/local/bin/composer $@
