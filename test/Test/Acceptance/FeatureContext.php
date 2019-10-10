@@ -5,8 +5,12 @@ namespace Test\Acceptance;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use MeetupOrganizing\Application\ScheduleMeetup\MeetupService;
+use MeetupOrganizing\Application\ScheduleMeetup\ScheduleMeetup;
 use MeetupOrganizing\Domain\Model\User\UserRepository;
+use MeetupOrganizing\Infrastructure\Memory\InMemoryMeetupRepository;
 use MeetupOrganizing\Infrastructure\Memory\InMemoryUserRepository;
+use RuntimeException;
 
 final class FeatureContext implements Context
 {
@@ -20,9 +24,20 @@ final class FeatureContext implements Context
      */
     private $userId;
 
+    /**
+     * @var InMemoryMeetupRepository
+     */
+    private $meetupRepository;
+
+    /**
+     * @var int|null
+     */
+    private $meetupId;
+
     public function __construct()
     {
         $this->userRepository = new InMemoryUserRepository();
+        $this->meetupRepository = new InMemoryMeetupRepository();
     }
 
     /**
@@ -39,7 +54,19 @@ final class FeatureContext implements Context
      */
     public function iScheduleAWithTheDescriptionOnAt(string $name, string $date, string $time): void
     {
-        throw new PendingException();
+        $service = new MeetupService(
+            $this->userRepository,
+            $this->meetupRepository
+        );
+
+        $this->meetupId = $service->scheduleMeetup(
+            new ScheduleMeetup(
+                $this->userId,
+                $name,
+                'A description',
+                $date . ' ' . $time
+            )
+        );
     }
 
     /**
@@ -47,7 +74,13 @@ final class FeatureContext implements Context
      */
     public function thereWillBeAnUpcomingMeetupCalled(string $name): void
     {
-        throw new PendingException();
+        foreach ($this->meetupRepository->upcomingMeetups(new \DateTimeImmutable()) as $meetup) {
+            if ($meetup->name() === $name) {
+                return;
+            }
+        }
+
+        throw new RuntimeException('We did not find the meetup we expected');
     }
 
     /**

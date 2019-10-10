@@ -26,7 +26,10 @@ final class SqliteMeetupRepository implements MeetupRepository, ListMeetupsRepos
 
     public function add(Meetup $meetup): void
     {
-        $this->connection->insert('meetups', $meetup->getData());
+        $data = $meetup->getData();
+        unset($data['meetupId']);
+
+        $this->connection->insert('meetups', $data);
 
         $meetupId = (int)$this->connection->lastInsertId();
         $meetup->setId($meetupId);
