@@ -3,11 +3,16 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure;
 
+use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
+use MeetupOrganizing\Domain\ListMeetupsRepository;
 use MeetupOrganizing\Domain\Meetup;
 use MeetupOrganizing\Domain\MeetupRepository;
+use MeetupOrganizing\Domain\ScheduledDate;
+use PDO;
+use MeetupOrganizing\Application\Meetup as MeetupForList;
 
-final class SqliteMeetupRepository implements MeetupRepository
+final class SqliteMeetupRepository implements MeetupRepository, ListMeetupsRepository
 {
     /**
      * @var Connection
@@ -25,5 +30,33 @@ final class SqliteMeetupRepository implements MeetupRepository
 
         $meetupId = (int)$this->connection->lastInsertId();
         $meetup->setId($meetupId);
+    }
+
+    public function upcomingMeetups(DateTimeImmutable $now): array
+    {
+        $upcomingMeetups = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from('meetups')
+            ->where('scheduledFor >= :now')
+            ->andWhere('wasCancelled = 0')
+            ->setParameter('now', $now->format(ScheduledDate::DATE_TIME_FORMAT))
+            ->execute()
+            ->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map([MeetupForList::class, 'fromDatabaseRecord'], $upcomingMeetups);
+    }
+
+    public function pastMeetups(DateTimeImmutable $now): array
+    {
+        $pastMeetups = $this->connection->createQueryBuilder()
+            ->select('*')
+            ->from('meetups')
+            ->where('scheduledFor < :now')
+            ->andWhere('wasCancelled = 0')
+            ->setParameter('now', $now->format(ScheduledDate::DATE_TIME_FORMAT))
+            ->execute()
+            ->fetchAll(PDO::FETCH_ASSOC);;
+
+        return array_map([MeetupForList::class, 'fromDatabaseRecord'], $pastMeetups);
     }
 }

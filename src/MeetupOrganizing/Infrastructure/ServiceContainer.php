@@ -6,6 +6,7 @@ namespace MeetupOrganizing\Infrastructure;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Domain\ListMeetupsRepository;
 use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\RsvpRepository;
 use MeetupOrganizing\Domain\UserRepository;
@@ -177,11 +178,7 @@ final class ServiceContainer extends Container
                 $this[Connection::class]
             );
         };
-        $this[ListMeetupsRepository::class] = function () {
-            return new ListMeetupsRepository(
-                $this[Connection::class]
-            );
-        };
+        $this[ListMeetupsRepository::class] = $this[MeetupRepository::class];
 
         /*
          * Controllers

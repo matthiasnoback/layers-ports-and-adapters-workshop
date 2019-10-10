@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure;
 
 use DateTimeImmutable;
-use Doctrine\DBAL\Connection;
+use MeetupOrganizing\Domain\ListMeetupsRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -14,7 +14,7 @@ use Zend\Stratigility\MiddlewareInterface;
 final class ListMeetupsController implements MiddlewareInterface
 {
     /**
-     * @var Connection
+     * @var ListMeetupsRepository
      */
     private $listMeetupsRepository;
 
