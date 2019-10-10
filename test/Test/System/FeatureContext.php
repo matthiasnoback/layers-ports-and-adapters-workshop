@@ -3,7 +3,7 @@
 namespace Test\System;
 
 use Behat\MinkExtension\Context\MinkContext;
-use MeetupOrganizing\Infrastructure\SchemaManager;
+use MeetupOrganizing\Infrastructure\Sqlite\SchemaManager;
 use MeetupOrganizing\Infrastructure\ServiceContainer;
 use RuntimeException;
 
