@@ -1,10 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Command;
+namespace MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\SchemaManager;
-use MeetupOrganizing\ServiceContainer;
 use PHPUnit_Framework_TestCase;
 use Webmozart\Console\Args\StringArgs;
 use Webmozart\Console\ConsoleApplication;
