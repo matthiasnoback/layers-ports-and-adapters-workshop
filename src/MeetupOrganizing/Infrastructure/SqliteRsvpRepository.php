@@ -5,9 +5,10 @@ namespace MeetupOrganizing\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Domain\Rsvp;
+use MeetupOrganizing\Domain\RsvpRepository;
 use PDO;
 
-final class RsvpRepository
+final class SqliteRsvpRepository implements RsvpRepository
 {
     /**
      * @var Connection
@@ -31,10 +32,6 @@ final class RsvpRepository
         );
     }
 
-    /**
-     * @param int $meetupId
-     * @return array&Rsvp[]
-     */
     public function getByMeetupId(int $meetupId): array
     {
         $records = $this->connection

@@ -5,7 +5,7 @@ namespace MeetupOrganizing\Infrastructure;
 
 use MeetupOrganizing\Domain\User;
 use MeetupOrganizing\Domain\UserId;
-use MeetupOrganizing\Infrastructure\UserRepository;
+use MeetupOrganizing\Domain\UserRepository;
 
 final class Session
 {

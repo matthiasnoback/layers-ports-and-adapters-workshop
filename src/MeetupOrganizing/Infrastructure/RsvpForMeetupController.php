@@ -5,7 +5,7 @@ namespace MeetupOrganizing\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Domain\Rsvp;
-use MeetupOrganizing\Infrastructure\RsvpRepository;
+use MeetupOrganizing\Domain\RsvpRepository;
 use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
