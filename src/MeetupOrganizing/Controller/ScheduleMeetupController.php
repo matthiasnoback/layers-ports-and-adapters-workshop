@@ -5,6 +5,7 @@ namespace MeetupOrganizing\Controller;
 
 use Doctrine\DBAL\Connection;
 use Exception;
+use MeetupOrganizing\Entity\Meetup;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
@@ -76,14 +77,16 @@ final class ScheduleMeetupController
             }
 
             if (empty($formErrors)) {
-                $record = [
-                    'organizerId' => $this->session->getLoggedInUser()->userId()->asInt(),
-                    'name' => $formData['name'],
-                    'description' => $formData['description'],
-                    'scheduledFor' => $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime'],
-                    'wasCancelled' => 0
-                ];
-                $this->connection->insert('meetups', $record);
+
+                $meetup = new Meetup(
+                    $this->session->getLoggedInUser()->userId(),
+                    $formData['name'],
+                    $formData['description'],
+                    ScheduledDate::fromString(
+                        $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
+                    )
+                );
+                $this->connection->insert('meetups', $meetup->getData());
 
                 $meetupId = (int)$this->connection->lastInsertId();
 
