@@ -6,8 +6,8 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
-use MeetupOrganizing\SchemaManager;
-use MeetupOrganizing\ServiceContainer;
+use MeetupOrganizing\Infrastructure\SchemaManager;
+use MeetupOrganizing\Infrastructure\ServiceContainer;
 use RuntimeException;
 
 /**
