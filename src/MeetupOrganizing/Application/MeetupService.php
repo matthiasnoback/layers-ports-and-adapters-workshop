@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Application;
 
 use MeetupOrganizing\Domain\Meetup;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
-use MeetupOrganizing\Infrastructure\UserRepository;
+use MeetupOrganizing\Domain\MeetupRepository;
+use MeetupOrganizing\Domain\UserRepository;
 
 final class MeetupService
 {
