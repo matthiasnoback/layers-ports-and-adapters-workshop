@@ -55,6 +55,7 @@ final class Meetup
     public function getData(): array
     {
         return [
+            'meetupId' => $this->meetupId,
             'organizerId' => $this->organizerId->asInt(),
             'name' => $this->name,
             'description' => $this->description,
@@ -75,5 +76,10 @@ final class Meetup
     public function getId(): int
     {
         return $this->meetupId;
+    }
+
+    public function scheduledDate(): ScheduledDate
+    {
+        return $this->scheduledFor;
     }
 }

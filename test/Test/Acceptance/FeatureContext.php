@@ -5,8 +5,13 @@ namespace Test\Acceptance;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use MeetupOrganizing\Application\MeetupForList;
+use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Application\ScheduleMeetup;
+use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
 use MeetupOrganizing\Infrastructure\InMemoryUserRepository;
+use RuntimeException;
 
 final class FeatureContext implements Context
 {
@@ -20,6 +25,11 @@ final class FeatureContext implements Context
      */
     private $userId;
 
+    /**
+     * @var InMemoryMeetupRepository
+     */
+    private $meetupRepository;
+
     public function __construct()
     {
         $this->userRepository = new InMemoryUserRepository();
@@ -31,6 +41,7 @@ final class FeatureContext implements Context
     public function iAmAnOrganizer()
     {
         $this->userId = $this->userRepository->getOrganizerId()->asInt();
+        $this->meetupRepository = new InMemoryMeetupRepository();
     }
 
     /**
@@ -39,7 +50,19 @@ final class FeatureContext implements Context
      */
     public function iScheduleAWithTheDescriptionOnAt(string $name, string $date, string $time): void
     {
-        throw new PendingException();
+        $service = new MeetupService(
+            $this->userRepository,
+            $this->meetupRepository
+        );
+
+        $service->scheduleMeetup(
+            new ScheduleMeetup(
+                $this->userId,
+                $name,
+                'Some description',
+                $date . ' ' . $time
+            )
+        );
     }
 
     /**
@@ -47,7 +70,14 @@ final class FeatureContext implements Context
      */
     public function thereWillBeAnUpcomingMeetupCalled(string $name): void
     {
-        throw new PendingException();
+        foreach ($this->meetupRepository->upcomingMeetups(new \DateTimeImmutable()) as $meetup) {
+            /** @var MeetupForList $meetup */
+            if ($meetup->name() === $name) {
+                return;
+            }
+        }
+
+        throw new RuntimeException('We expected an upcoming meetup to have been scheduled');
     }
 
     /**
