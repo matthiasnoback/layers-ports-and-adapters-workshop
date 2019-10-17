@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure;
 
 use MeetupOrganizing\Domain\UserId;
-use MeetupOrganizing\Infrastructure\UserRepository;
+use MeetupOrganizing\Domain\UserRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
