@@ -5,6 +5,9 @@ namespace MeetupOrganizing\Command;
 
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
+use MeetupOrganizing\Entity\Meetup;
+use MeetupOrganizing\Entity\ScheduledDate;
+use MeetupOrganizing\Entity\UserId;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -47,14 +50,14 @@ final class ScheduleMeetupCommand extends Command
         $scheduledFor = $input->getArgument('scheduledFor');
         Assert::that($scheduledFor)->string();
 
-        $record = [
-            'organizerId' => (int)$organizerId,
-            'name' => $name,
-            'description' => $description,
-            'scheduledFor' => $scheduledFor
-        ];
+        $meetup = new Meetup(
+            UserId::fromInt((int)$organizerId),
+            $name,
+            $description,
+            ScheduledDate::fromString($scheduledFor)
+        );
 
-        $this->connection->insert('meetups', $record);
+        $this->connection->insert('meetups', $meetup->getData());
 
         $output->writeln('<info>Scheduled the meetup successfully</info>');
 
