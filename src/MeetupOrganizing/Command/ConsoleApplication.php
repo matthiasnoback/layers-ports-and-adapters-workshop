@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Command;
 
-use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\MeetupService;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
