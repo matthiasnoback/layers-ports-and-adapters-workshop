@@ -8,10 +8,11 @@ use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Application\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupForList;
 use MeetupOrganizing\Domain\Meetup;
+use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\ScheduledDate;
 use PDO;
 
-final class MeetupRepository implements ListMeetupsRepository
+final class DbalMeetupRepository implements ListMeetupsRepository, MeetupRepository
 {
     /**
      * @var Connection

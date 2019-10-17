@@ -5,9 +5,10 @@ namespace MeetupOrganizing\Infrastructure;
 
 use MeetupOrganizing\Domain\User;
 use MeetupOrganizing\Domain\UserId;
+use MeetupOrganizing\Domain\UserRepository;
 use RuntimeException;
 
-final class UserRepository
+final class InMemoryUserRepository implements UserRepository
 {
     const ORGANIZER_ID = 1;
     const REGULAR_USER_ID = 2;
@@ -32,9 +33,6 @@ final class UserRepository
         return User::fromDatabaseRecord($this->records[$id->asInt()]);
     }
 
-    /**
-     * @return array&User[]
-     */
     public function findAll(): array
     {
         return array_map(

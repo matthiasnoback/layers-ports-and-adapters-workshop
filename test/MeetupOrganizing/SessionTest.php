@@ -3,7 +3,7 @@
 namespace MeetupOrganizing;
 
 use MeetupOrganizing\Domain\UserId;
-use MeetupOrganizing\Infrastructure\UserRepository;
+use MeetupOrganizing\Infrastructure\InMemoryUserRepository;
 use MeetupOrganizing\Infrastructure\Session;
 use PHPUnit_Framework_TestCase;
 
@@ -14,7 +14,7 @@ final class SessionTest extends PHPUnit_Framework_TestCase
      */
     public function it_will_return_user_1_as_logged_in_user_if_the_session_is_empty(): void
     {
-        $userRepository = new UserRepository();
+        $userRepository = new InMemoryUserRepository();
         $session = new Session($userRepository);
 
         self::assertEquals(
@@ -28,7 +28,7 @@ final class SessionTest extends PHPUnit_Framework_TestCase
      */
     public function you_can_set_the_logged_in_user(): void
     {
-        $userRepository = new UserRepository();
+        $userRepository = new InMemoryUserRepository();
         $session = new Session($userRepository);
 
         $session->setLoggedInUserId(UserId::fromInt(2));
@@ -44,7 +44,7 @@ final class SessionTest extends PHPUnit_Framework_TestCase
      */
     public function you_can_add_flashes_by_type_and_get_all_of_them_at_once(): void
     {
-        $session = new Session(new UserRepository());
+        $session = new Session(new InMemoryUserRepository());
         $session->addErrorFlash('Error');
         $session->addSuccessFlash('Success');
 
