@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Controller;
 
 use Assert\Assert;
-use Doctrine\DBAL\Connection;
 use Exception;
 use MeetupOrganizing\Entity\Meetup;
+use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
@@ -23,18 +23,18 @@ final class ScheduleMeetupController
 
     private RouterInterface $router;
 
-    private Connection $connection;
+    private MeetupRepository $meetupRepository;
 
     public function __construct(
         Session $session,
         TemplateRendererInterface $renderer,
         RouterInterface $router,
-        Connection $connection
+        MeetupRepository $meetupRepository
     ) {
         $this->session = $session;
         $this->renderer = $renderer;
         $this->router = $router;
-        $this->connection = $connection;
+        $this->meetupRepository = $meetupRepository;
     }
 
     public function __invoke(
@@ -76,9 +76,8 @@ final class ScheduleMeetupController
                         $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
                     )
                 );
-                $this->connection->insert('meetups', $meetup->getData());
 
-                $meetupId = (int)$this->connection->lastInsertId();
+                $this->meetupRepository->save($meetup);
 
                 $this->session->addSuccessFlash('Your meetup was scheduled successfully');
 
@@ -86,7 +85,7 @@ final class ScheduleMeetupController
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetupId
+                            'id' => $meetup->getId()
                         ]
                     )
                 );
