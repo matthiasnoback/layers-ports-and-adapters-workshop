@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
-use Exception;
-use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\MeetupService;
 use MeetupOrganizing\ScheduleMeetup;
 use MeetupOrganizing\Session;
@@ -62,29 +60,19 @@ final class ScheduleMeetupController
         if ($request->getMethod() === 'POST') {
             $formData = $request->getParsedBody();
 
-            if (empty($formData['name'])) {
-                $formErrors['name'][] = 'Provide a name';
-            }
-            if (empty($formData['description'])) {
-                $formErrors['description'][] = 'Provide a description';
-            }
-            try {
-                ScheduledDate::fromString(
-                    $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
-                );
-            } catch (Exception $exception) {
-                $formErrors['scheduleFor'][] = 'Invalid date/time';
-            }
+            $command = new ScheduleMeetup(
+                $this->session->getLoggedInUser()->userId()->asInt(),
+                $formData['name'],
+                $formData['description'],
+                $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
+            );
+
+            $formErrors = $command->validate();
 
             if (empty($formErrors)) {
 
                 $meetupId = $this->meetupService->scheduleMeetup(
-                    new ScheduleMeetup(
-                        $this->session->getLoggedInUser()->userId()->asInt(),
-                        $formData['name'],
-                        $formData['description'],
-                        $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
-                    )
+                    $command
                 );
 
                 $this->session->addSuccessFlash('Your meetup was scheduled successfully');

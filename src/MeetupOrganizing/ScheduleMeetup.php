@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing;
 
+use InvalidArgumentException;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Entity\UserId;
 
@@ -58,5 +59,25 @@ final class ScheduleMeetup
     public function scheduledFor(): ScheduledDate
     {
         return ScheduledDate::fromString($this->scheduledFor);
+    }
+
+    public function validate(): array
+    {
+        $formErrors = [];
+
+        if (empty($this->name)) {
+            $formErrors['name'][] = 'Provide a name';
+        }
+        if (empty($this->description)) {
+            $formErrors['description'][] = 'Provide a description';
+        }
+
+        try {
+            $this->scheduledFor();
+        } catch (InvalidArgumentException $exception) {
+            $formErrors['scheduleFor'][] = 'Invalid date/time';
+        }
+
+        return $formErrors;
     }
 }
