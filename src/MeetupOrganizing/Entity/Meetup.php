@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use Assert\Assertion;
+
 final class Meetup
 {
     /**
@@ -41,6 +43,9 @@ final class Meetup
         string $description,
         ScheduledDate $scheduledFor
     ) {
+        Assertion::notEmpty($name, 'name should not be empty');
+        Assertion::notEmpty($description, 'description should not be empty');
+
         $this->organizerId = $organizerId;
         $this->name = $name;
         $this->description = $description;
