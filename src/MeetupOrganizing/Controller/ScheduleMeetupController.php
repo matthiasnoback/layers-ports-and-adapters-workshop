@@ -60,6 +60,8 @@ final class ScheduleMeetupController
         ];
 
         if ($request->getMethod() === 'POST') {
+            $formData = $request->getParsedBody();
+
             $command = new ScheduleMeetup(
                 $this->session->getLoggedInUser()->userId()->asInt(),
                 $formData['name'] ?? '',
