@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Application;
+namespace MeetupOrganizing\Application\ScheduleMeetup;
 
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
+use MeetupOrganizing\Domain\Model\User\UserId;
 use Symfony\Component\Validator\Constraints as Assert;
-use MeetupOrganizing\Domain\ScheduledDate;
-use MeetupOrganizing\Domain\UserId;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 final class ScheduleMeetup
 {

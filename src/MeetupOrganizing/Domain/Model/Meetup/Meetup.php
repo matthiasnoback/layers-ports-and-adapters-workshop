@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Domain;
+namespace MeetupOrganizing\Domain\Model\Meetup;
 
 use Assert\Assertion;
+use MeetupOrganizing\Domain\Model\User\UserId;
 
 final class Meetup
 {

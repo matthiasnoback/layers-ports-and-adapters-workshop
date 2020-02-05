@@ -5,10 +5,10 @@ namespace MeetupOrganizing\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use MeetupOrganizing\Application\ListMeetupsRepository;
-use MeetupOrganizing\Application\MeetupService;
-use MeetupOrganizing\Domain\MeetupRepository;
-use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Application\ListMeetups\ListMeetupsRepository;
+use MeetupOrganizing\Application\ScheduleMeetup\MeetupService;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupRepository;
+use MeetupOrganizing\Domain\Model\User\UserRepository;
 use MeetupOrganizing\Infrastructure\Resources\Views\FlashExtension;
 use MeetupOrganizing\Infrastructure\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Infrastructure\Resources\Views\UserExtension;

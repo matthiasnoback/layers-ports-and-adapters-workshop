@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Application;
+namespace MeetupOrganizing\Application\ScheduleMeetup;
 
-use MeetupOrganizing\Domain\Meetup;
-use MeetupOrganizing\Domain\MeetupRepository;
-use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Domain\Model\Meetup\Meetup;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupRepository;
+use MeetupOrganizing\Domain\Model\User\UserRepository;
 
 final class MeetupService
 {

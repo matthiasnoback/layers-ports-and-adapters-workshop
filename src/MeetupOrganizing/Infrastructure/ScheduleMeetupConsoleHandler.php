@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\Application\MeetupService;
-use MeetupOrganizing\Application\ScheduleMeetup;
+use MeetupOrganizing\Application\ScheduleMeetup\MeetupService;
+use MeetupOrganizing\Application\ScheduleMeetup\ScheduleMeetup;
 use Webmozart\Console\Api\Args\Args;
 use Webmozart\Console\Api\IO\IO;
 

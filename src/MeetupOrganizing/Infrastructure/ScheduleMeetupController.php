@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\Application\MeetupService;
-use MeetupOrganizing\Application\ScheduleMeetup;
+use MeetupOrganizing\Application\ScheduleMeetup\MeetupService;
+use MeetupOrganizing\Application\ScheduleMeetup\ScheduleMeetup;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Validator\ConstraintViolation;

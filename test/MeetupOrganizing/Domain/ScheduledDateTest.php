@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Domain;
 
+use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
 use PHPUnit_Framework_TestCase;
 
 final class ScheduledDateTest extends PHPUnit_Framework_TestCase

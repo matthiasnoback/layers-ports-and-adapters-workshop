@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Application;
+namespace MeetupOrganizing\Application\ListMeetups;
 
 use DateTimeImmutable;
 

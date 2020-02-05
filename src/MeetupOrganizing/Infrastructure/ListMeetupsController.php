@@ -5,7 +5,7 @@ namespace MeetupOrganizing\Infrastructure;
 
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
-use MeetupOrganizing\Application\ListMeetupsRepository;
+use MeetupOrganizing\Application\ListMeetups\ListMeetupsRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

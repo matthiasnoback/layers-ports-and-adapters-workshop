@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Domain;
+namespace MeetupOrganizing\Domain\Model\User;
 
 final class UserId
 {
