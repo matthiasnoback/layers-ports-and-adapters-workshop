@@ -20,12 +20,12 @@
                 <span class="help-block">{{ error }}</span>
             {% endfor %}
         </div>
-        <div class="form-group {% if formErrors["scheduleForDate"] is defined %} has-error{% endif %}">
+        <div class="form-group {% if formErrors["scheduleFor"] is defined %} has-error{% endif %}">
             <label class="control-label" for="scheduleForDate">Schedule for date: </label>
             <input class="form-control" name="scheduleForDate" id="scheduleForDate" type="date"
                    value="{{ formData["scheduleForDate"]|default("") }}">
         </div>
-        <div class="form-group {% if formErrors["scheduleForTime"] is defined %} has-error{% endif %}">
+        <div class="form-group {% if formErrors["scheduleFor"] is defined %} has-error{% endif %}">
             <label class="control-label" for="scheduleForTime">Time: </label>
             <input class="form-control" name="scheduleForTime" id="scheduleForTime" type="time"
                    value="{{ formData["scheduleForTime"]|default("") }}">

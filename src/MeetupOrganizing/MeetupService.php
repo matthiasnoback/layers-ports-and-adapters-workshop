@@ -35,7 +35,7 @@ final class MeetupService
             $user->userId(),
             $command->name(),
             $command->description(),
-            $command->scheduledFor()
+            $command->scheduleFor()
         );
 
         $this->meetupRepository->add($meetup);

@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
-use Exception;
-use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\MeetupService;
 use MeetupOrganizing\ScheduleMeetup;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\Validation;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
@@ -60,31 +60,20 @@ final class ScheduleMeetupController
         ];
 
         if ($request->getMethod() === 'POST') {
-            $formData = $request->getParsedBody();
+            $command = new ScheduleMeetup(
+                $this->session->getLoggedInUser()->userId()->asInt(),
+                $formData['name'] ?? '',
+                $formData['description'] ?? '',
+                ($formData['scheduleForDate'] ?? '') . ' ' . ($formData['scheduleForTime'] ?? '')
+            );
 
-            if (empty($formData['name'])) {
-                $formErrors['name'][] = 'Provide a name';
-            }
-            if (empty($formData['description'])) {
-                $formErrors['description'][] = 'Provide a description';
-            }
-            try {
-                ScheduledDate::fromString(
-                    $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
-                );
-            } catch (Exception $exception) {
-                $formErrors['scheduleFor'][] = 'Invalid date/time';
-            }
-
-            if (empty($formErrors)) {
-
+            $validator = Validation::createValidatorBuilder()
+                ->addMethodMapping('loadValidatorMetadata')
+                ->getValidator();
+            $violations = $validator->validate($command);
+            if (count($violations) === 0) {
                 $meetupId = $this->meetupService->scheduleMeetup(
-                    new ScheduleMeetup(
-                        $this->session->getLoggedInUser()->userId()->asInt(),
-                        $formData['name'],
-                        $formData['description'],
-                        $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
-                    )
+                    $command
                 );
 
                 $this->session->addSuccessFlash('Your meetup was scheduled successfully');
@@ -97,6 +86,11 @@ final class ScheduleMeetupController
                         ]
                     )
                 );
+            } else {
+                foreach ($violations as $violation) {
+                    /** @var ConstraintViolation $violation */
+                    $formErrors[$violation->getPropertyPath()][] = $violation->getMessage();
+                }
             }
         }
 

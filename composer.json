@@ -27,7 +27,8 @@
         "matthiasnoback/convenient-immutability": "^0.2.1",
         "bunny/bunny": "^0.2.4",
         "doctrine/dbal": "^2.9",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "symfony/validator": "^4.4"
     },
     "autoload": {
         "psr-4": {
