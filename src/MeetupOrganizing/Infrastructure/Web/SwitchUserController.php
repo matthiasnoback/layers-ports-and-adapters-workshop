@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure;
+namespace MeetupOrganizing\Infrastructure\Web;
 
 use MeetupOrganizing\Domain\Model\User\UserId;
 use MeetupOrganizing\Domain\Model\User\UserRepository;
+use MeetupOrganizing\Infrastructure\Web\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;

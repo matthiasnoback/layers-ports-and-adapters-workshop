@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure;
+namespace MeetupOrganizing\Infrastructure\Web;
 
 use Doctrine\DBAL\Connection;
+use MeetupOrganizing\Infrastructure\Web\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;

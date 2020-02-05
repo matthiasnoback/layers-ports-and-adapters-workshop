@@ -6,7 +6,7 @@ namespace Test\Acceptance;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use MeetupOrganizing\Domain\Model\User\UserRepository;
-use MeetupOrganizing\Infrastructure\InMemoryUserRepository;
+use MeetupOrganizing\Infrastructure\Database\InMemoryUserRepository;
 
 final class FeatureContext implements Context
 {

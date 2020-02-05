@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure;
+namespace MeetupOrganizing\Infrastructure\Web;
 
 use MeetupOrganizing\Application\ScheduleMeetup\MeetupService;
 use MeetupOrganizing\Application\ScheduleMeetup\ScheduleMeetup;
+use MeetupOrganizing\Infrastructure\Web\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Validator\ConstraintViolation;

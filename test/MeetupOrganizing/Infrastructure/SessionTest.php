@@ -3,8 +3,8 @@
 namespace MeetupOrganizing\Infrastructure;
 
 use MeetupOrganizing\Domain\Model\User\UserId;
-use MeetupOrganizing\Infrastructure\InMemoryUserRepository;
-use MeetupOrganizing\Infrastructure\Session;
+use MeetupOrganizing\Infrastructure\Database\InMemoryUserRepository;
+use MeetupOrganizing\Infrastructure\Web\Session;
 use PHPUnit_Framework_TestCase;
 
 final class SessionTest extends PHPUnit_Framework_TestCase

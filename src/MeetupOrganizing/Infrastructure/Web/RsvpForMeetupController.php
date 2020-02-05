@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure;
+namespace MeetupOrganizing\Infrastructure\Web;
 
 use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Domain\Model\Rsvp\Rsvp;
+use MeetupOrganizing\Infrastructure\Database\RsvpRepository;
+use MeetupOrganizing\Infrastructure\Web\Session;
 use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

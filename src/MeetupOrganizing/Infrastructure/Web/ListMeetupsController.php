@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure;
+namespace MeetupOrganizing\Infrastructure\Web;
 
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
@@ -32,7 +32,7 @@ final class ListMeetupsController implements MiddlewareInterface
         $this->renderer = $renderer;
     }
 
-    public function __invoke(Request $request, Response $response, callable $out = null): ResponseInterface
+    public function __invoke(Request $request, Response $response, callable $out = null): Response
     {
         $now = new DateTimeImmutable();
 

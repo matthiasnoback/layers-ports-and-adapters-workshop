@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure;
+namespace MeetupOrganizing\Infrastructure\Database;
 
 use MeetupOrganizing\Domain\Model\User\User;
 use MeetupOrganizing\Domain\Model\User\UserId;
