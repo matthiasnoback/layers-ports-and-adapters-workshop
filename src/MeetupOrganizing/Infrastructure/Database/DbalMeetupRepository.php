@@ -8,9 +8,11 @@ use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Application\ListMeetups\ListMeetupsRepository;
 use MeetupOrganizing\Application\ListMeetups\MeetupForList;
 use MeetupOrganizing\Domain\Model\Meetup\Meetup;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\Meetup\MeetupRepository;
 use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
 use PDO;
+use Ramsey\Uuid\Uuid;
 
 final class DbalMeetupRepository implements ListMeetupsRepository, MeetupRepository
 {
@@ -57,5 +59,10 @@ final class DbalMeetupRepository implements ListMeetupsRepository, MeetupReposit
             ->fetchAll(PDO::FETCH_ASSOC);;
 
         return array_map([MeetupForList::class, 'fromDatabaseRecord'], $pastMeetups);
+    }
+
+    public function nextIdentity(): MeetupId
+    {
+        return MeetupId::fromString(Uuid::uuid4()->toString());
     }
 }
