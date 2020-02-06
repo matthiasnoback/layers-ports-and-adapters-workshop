@@ -5,12 +5,14 @@ namespace Test\Acceptance;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use DateTimeImmutable;
+use MeetupOrganizing\Application\ListMeetups\MeetupForList;
 use MeetupOrganizing\Application\ScheduleMeetup\MeetupService;
 use MeetupOrganizing\Application\ScheduleMeetup\ScheduleMeetup;
-use MeetupOrganizing\Domain\Model\Meetup\MeetupRepository;
 use MeetupOrganizing\Domain\Model\User\UserRepository;
 use MeetupOrganizing\Infrastructure\Database\InMemoryMeetupRepository;
 use MeetupOrganizing\Infrastructure\Database\InMemoryUserRepository;
+use RuntimeException;
 
 final class FeatureContext implements Context
 {
@@ -25,7 +27,7 @@ final class FeatureContext implements Context
     private $userId;
 
     /**
-     * @var MeetupRepository
+     * @var InMemoryMeetupRepository
      */
     private $meetupRepository;
 
@@ -65,7 +67,14 @@ final class FeatureContext implements Context
      */
     public function thereWillBeAnUpcomingMeetupCalled(string $name): void
     {
-        throw new PendingException();
+        foreach ($this->meetupRepository->upcomingMeetups(new DateTimeImmutable()) as $upcomingMeetup) {
+            /** @var MeetupForList $upcomingMeetup */
+            if ($upcomingMeetup->name() === $name) {
+                return;
+            }
+        }
+
+        throw new RuntimeException('Could not find an upcoming meetup with name ' . $name);
     }
 
     /**

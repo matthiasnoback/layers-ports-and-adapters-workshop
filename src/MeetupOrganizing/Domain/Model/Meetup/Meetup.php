@@ -71,4 +71,9 @@ final class Meetup
     {
         return $this->meetupId;
     }
+
+    public function scheduledFor(): ScheduledDate
+    {
+        return $this->scheduledFor;
+    }
 }
