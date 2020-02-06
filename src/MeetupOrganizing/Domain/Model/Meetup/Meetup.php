@@ -66,4 +66,9 @@ final class Meetup
             'wasCancelled' => (int)$this->wasCancelled
         ];
     }
+
+    public function getId(): MeetupId
+    {
+        return $this->meetupId;
+    }
 }

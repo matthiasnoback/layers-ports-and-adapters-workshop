@@ -5,7 +5,11 @@ namespace Test\Acceptance;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use MeetupOrganizing\Application\ScheduleMeetup\MeetupService;
+use MeetupOrganizing\Application\ScheduleMeetup\ScheduleMeetup;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupRepository;
 use MeetupOrganizing\Domain\Model\User\UserRepository;
+use MeetupOrganizing\Infrastructure\Database\InMemoryMeetupRepository;
 use MeetupOrganizing\Infrastructure\Database\InMemoryUserRepository;
 
 final class FeatureContext implements Context
@@ -20,9 +24,15 @@ final class FeatureContext implements Context
      */
     private $userId;
 
+    /**
+     * @var MeetupRepository
+     */
+    private $meetupRepository;
+
     public function __construct()
     {
         $this->userRepository = new InMemoryUserRepository();
+        $this->meetupRepository = new InMemoryMeetupRepository();
     }
 
     /**
@@ -39,7 +49,15 @@ final class FeatureContext implements Context
      */
     public function iScheduleAWithTheDescriptionOnAt(string $name, string $date, string $time): void
     {
-        throw new PendingException();
+        $meetupService = new MeetupService($this->userRepository, $this->meetupRepository);
+        $meetupService->scheduleMeetup(
+            new ScheduleMeetup(
+                $this->userId,
+                $name,
+                'Description',
+                $date . ' ' . $time
+            )
+        );
     }
 
     /**
