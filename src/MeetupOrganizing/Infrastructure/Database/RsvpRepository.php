@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure\Database;
 
 use Doctrine\DBAL\Connection;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\Rsvp\Rsvp;
 use PDO;
 
@@ -32,17 +33,16 @@ final class RsvpRepository
     }
 
     /**
-     * @param int $meetupId
      * @return array&Rsvp[]
      */
-    public function getByMeetupId(int $meetupId): array
+    public function getByMeetupId(MeetupId $meetupId): array
     {
         $records = $this->connection
             ->createQueryBuilder()
             ->select('*')
             ->from('rsvps')
             ->where('meetupId = :meetupId')
-            ->setParameter('meetupId', $meetupId)
+            ->setParameter('meetupId', $meetupId->asString())
             ->execute()
             ->fetchAll(PDO::FETCH_ASSOC);
 

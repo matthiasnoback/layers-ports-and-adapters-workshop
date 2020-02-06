@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Domain\Model\Rsvp;
 
+use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\User\UserId;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -15,7 +16,7 @@ final class Rsvp
     private $rsvpId;
 
     /**
-     * @var int
+     * @var MeetupId
      */
     private $meetupId;
 
@@ -26,7 +27,7 @@ final class Rsvp
 
     private function __construct(
         UuidInterface $rsvpId,
-        int $meetupId,
+        MeetupId $meetupId,
         UserId $userId
     ) {
         $this->rsvpId = $rsvpId;
@@ -34,7 +35,7 @@ final class Rsvp
         $this->userId = $userId;
     }
 
-    public static function create(int $meetupId, UserId $userId): Rsvp
+    public static function create(MeetupId $meetupId, UserId $userId): Rsvp
     {
         return new self(Uuid::uuid4(), $meetupId, $userId);
     }
@@ -43,7 +44,7 @@ final class Rsvp
     {
         return new self(
             Uuid::fromString($record['rsvpId']),
-            (int)$record['meetupId'],
+            MeetupId::fromString($record['meetupId']),
             UserId::fromInt((int)$record['userId'])
         );
     }
@@ -53,7 +54,7 @@ final class Rsvp
         return $this->rsvpId;
     }
 
-    public function meetupId(): int
+    public function meetupId(): MeetupId
     {
         return $this->meetupId;
     }

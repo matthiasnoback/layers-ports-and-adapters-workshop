@@ -6,7 +6,7 @@ namespace MeetupOrganizing\Application\ListMeetups;
 final class MeetupForList
 {
     /**
-     * @var int
+     * @var string
      */
     private $meetupId;
 
@@ -28,14 +28,14 @@ final class MeetupForList
     {
         $meetup = new self();
 
-        $meetup->meetupId = (int)$record['meetupId'];
+        $meetup->meetupId = $record['meetupId'];
         $meetup->name = $record['name'];
         $meetup->scheduledFor = $record['scheduledFor'];
 
         return $meetup;
     }
 
-    public function meetupId(): int
+    public function meetupId(): string
     {
         return $this->meetupId;
     }

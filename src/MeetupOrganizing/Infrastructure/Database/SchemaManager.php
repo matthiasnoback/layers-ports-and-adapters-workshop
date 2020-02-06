@@ -39,7 +39,7 @@ final class SchemaManager
         $schema = new Schema();
 
         $meetupsTable = $schema->createTable('meetups');
-        $meetupsTable->addColumn('meetupId', 'integer', ['autoincrement' => true]);
+        $meetupsTable->addColumn('meetupId', 'string');
         $meetupsTable->addColumn('organizerId', 'integer');
         $meetupsTable->addColumn('name', 'string');
         $meetupsTable->addColumn('description', 'string');
@@ -49,7 +49,7 @@ final class SchemaManager
 
         $rsvpsTable = $schema->createTable('rsvps');
         $rsvpsTable->addColumn('rsvpId', 'string');
-        $rsvpsTable->addColumn('meetupId', 'integer');
+        $rsvpsTable->addColumn('meetupId', 'string');
         $rsvpsTable->addColumn('userId', 'integer');
         $rsvpsTable->setPrimaryKey(['rsvpId']);
         $rsvpsTable->addUniqueIndex(['meetupId', 'userId']);

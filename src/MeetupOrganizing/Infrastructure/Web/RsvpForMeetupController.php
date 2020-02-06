@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure\Web;
 
 use Doctrine\DBAL\Connection;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\Rsvp\Rsvp;
 use MeetupOrganizing\Infrastructure\Database\RsvpRepository;
 use MeetupOrganizing\Infrastructure\Web\Session;
@@ -63,7 +64,7 @@ final class RsvpForMeetupController
             ->select('*')
             ->from('meetups')
             ->where('meetupId = :meetupId')
-            ->setParameter('meetupId', (int)$postData['meetupId'])
+            ->setParameter('meetupId', $postData['meetupId'])
             ->execute()
             ->fetch(PDO::FETCH_ASSOC);
 
@@ -72,7 +73,7 @@ final class RsvpForMeetupController
         }
 
         $rsvp = Rsvp::create(
-            (int)$postData['meetupId'],
+            MeetupId::fromString($postData['meetupId']),
             $this->session->getLoggedInUser()->userId()
         );
         $this->rsvpRepository->save($rsvp);
@@ -83,7 +84,7 @@ final class RsvpForMeetupController
             $this->router->generateUri(
                 'meetup_details',
                 [
-                    'id' => (int)$postData['meetupId']
+                    'id' => $postData['meetupId']
                 ]
             )
         );

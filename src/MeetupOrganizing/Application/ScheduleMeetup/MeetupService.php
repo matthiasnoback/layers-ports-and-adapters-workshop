@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Application\ScheduleMeetup;
 
 use MeetupOrganizing\Domain\Model\Meetup\Meetup;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\Meetup\MeetupRepository;
 use MeetupOrganizing\Domain\Model\User\UserRepository;
+use Ramsey\Uuid\Uuid;
 
 final class MeetupService
 {
@@ -27,11 +29,14 @@ final class MeetupService
         $this->meetupRepository = $meetupRepository;
     }
 
-    public function scheduleMeetup(ScheduleMeetup $command): int
+    public function scheduleMeetup(ScheduleMeetup $command): MeetupId
     {
         $user = $this->userRepository->getById($command->organizerId());
 
+        $meetupId = MeetupId::fromString(Uuid::uuid4()->toString());
+
         $meetup = new Meetup(
+            $meetupId,
             $user->userId(),
             $command->name(),
             $command->description(),
@@ -40,6 +45,6 @@ final class MeetupService
 
         $this->meetupRepository->add($meetup);
 
-        return $meetup->getId();
+        return $meetupId;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure\Web;
 
 use Doctrine\DBAL\Connection;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupId;
 use MeetupOrganizing\Domain\Model\Rsvp\Rsvp;
 use MeetupOrganizing\Domain\Model\User\UserId;
 use MeetupOrganizing\Domain\Model\User\UserRepository;
@@ -59,7 +60,7 @@ final class MeetupDetailsController
             ->select('*')
             ->from('meetups')
             ->where('meetupId = :meetupId')
-            ->setParameter('meetupId', (int)$request->getAttribute('id'))
+            ->setParameter('meetupId', $request->getAttribute('id'))
             ->execute()
             ->fetch(PDO::FETCH_ASSOC);
 
@@ -68,7 +69,7 @@ final class MeetupDetailsController
         };
 
         $organizer = $this->userRepository->getById(UserId::fromInt((int)$meetup['organizerId']));
-        $rsvps = $this->rsvpRepository->getByMeetupId((int)$meetup['meetupId']);
+        $rsvps = $this->rsvpRepository->getByMeetupId(MeetupId::fromString($meetup['meetupId']));
         $users = array_map(
             function (Rsvp $rsvp) {
                 return $this->userRepository->getById($rsvp->userId());

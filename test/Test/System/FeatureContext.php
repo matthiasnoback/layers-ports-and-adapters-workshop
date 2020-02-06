@@ -81,11 +81,11 @@ final class FeatureContext extends MinkContext
 
         $currentUrl = $this->getSession()->getCurrentUrl();
         $matches = [];
-        if (preg_match('#^.+/(\d+)$#', $currentUrl, $matches) === 0) {
+        if (preg_match('#^.+/([a-z0-9\-]+)$#', $currentUrl, $matches) === 0) {
             throw new RuntimeException('Cannot determine the ID of the meetup');
         }
 
-        $this->scheduledMeetupId = (int)$matches[1];
+        $this->scheduledMeetupId = $matches[1];
     }
 
     /**
