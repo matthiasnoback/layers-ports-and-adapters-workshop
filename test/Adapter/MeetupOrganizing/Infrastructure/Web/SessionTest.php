@@ -1,6 +1,6 @@
 <?php
 
-namespace MeetupOrganizing\Infrastructure;
+namespace MeetupOrganizing\Infrastructure\Web;
 
 use MeetupOrganizing\Domain\Model\User\UserId;
 use MeetupOrganizing\Infrastructure\Database\InMemoryUserRepository;

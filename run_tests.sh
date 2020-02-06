@@ -2,5 +2,6 @@
 
 set -e
 
-vendor/bin/phpunit
+vendor/bin/phpunit --testsuite "Unit tests"
+vendor/bin/phpunit --testsuite "Adapter tests"
 vendor/bin/behat
