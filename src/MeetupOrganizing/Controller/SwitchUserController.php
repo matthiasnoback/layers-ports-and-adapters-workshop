@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
+use Assert\Assert;
 use MeetupOrganizing\Entity\UserId;
 use RuntimeException;
 use MeetupOrganizing\Entity\UserRepository;
@@ -31,6 +32,8 @@ final class SwitchUserController
         callable $next
     ): ResponseInterface {
         $postData = $request->getParsedBody();
+        Assert::that($postData)->isArray();
+
         if (!isset($postData['userId'])) {
             throw new RuntimeException('Bad request');
         }

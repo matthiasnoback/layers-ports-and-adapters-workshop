@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
+use Assert\Assert;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Entity\Rsvp;
 use MeetupOrganizing\Entity\RsvpRepository;
 use MeetupOrganizing\Entity\UserId;
@@ -42,14 +44,16 @@ final class MeetupDetailsController
         callable $out = null
     ): ResponseInterface {
 
-        $meetup = $this->connection
+        $statement = $this->connection
             ->createQueryBuilder()
             ->select('*')
             ->from('meetups')
             ->where('meetupId = :meetupId')
             ->setParameter('meetupId', (int)$request->getAttribute('id'))
-            ->execute()
-            ->fetch(PDO::FETCH_ASSOC);
+            ->execute();
+        Assert::that($statement)->isInstanceOf(Statement::class);
+
+        $meetup = $statement->fetch(PDO::FETCH_ASSOC);
 
         if ($meetup === false) {
             throw new RuntimeException('Meetup not found');

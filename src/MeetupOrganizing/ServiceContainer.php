@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing;
 
+use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Command\ConsoleApplication;
@@ -36,6 +37,8 @@ final class ServiceContainer extends Container
 {
     public function __construct(string $projectRootDir)
     {
+        Assert::that($projectRootDir)->directory();
+
         parent::__construct(
             [
                 'project_root_dir' => $projectRootDir

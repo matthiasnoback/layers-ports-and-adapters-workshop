@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use Assert\Assert;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use RuntimeException;
@@ -10,12 +11,9 @@ use Throwable;
 
 final class ScheduledDate
 {
-    const DATE_TIME_FORMAT = 'Y-m-d H:i';
+    public const DATE_TIME_FORMAT = 'Y-m-d H:i';
 
-    /**
-     * @var string
-     */
-    private $dateTime;
+    private string $dateTime;
 
     private function __construct(string $dateTime)
     {
@@ -61,6 +59,9 @@ final class ScheduledDate
 
     public function toDateTimeImmutable(): DateTimeImmutable
     {
-        return DateTimeImmutable::createFromFormat(self::DATE_TIME_FORMAT, $this->dateTime);
+        $dateTimeImmutable = DateTimeImmutable::createFromFormat(self::DATE_TIME_FORMAT, $this->dateTime);
+        Assert::that($dateTimeImmutable)->isInstanceOf(DateTimeImmutable::class);
+
+        return $dateTimeImmutable;
     }
 }

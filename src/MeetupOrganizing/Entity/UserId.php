@@ -5,17 +5,14 @@ namespace MeetupOrganizing\Entity;
 
 final class UserId
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private int $id;
 
     private function __construct(int $id)
     {
         $this->id = $id;
     }
 
-    public static function fromInt(int $id)
+    public static function fromInt(int $id): self
     {
         return new self($id);
     }

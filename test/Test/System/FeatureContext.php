@@ -17,15 +17,9 @@ use RuntimeException;
  */
 final class FeatureContext extends MinkContext
 {
-    /**
-     * @var int|null
-     */
-    private $scheduledMeetupId;
+    private ?int $scheduledMeetupId = null;
 
-    /**
-     * @var string
-     */
-    private $projectRootDir;
+    private string $projectRootDir;
 
     /**
      * Initializes context.

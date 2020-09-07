@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use Assert\Assert;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Statement;
 use PDO;
 
 final class RsvpRepository
@@ -15,7 +17,7 @@ final class RsvpRepository
         $this->connection = $connection;
     }
 
-    public function save(Rsvp $rsvp)
+    public function save(Rsvp $rsvp): void
     {
         $this->connection->insert(
             'rsvps',
@@ -28,19 +30,20 @@ final class RsvpRepository
     }
 
     /**
-     * @param int $meetupId
-     * @return array&Rsvp[]
+     * @return array<Rsvp> & Rsvp[]
      */
     public function getByMeetupId(int $meetupId): array
     {
-        $records = $this->connection
+        $statement = $this->connection
             ->createQueryBuilder()
             ->select('*')
             ->from('rsvps')
             ->where('meetupId = :meetupId')
             ->setParameter('meetupId', $meetupId)
-            ->execute()
-            ->fetchAll(PDO::FETCH_ASSOC);
+            ->execute();
+
+        Assert::that($statement)->isInstanceOf(Statement::class);
+        $records = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         return array_map(
             function (array $record) {

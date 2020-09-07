@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Command;
 
+use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -32,11 +33,25 @@ final class ScheduleMeetupCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        // InputInterface isn't particularly well-typed, so we need to add some checks
+        $organizerId = $input->getArgument('organizerId');
+        Assert::that($organizerId)->string();
+
+
+        $name = $input->getArgument('name');
+        Assert::that($name)->string();
+
+        $description = $input->getArgument('description');
+        Assert::that($description)->string();
+
+        $scheduledFor = $input->getArgument('scheduledFor');
+        Assert::that($scheduledFor)->string();
+
         $record = [
-            'organizerId' => (int)$input->getArgument('organizerId'),
-            'name' => $input->getArgument('name'),
-            'description' => $input->getArgument('description'),
-            'scheduledFor' => $input->getArgument('scheduledFor')
+            'organizerId' => (int)$organizerId,
+            'name' => $name,
+            'description' => $description,
+            'scheduledFor' => $scheduledFor
         ];
 
         $this->connection->insert('meetups', $record);
