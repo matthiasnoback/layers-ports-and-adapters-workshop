@@ -1,0 +1,20 @@
+sudo: required
+
+cache:
+  directories:
+    - $HOME/.composer
+
+services:
+  - docker
+
+install:
+  - docker-compose pull
+  - bin/composer.sh install --prefer-dist
+
+script:
+  # Run the tests
+  - bin/run_tests.sh
+  # Test the console application
+  - bin/meetup.sh schedule 1 Test Test 2020-09-07
+  # See if deptrac can run
+  - bin/deptrac.sh
