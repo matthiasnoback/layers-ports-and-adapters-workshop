@@ -7,10 +7,10 @@ default:
                 default:
                     goutte: ~
     suites:
-        acceptance:
-            paths: [ "%paths.base%/test/Test/Acceptance/Features"]
+        use_cases:
+            paths: [ "%paths.base%/test/Test/UseCases/Features"]
             contexts:
-                - Test\Acceptance\FeatureContext
+                - Test\UseCases\FeatureContext
         system:
             mink_session: default
             paths: [ "%paths.base%/test/Test/System/Features"]
