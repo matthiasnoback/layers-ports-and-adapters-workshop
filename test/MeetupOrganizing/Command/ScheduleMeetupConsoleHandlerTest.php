@@ -17,7 +17,7 @@ final class ScheduleMeetupConsoleHandlerTest extends TestCase
     public function it_schedules_a_meetup(): void
     {
         $projectRootDir = getenv('PROJECT_ROOT_DIR');
-        Assert::that($projectRootDir)->directory();
+        Assert::that($projectRootDir)->string();
 
         $container = new ServiceContainer($projectRootDir);
         $application = new ConsoleApplication($container);

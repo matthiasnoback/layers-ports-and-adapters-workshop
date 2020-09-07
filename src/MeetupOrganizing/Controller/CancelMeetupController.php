@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
+use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
 
@@ -33,7 +35,13 @@ final class CancelMeetupController
         ResponseInterface $response,
         callable $next
     ): ResponseInterface {
-        $meetupId = $request->getParsedBody()['meetupId'];
+        $parsedBody = $request->getParsedBody();
+        Assert::that($parsedBody)->isArray();
+
+        if (!isset($parsedBody['meetupId'])) {
+            throw new RuntimeException('Bad request');
+        }
+        $meetupId = $parsedBody['meetupId'];
 
         $numberOfAffectedRows = $this->connection->update(
             'meetups',

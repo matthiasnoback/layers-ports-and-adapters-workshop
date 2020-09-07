@@ -9,15 +9,9 @@ use MeetupOrganizing\Entity\UserRepository;
 
 final class FeatureContext implements Context
 {
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
+    private UserRepository $userRepository;
 
-    /**
-     * @var int|null
-     */
-    private $userId;
+    private ?int $userId = null;
 
     public function __construct()
     {
@@ -27,7 +21,7 @@ final class FeatureContext implements Context
     /**
      * @Given I am an organizer
      */
-    public function iAmAnOrganizer()
+    public function iAmAnOrganizer(): void
     {
         $this->userId = $this->userRepository->getOrganizerId()->asInt();
     }
@@ -52,7 +46,7 @@ final class FeatureContext implements Context
     /**
      * @When I cancel it
      */
-    public function iCancelIt()
+    public function iCancelIt(): void
     {
         throw new PendingException();
     }
@@ -60,7 +54,7 @@ final class FeatureContext implements Context
     /**
      * @Then it will no longer show up in the list of upcoming meetups
      */
-    public function itWillNoLongerShowUpInTheListOfUpcomingMeetups()
+    public function itWillNoLongerShowUpInTheListOfUpcomingMeetups(): void
     {
         throw new PendingException();
     }

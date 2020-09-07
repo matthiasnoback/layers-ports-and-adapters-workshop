@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
+use Assert\Assert;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Entity\ScheduledDate;
 use PDO;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -31,25 +33,29 @@ final class ListMeetupsController implements MiddlewareInterface
     {
         $now = new DateTimeImmutable();
 
-        $upcomingMeetups = $this->connection->createQueryBuilder()
+        $statement = $this->connection->createQueryBuilder()
             ->select('*')
             ->from('meetups')
             ->where('scheduledFor >= :now')
             ->setParameter('now', $now->format(ScheduledDate::DATE_TIME_FORMAT))
             ->andWhere('wasCancelled = :wasNotCancelled')
             ->setParameter('wasNotCancelled', 0)
-            ->execute()
-            ->fetchAll(PDO::FETCH_ASSOC);
+            ->execute();
+        Assert::that($statement)->isInstanceOf(Statement::class);
 
-        $pastMeetups = $this->connection->createQueryBuilder()
+        $upcomingMeetups = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $statement = $this->connection->createQueryBuilder()
             ->select('*')
             ->from('meetups')
             ->where('scheduledFor < :now')
             ->setParameter('now', $now->format(ScheduledDate::DATE_TIME_FORMAT))
             ->andWhere('wasCancelled = :wasNotCancelled')
             ->setParameter('wasNotCancelled', 0)
-            ->execute()
-            ->fetchAll(PDO::FETCH_ASSOC);
+            ->execute();
+        Assert::that($statement)->isInstanceOf(Statement::class);
+
+        $pastMeetups = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         $response->getBody()->write(
             $this->renderer->render(

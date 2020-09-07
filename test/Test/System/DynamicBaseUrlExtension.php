@@ -19,15 +19,15 @@ final class DynamicBaseUrlExtension implements Extension
         return 'dynamic_base_url';
     }
 
-    public function initialize(ExtensionManager $extensionManager)
+    public function initialize(ExtensionManager $extensionManager): void
     {
     }
 
-    public function configure(ArrayNodeDefinition $builder)
+    public function configure(ArrayNodeDefinition $builder): void
     {
     }
 
-    public function load(ContainerBuilder $container, array $config)
+    public function load(ContainerBuilder $container, array $config): void
     {
         $webHostname = getenv('WEB_HOSTNAME') ?: 'localhost';
         $container->setParameter('web_hostname', $webHostname);

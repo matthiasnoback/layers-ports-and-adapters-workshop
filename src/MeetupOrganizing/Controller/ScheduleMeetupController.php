@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Controller;
 
+use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Exception;
 use MeetupOrganizing\Entity\ScheduledDate;
@@ -48,6 +49,7 @@ final class ScheduleMeetupController
 
         if ($request->getMethod() === 'POST') {
             $formData = $request->getParsedBody();
+            Assert::that($formData)->isArray();
 
             if (empty($formData['name'])) {
                 $formErrors['name'][] = 'Provide a name';
