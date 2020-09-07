@@ -7,10 +7,13 @@ use RuntimeException;
 
 final class UserRepository
 {
-    const ORGANIZER_ID = 1;
-    const REGULAR_USER_ID = 2;
+    private const ORGANIZER_ID = 1;
+    private const REGULAR_USER_ID = 2;
 
-    private $records = [
+    /**
+     * @var array<int,array{userId:int,name:string}>
+     */
+    private array $records = [
         self::ORGANIZER_ID => [
             'userId' => self::ORGANIZER_ID,
             'name' => 'Organizer'
@@ -31,7 +34,7 @@ final class UserRepository
     }
 
     /**
-     * @return array&User[]
+     * @return array<User> & User[]
      */
     public function findAll(): array
     {

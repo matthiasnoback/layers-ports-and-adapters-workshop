@@ -8,20 +8,11 @@ use Ramsey\Uuid\UuidInterface;
 
 final class Rsvp
 {
-    /**
-     * @var UuidInterface
-     */
-    private $rsvpId;
+    private UuidInterface $rsvpId;
 
-    /**
-     * @var int
-     */
-    private $meetupId;
+    private int $meetupId;
 
-    /**
-     * @var UserId
-     */
-    private $userId;
+    private UserId $userId;
 
     private function __construct(
         UuidInterface $rsvpId,

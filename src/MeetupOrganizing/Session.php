@@ -12,15 +12,12 @@ final class Session
     private const DEFAULT_userId = 1;
     private const LOGGED_IN_userId = 'logged_in_userId';
 
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
+    private UserRepository $userRepository;
 
     /**
-     * @var array
+     * @var array<string,mixed>
      */
-    private $sessionData;
+    private array $sessionData;
 
     public function __construct(UserRepository $userRepository)
     {
@@ -48,6 +45,10 @@ final class Session
         $this->set(self::LOGGED_IN_userId, $id->asInt());
     }
 
+    /**
+     * @return mixed
+     * @param mixed $defaultValue
+     */
     public function get(string $key, $defaultValue = null)
     {
         if (isset($this->sessionData[$key])) {

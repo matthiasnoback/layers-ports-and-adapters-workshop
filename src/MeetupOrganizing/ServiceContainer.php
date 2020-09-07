@@ -18,8 +18,7 @@ use MeetupOrganizing\Resources\Views\FlashExtension;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Resources\Views\UserExtension;
 use Psr\Http\Message\RequestInterface;
-use Symfony\Component\Debug\Debug;
-use Symfony\Component\Debug\ErrorHandler;
+use Symfony\Component\ErrorHandler\Debug;
 use Xtreamwayz\Pimple\Container;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
@@ -47,7 +46,6 @@ final class ServiceContainer extends Container
          * Not a best practice for containers, but hey.
          */
         Debug::enable();
-        ErrorHandler::register();
 
         $this['config'] = function () {
             return [

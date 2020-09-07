@@ -12,20 +12,11 @@ use Zend\Expressive\Router\RouterInterface;
 
 final class CancelMeetupController
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
 
-    /**
-     * @var Session
-     */
-    private $session;
+    private Session $session;
 
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private RouterInterface $router;
 
     public function __construct(
         Connection $connection,

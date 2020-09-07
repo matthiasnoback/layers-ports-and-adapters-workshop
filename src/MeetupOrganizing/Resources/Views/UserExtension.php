@@ -5,25 +5,17 @@ namespace MeetupOrganizing\Resources\Views;
 
 use MeetupOrganizing\Entity\UserRepository;
 use MeetupOrganizing\Session;
-use Twig_Extension;
-use Twig_Extension_GlobalsInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
 
-final class UserExtension extends Twig_Extension implements Twig_Extension_GlobalsInterface
+final class UserExtension extends AbstractExtension implements GlobalsInterface
 {
-    /**
-     * @var Session
-     */
-    private $session;
+    private Session $session;
 
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
+    private UserRepository $userRepository;
 
-    public function __construct(
-        Session $session,
-        UserRepository $userRepository
-    ) {
+    public function __construct(Session $session, UserRepository $userRepository)
+    {
         $this->session = $session;
         $this->userRepository = $userRepository;
     }

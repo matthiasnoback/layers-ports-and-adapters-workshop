@@ -13,15 +13,9 @@ use Zend\Diactoros\Response\RedirectResponse;
 
 final class SwitchUserController
 {
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
+    private UserRepository $userRepository;
 
-    /**
-     * @var Session
-     */
-    private $session;
+    private Session $session;
 
     public function __construct(
         UserRepository $userRepository,

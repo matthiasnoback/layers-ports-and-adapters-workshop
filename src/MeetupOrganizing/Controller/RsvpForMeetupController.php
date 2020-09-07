@@ -16,25 +16,13 @@ use Zend\Expressive\Router\RouterInterface;
 
 final class RsvpForMeetupController
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
 
-    /**
-     * @var Session
-     */
-    private $session;
+    private Session $session;
 
-    /**
-     * @var RsvpRepository
-     */
-    private $rsvpRepository;
+    private RsvpRepository $rsvpRepository;
 
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private RouterInterface $router;
 
     public function __construct(
         Connection $connection,

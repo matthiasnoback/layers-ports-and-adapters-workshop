@@ -11,10 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class ScheduleMeetupCommand extends Command
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
 
     public function __construct(Connection $connection)
     {

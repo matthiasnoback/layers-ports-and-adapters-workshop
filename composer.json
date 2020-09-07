@@ -23,7 +23,8 @@
         "ext-pdo": "*",
         "beberlei/assert": "^3.2",
         "matthiasnoback/naive-serializer": "^0.9.1",
-        "matthiasnoback/php-workshop-tools": "^0.32.0"
+        "matthiasnoback/php-workshop-tools": "^0.32.0",
+        "symfony/error-handler": "^5.1"
     },
     "autoload": {
         "psr-4": {

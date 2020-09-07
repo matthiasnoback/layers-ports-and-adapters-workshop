@@ -5,15 +5,9 @@ namespace MeetupOrganizing\Entity;
 
 final class User
 {
-    /**
-     * @var int
-     */
-    private $userId;
+    private int $userId;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     private function __construct()
     {

@@ -15,25 +15,13 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 final class ScheduleMeetupController
 {
-    /**
-     * @var Session
-     */
-    private $session;
+    private Session $session;
 
-    /**
-     * @var TemplateRendererInterface
-     */
-    private $renderer;
+    private TemplateRendererInterface $renderer;
 
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    private RouterInterface $router;
 
-    /**
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
 
     public function __construct(
         Session $session,

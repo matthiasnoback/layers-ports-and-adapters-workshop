@@ -16,25 +16,13 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 final class MeetupDetailsController
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
 
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
+    private UserRepository $userRepository;
 
-    /**
-     * @var TemplateRendererInterface
-     */
-    private $renderer;
+    private TemplateRendererInterface $renderer;
 
-    /**
-     * @var RsvpRepository
-     */
-    private $rsvpRepository;
+    private RsvpRepository $rsvpRepository;
 
     public function __construct(
         Connection $connection,
@@ -65,7 +53,7 @@ final class MeetupDetailsController
 
         if ($meetup === false) {
             throw new RuntimeException('Meetup not found');
-        };
+        }
 
         $organizer = $this->userRepository->getById(UserId::fromInt((int)$meetup['organizerId']));
         $rsvps = $this->rsvpRepository->getByMeetupId((int)$meetup['meetupId']);

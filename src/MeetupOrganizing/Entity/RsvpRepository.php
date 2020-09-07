@@ -8,10 +8,7 @@ use PDO;
 
 final class RsvpRepository
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
 
     public function __construct(Connection $connection)
     {

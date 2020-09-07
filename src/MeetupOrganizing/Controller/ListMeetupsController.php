@@ -10,21 +10,14 @@ use PDO;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use RuntimeException;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use Zend\Stratigility\MiddlewareInterface;
 
 final class ListMeetupsController implements MiddlewareInterface
 {
-    /**
-     * @var Connection
-     */
-    private $connection;
+    private Connection $connection;
 
-    /**
-     * @var TemplateRendererInterface
-     */
-    private $renderer;
+    private TemplateRendererInterface $renderer;
 
     public function __construct(
         Connection $connection,
@@ -56,7 +49,7 @@ final class ListMeetupsController implements MiddlewareInterface
             ->andWhere('wasCancelled = :wasNotCancelled')
             ->setParameter('wasNotCancelled', 0)
             ->execute()
-            ->fetchAll(PDO::FETCH_ASSOC);;
+            ->fetchAll(PDO::FETCH_ASSOC);
 
         $response->getBody()->write(
             $this->renderer->render(

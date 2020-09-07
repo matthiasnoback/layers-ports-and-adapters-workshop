@@ -4,15 +4,12 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Resources\Views;
 
 use MeetupOrganizing\Session;
-use Twig_Extension;
-use Twig_Extension_GlobalsInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
 
-final class FlashExtension extends Twig_Extension implements Twig_Extension_GlobalsInterface
+final class FlashExtension extends AbstractExtension implements GlobalsInterface
 {
-    /**
-     * @var Session
-     */
-    private $session;
+    private Session $session;
 
     public function __construct(Session $session)
     {
