@@ -5,7 +5,7 @@ namespace MeetupOrganizing;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use MeetupOrganizing\Command\ScheduleMeetupConsoleHandler;
+use MeetupOrganizing\Command\ConsoleApplication;
 use MeetupOrganizing\Controller\CancelMeetupController;
 use MeetupOrganizing\Controller\ListMeetupsController;
 use MeetupOrganizing\Controller\MeetupDetailsController;
@@ -234,10 +234,8 @@ final class ServiceContainer extends Container
         /*
          * CLI
          */
-        $this[ScheduleMeetupConsoleHandler::class] = function () {
-            return new ScheduleMeetupConsoleHandler(
-                $this[Connection::class]
-            );
+        $this[ConsoleApplication::class] = function () {
+            return new ConsoleApplication($this);
         };
 
         $this->bootstrap();

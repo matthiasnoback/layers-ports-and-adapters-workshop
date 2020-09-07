@@ -3,36 +3,47 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Command;
 
+use Assert\Assert;
 use MeetupOrganizing\SchemaManager;
 use MeetupOrganizing\ServiceContainer;
-use PHPUnit_Framework_TestCase;
-use Webmozart\Console\Args\StringArgs;
-use Webmozart\Console\ConsoleApplication;
-use Webmozart\Console\IO\OutputStream\BufferedOutputStream;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Tester\ApplicationTester;
 
-final class ScheduleMeetupConsoleHandlerTest extends PHPUnit_Framework_TestCase
+final class ScheduleMeetupConsoleHandlerTest extends TestCase
 {
     /**
      * @test
      */
     public function it_schedules_a_meetup(): void
     {
-        $container = new ServiceContainer(getenv('PROJECT_ROOT_DIR'));
+        $projectRootDir = getenv('PROJECT_ROOT_DIR');
+        Assert::that($projectRootDir)->directory();
+
+        $container = new ServiceContainer($projectRootDir);
+        $application = new ConsoleApplication($container);
+        $application->setAutoExit(false);
+        $application->setCatchExceptions(false);
+
+        $applicationTester = new ApplicationTester($application);
+
+        $exitCode = $applicationTester->run(
+            [
+                'command' => 'schedule',
+                'organizerId' => '1',
+                'name' => 'Akeneo Meetup',
+                'description' => 'The description',
+                'scheduledFor' => '2018-04-20 20:00'
+            ]
+        );
         /** @var SchemaManager $schemaManager */
         $schemaManager = $container[SchemaManager::class];
         $schemaManager->updateSchema();
 
-        $config = new MeetupApplicationConfig($container);
-        $config->setTerminateAfterRun(false);
-        $cli = new ConsoleApplication($config);
+        self::assertSame(0, $exitCode);
 
-        $output = new BufferedOutputStream();
-        $args = new StringArgs('schedule 1 Akeneo Meetup "2018-04-20 20:00"');
-        $cli->run($args, null, $output);
-
-        $this->assertContains(
+        $this->assertStringContainsString(
             'Scheduled the meetup successfully',
-            $output->fetch()
+            $applicationTester->getDisplay()
         );
     }
 }

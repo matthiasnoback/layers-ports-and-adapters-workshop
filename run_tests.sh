@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 set -e
 
-vendor/bin/phpunit
+vendor/bin/phpunit -vvv test/
 vendor/bin/behat

@@ -4,9 +4,9 @@ namespace MeetupOrganizing;
 
 use MeetupOrganizing\Entity\UserId;
 use MeetupOrganizing\Entity\UserRepository;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-final class SessionTest extends PHPUnit_Framework_TestCase
+final class SessionTest extends TestCase
 {
     /**
      * @test
@@ -58,6 +58,13 @@ final class SessionTest extends PHPUnit_Framework_TestCase
 
     public function you_can_get_the_flashes_only_once(): void
     {
+        $session = new Session(new UserRepository());
+        $session->addErrorFlash('Error');
 
+        // Fetching them should clear them
+        $flashes = $session->getFlashes();
+        self::assertNotEmpty($flashes);
+
+        self::assertEmpty($session->getFlashes());
     }
 }

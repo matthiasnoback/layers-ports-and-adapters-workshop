@@ -13,12 +13,11 @@ On most machines the best way to install this project will be to use Docker. If 
 
 #### Getting started
 
-- Make sure the `HOST_UID`, `HOST_GUID` and `HOST_PORT` environment variables have been defined:
+- Make sure the `HOST_UID`, `HOST_GUID` environment variables have been defined:
 
     ```
     export HOST_GID=$(id -g)
     export HOST_UID=$(id -u)
-    export HOST_PORT=8080 # or whatever other port you want
     ```
 
 - Clone this repository (`git clone git@github.com:matthiasnoback/layers-ports-and-adapters-workshop.git`) and `cd` into it.
@@ -44,7 +43,7 @@ On most machines the best way to install this project will be to use Docker. If 
 
 #### Requirements
 
-- PHP (>=7.1)
+- PHP (>=7.4)
 - Composer
 
 #### Getting started

@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
-use PHPUnit_Framework_TestCase;
+use DateTimeImmutable;
+use PHPUnit\Framework\TestCase;
 
-final class ScheduledDateTest extends PHPUnit_Framework_TestCase
+final class ScheduledDateTest extends TestCase
 {
     /**
      * @test
@@ -15,7 +16,7 @@ final class ScheduledDateTest extends PHPUnit_Framework_TestCase
         $scheduledDate = ScheduledDate::fromString('2017-01-01 20:00');
 
         $this->assertEquals(
-            new \DateTimeImmutable('2017-01-01 20:00'),
+            new DateTimeImmutable('2017-01-01 20:00'),
             $scheduledDate->toDateTimeImmutable()
         );
     }
@@ -25,10 +26,10 @@ final class ScheduledDateTest extends PHPUnit_Framework_TestCase
      */
     public function it_can_be_created_from_a_php_date_time_immutable(): void
     {
-        $scheduledDate = ScheduledDate::fromDateTime(new \DateTimeImmutable('2017-01-01 20:00'));
+        $scheduledDate = ScheduledDate::fromDateTime(new DateTimeImmutable('2017-01-01 20:00'));
 
         $this->assertEquals(
-            new \DateTimeImmutable('2017-01-01 20:00'),
+            new DateTimeImmutable('2017-01-01 20:00'),
             $scheduledDate->toDateTimeImmutable()
         );
     }

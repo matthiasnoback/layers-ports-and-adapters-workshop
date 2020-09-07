@@ -1,13 +1,14 @@
 #!/usr/bin/env php
 <?php
 
-use MeetupOrganizing\Command\MeetupApplicationConfig;
+use MeetupOrganizing\Command\ConsoleApplication;
 use MeetupOrganizing\ServiceContainer;
-use Webmozart\Console\ConsoleApplication;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 $container = new ServiceContainer(__DIR__);
 
-$cli = new ConsoleApplication(new MeetupApplicationConfig($container));
-$cli->run();
+/** @var ConsoleApplication $application */
+$application = $container->get(ConsoleApplication::class);
+
+$application->run();

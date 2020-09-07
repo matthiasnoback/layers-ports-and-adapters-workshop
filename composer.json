@@ -6,28 +6,24 @@
         }
     ],
     "require-dev": {
-        "behat/behat": "^3.1",
-        "phpunit/phpunit": "^5.3",
-        "behat/mink-extension": "^2.2",
-        "behat/mink-selenium2-driver": "^1.3"
+        "behat/mink-extension": "^2.3",
+        "behat/behat": "^3.7",
+        "phpunit/phpunit": "^9.3"
     },
     "require": {
-        "php": "^7.1",
+        "php": "^7.4",
         "zendframework/zend-expressive": "^1.0",
         "zendframework/zend-expressive-fastroute": "^1.1",
         "xtreamwayz/pimple-container-interop": "^1.0",
         "zendframework/zend-expressive-twigrenderer": "^1.1",
-        "beberlei/assert": "^2.5",
-        "ramsey/uuid": "^3.4",
         "behat/mink-goutte-driver": "^1.2",
-        "webmozart/console": "~1.0@beta",
-        "symfony/debug": "^3.0",
-        "matthiasnoback/naive-serializer": "^0.4",
-        "matthiasnoback/php-workshop-tools": "^0.11",
         "matthiasnoback/convenient-immutability": "^0.2.1",
         "bunny/bunny": "^0.2.4",
         "doctrine/dbal": "^2.9",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "beberlei/assert": "^3.2",
+        "matthiasnoback/naive-serializer": "^0.9.1",
+        "matthiasnoback/php-workshop-tools": "^0.32.0"
     },
     "autoload": {
         "psr-4": {
@@ -37,9 +33,6 @@
     "autoload-dev": {
         "psr-4": {
             "": "test/"
-        },
-        "files": [
-            "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"
-        ]
+        }
     }
 }

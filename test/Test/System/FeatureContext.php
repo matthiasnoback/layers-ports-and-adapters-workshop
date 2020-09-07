@@ -5,9 +5,11 @@ namespace Test\System;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
 use MeetupOrganizing\SchemaManager;
 use MeetupOrganizing\ServiceContainer;
+use PHPUnit\Framework\Assert;
 use RuntimeException;
 
 /**
@@ -101,7 +103,19 @@ final class FeatureContext extends MinkContext
      */
     public function theListOfAttendeesShouldContain(string $name): void
     {
-        $attendeeElement = $this->getSession()->getPage()->find('css', '.attendees li:contains("' . $name . '")');
-        assertNotNull($attendeeElement, 'Could not find the expected attendee element on the page');
+        $this->findOrFail('.attendees li:contains("' . $name . '")');
+    }
+
+    private function findOrFail(string $cssLocator): NodeElement
+    {
+        $element = $this->getSession()->getPage()->find('css', $cssLocator);
+
+        Assert::assertInstanceOf(
+            NodeElement::class,
+            $element,
+            'Expected to find element with CSS selector: ' . $cssLocator
+        );
+
+        return $element;
     }
 }

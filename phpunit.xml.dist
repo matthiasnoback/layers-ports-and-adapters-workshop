@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="./test/bootstrap.php"
-         colors="true">
-    <testsuites>
-        <testsuite name="Tests">
-            <directory>./test</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory>src/</directory>
-        </whitelist>
-    </filter>
-    <php>
-        <env name="PROJECT_ROOT_DIR" value="./"/>
-    </php>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" bootstrap="./test/bootstrap.php" colors="true">
+  <testsuites>
+    <testsuite name="Tests">
+      <directory>./test</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <env name="PROJECT_ROOT_DIR" value="./"/>
+  </php>
 </phpunit>
