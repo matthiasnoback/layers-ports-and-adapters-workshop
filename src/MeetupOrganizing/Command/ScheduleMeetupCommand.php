@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Command;
 
 use Assert\Assert;
+use DateTimeImmutable;
 use MeetupOrganizing\MeetupService;
 use MeetupOrganizing\ScheduleMeetup;
 use Symfony\Component\Console\Command\Command;
@@ -53,7 +54,8 @@ final class ScheduleMeetupCommand extends Command
                 (int)$organizerId,
                 $name,
                 $description,
-                $scheduledFor
+                $scheduledFor,
+                new DateTimeImmutable('now')
             )
         );
 
