@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Controller;
 
 use Assert\Assert;
+use DateTimeImmutable;
 use Exception;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\MeetupService;
@@ -74,7 +75,8 @@ final class ScheduleMeetupController
                         $formData['name'],
                         $formData['description'],
                         $formData['scheduleForDate'] . ' ' .
-                        $formData['scheduleForTime']
+                        $formData['scheduleForTime'],
+                        new DateTimeImmutable('now')
                     )
                 );
 
