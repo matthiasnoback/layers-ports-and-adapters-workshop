@@ -199,7 +199,7 @@ final class ServiceContainer extends Container
                 $this[Session::class],
                 $this[TemplateRendererInterface::class],
                 $this[RouterInterface::class],
-                $this[MeetupRepository::class]
+                $this[MeetupService::class]
             );
         };
         $this[CancelMeetupController::class] = function () {
@@ -243,6 +243,16 @@ final class ServiceContainer extends Container
          */
         $this[ConsoleApplication::class] = function () {
             return new ConsoleApplication($this);
+        };
+
+        /*
+         * Application services
+         */
+        $this[MeetupService::class] = function () {
+            return new MeetupService(
+                $this[UserRepository::class],
+                $this[MeetupRepository::class]
+            );
         };
 
         $this->bootstrap();

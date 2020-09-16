@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Command;
 
 use MeetupOrganizing\Entity\MeetupRepository;
+use MeetupOrganizing\MeetupService;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 
@@ -19,7 +20,7 @@ final class ConsoleApplication extends Application
 
         $this->addCommands(
             [
-                new ScheduleMeetupCommand($this->container->get(MeetupRepository::class))
+                new ScheduleMeetupCommand($this->container->get(MeetupService::class))
             ]
         );
     }
