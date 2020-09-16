@@ -256,8 +256,13 @@ final class ServiceContainer extends Container
         $this[MeetupService::class] = function () {
             return new MeetupService(
                 $this[UserRepository::class],
-                $this[MeetupRepository::class]
+                $this[MeetupRepository::class],
+                $this[SystemClock::class]
             );
+        };
+
+        $this[SystemClock::class] = function () {
+            return new SystemClock();
         };
 
         $this->bootstrap();

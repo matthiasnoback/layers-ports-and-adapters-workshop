@@ -14,12 +14,16 @@ final class MeetupService
 
     private MeetupRepository $meetupRepository;
 
+    private SystemClock $clock;
+
     public function __construct(
         UserRepository $userRepository,
-        MeetupRepository $meetupRepository
+        MeetupRepository $meetupRepository,
+        SystemClock $clock
     ) {
         $this->userRepository = $userRepository;
         $this->meetupRepository = $meetupRepository;
+        $this->clock = $clock;
     }
 
     public function scheduleMeetup(ScheduleMeetup $command): int
@@ -30,7 +34,8 @@ final class MeetupService
             $user->userId(),
             $command->name(),
             $command->description(),
-            $command->scheduledFor()
+            $command->scheduledFor(),
+            $this->clock->currentTime()
         );
 
         $this->meetupRepository->save($meetup);
