@@ -6,7 +6,7 @@ Feature:
     When I fill in the following:
       | Name              | Coding Dojo      |
       | Description       | Some description |
-      | Schedule for date | 2018-10-10       |
+      | Schedule for date | 2024-10-10       |
       | Time              | 20:00            |
     And I press "Schedule this meetup"
     And I am on "/"
@@ -19,7 +19,7 @@ Feature:
     When I fill in the following:
       | Name              | Coding Dojo      |
       | Description       | Some description |
-      | Schedule for date | 2018-10-10       |
+      | Schedule for date | 2024-10-10       |
       | Time              | 20:00            |
     And I press "Schedule this meetup"
     When I press "Cancel this meetup"
