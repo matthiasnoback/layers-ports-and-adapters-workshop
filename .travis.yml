@@ -15,6 +15,6 @@ script:
   # Run the tests
   - bin/run_tests.sh
   # Test the console application
-  - bin/meetup.sh schedule 1 Test Test 2020-09-07
+  - bin/meetup.sh schedule 1 Test Test '2020-09-07 20:00'
   # See if deptrac can run
   - bin/deptrac.sh
