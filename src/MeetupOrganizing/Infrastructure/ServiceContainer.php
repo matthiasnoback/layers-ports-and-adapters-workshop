@@ -1,31 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing;
+namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use MeetupOrganizing\Command\ConsoleApplication;
-use MeetupOrganizing\Command\ScheduleMeetupCommand;
-use MeetupOrganizing\Controller\CancelMeetupController;
-use MeetupOrganizing\Controller\ListMeetupsController;
-use MeetupOrganizing\Controller\MeetupDetailsController;
-use MeetupOrganizing\Controller\RsvpForMeetupController;
-use MeetupOrganizing\Controller\ScheduleMeetupController;
-use MeetupOrganizing\Controller\SwitchUserController;
-use MeetupOrganizing\Entity\MeetupRepository;
-use MeetupOrganizing\Entity\RsvpRepository;
-use MeetupOrganizing\Entity\UserRepository;
-use MeetupOrganizing\ReadModel\ListMeetupsRepository;
-use MeetupOrganizing\Resources\Views\FlashExtension;
-use MeetupOrganizing\Resources\Views\TwigTemplates;
-use MeetupOrganizing\Resources\Views\UserExtension;
+use MeetupOrganizing\Application\ListMeetupsRepository;
+use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Infrastructure\MeetupRepository;
+use MeetupOrganizing\Domain\RsvpRepository;
+use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Infrastructure\Resources\Views\FlashExtension;
+use MeetupOrganizing\Infrastructure\Resources\Views\TwigTemplates;
+use MeetupOrganizing\Infrastructure\Resources\Views\UserExtension;
 use Psr\Http\Message\RequestInterface;
-use Symfony\Component\ErrorHandler\Debug;
-use Xtreamwayz\Pimple\Container;
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\ErrorHandler\Debug;
 use Throwable;
+use Xtreamwayz\Pimple\Container;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper\ServerUrlHelper;

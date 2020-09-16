@@ -1,15 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Controller;
+namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
 use DateTimeImmutable;
 use Exception;
-use MeetupOrganizing\Entity\ScheduledDate;
-use MeetupOrganizing\MeetupService;
-use MeetupOrganizing\ScheduleMeetup;
-use MeetupOrganizing\Session;
+use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Application\ScheduleMeetup;
+use MeetupOrganizing\Domain\ScheduledDate;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
