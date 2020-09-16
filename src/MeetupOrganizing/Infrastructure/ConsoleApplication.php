@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Command;
+namespace MeetupOrganizing\Infrastructure;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\ReadModel;
+namespace MeetupOrganizing\Application;
 
 final class MeetupForList
 {

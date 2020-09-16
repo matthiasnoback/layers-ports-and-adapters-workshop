@@ -1,11 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Controller;
+namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
-use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;

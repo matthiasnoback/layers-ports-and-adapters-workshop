@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Command;
+namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
 use DateTimeImmutable;
-use MeetupOrganizing\MeetupService;
-use MeetupOrganizing\ScheduleMeetup;
+use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Application\ScheduleMeetup;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
