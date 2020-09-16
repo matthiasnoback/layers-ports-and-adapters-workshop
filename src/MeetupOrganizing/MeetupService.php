@@ -30,7 +30,8 @@ final class MeetupService
             $user->userId(),
             $command->name(),
             $command->description(),
-            $command->scheduledFor()
+            $command->scheduledFor(),
+            $command->currentTime()
         );
 
         $this->meetupRepository->save($meetup);
