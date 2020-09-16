@@ -2,8 +2,9 @@
 
 namespace MeetupOrganizing;
 
-use MeetupOrganizing\Entity\UserId;
-use MeetupOrganizing\Entity\UserRepository;
+use MeetupOrganizing\Domain\UserId;
+use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Infrastructure\Session;
 use PHPUnit\Framework\TestCase;
 
 final class SessionTest extends TestCase
