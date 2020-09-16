@@ -4,10 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Command;
 
 use Assert\Assert;
-use MeetupOrganizing\Entity\Meetup;
-use MeetupOrganizing\Entity\MeetupRepository;
-use MeetupOrganizing\Entity\ScheduledDate;
-use MeetupOrganizing\Entity\UserId;
+use MeetupOrganizing\MeetupService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,13 +12,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class ScheduleMeetupCommand extends Command
 {
-    private MeetupRepository $meetupRepository;
+    private MeetupService $meetupService;
 
-    public function __construct(MeetupRepository $meetupRepository)
+    public function __construct(MeetupService $meetupService)
     {
         parent::__construct();
 
-        $this->meetupRepository = $meetupRepository;
+        $this->meetupService = $meetupService;
     }
 
     protected function configure(): void
@@ -50,14 +47,12 @@ final class ScheduleMeetupCommand extends Command
         $scheduledFor = $input->getArgument('scheduledFor');
         Assert::that($scheduledFor)->string();
 
-        $meetup = new Meetup(
-            UserId::fromInt((int)$organizerId),
+        $this->meetupService->scheduleMeetup(
+            (int)$organizerId,
             $name,
             $description,
-            ScheduledDate::fromString($scheduledFor)
+            $scheduledFor
         );
-
-        $this->meetupRepository->save($meetup);
 
         $output->writeln('<info>Scheduled the meetup successfully</info>');
 
