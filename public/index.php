@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-use MeetupOrganizing\ServiceContainer;
+use MeetupOrganizing\Infrastructure\ServiceContainer;
 use Zend\Expressive\Application;
 
 require __DIR__ . '/../vendor/autoload.php';
