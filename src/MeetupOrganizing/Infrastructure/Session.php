@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing;
+namespace MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\Entity\User;
-use MeetupOrganizing\Entity\UserId;
-use MeetupOrganizing\Entity\UserRepository;
+use MeetupOrganizing\Domain\User;
+use MeetupOrganizing\Domain\UserId;
+use MeetupOrganizing\Domain\UserRepository;
 
 final class Session
 {
