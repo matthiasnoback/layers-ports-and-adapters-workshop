@@ -71,7 +71,7 @@ final class FeatureContext extends MinkContext
         $this->visit('/schedule-meetup');
         $this->fillField('Name', 'Meetup');
         $this->fillField('Description', 'Description');
-        $this->fillField('Schedule for date', '2020-10-10');
+        $this->fillField('Schedule for date', '2024-10-10');
         $this->fillField('Time', '20:00');
         $this->pressButton('Schedule this meetup');
 

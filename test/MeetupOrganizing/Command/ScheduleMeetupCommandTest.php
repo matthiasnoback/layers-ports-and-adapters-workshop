@@ -32,7 +32,7 @@ final class ScheduleMeetupCommandTest extends TestCase
                 'organizerId' => '1',
                 'name' => 'Akeneo Meetup',
                 'description' => 'The description',
-                'scheduledFor' => '2018-04-20 20:00'
+                'scheduledFor' => '2024-04-20 20:00'
             ]
         );
         /** @var SchemaManager $schemaManager */
