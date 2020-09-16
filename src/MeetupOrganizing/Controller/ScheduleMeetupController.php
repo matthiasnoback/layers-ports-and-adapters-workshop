@@ -5,9 +5,8 @@ namespace MeetupOrganizing\Controller;
 
 use Assert\Assert;
 use Exception;
-use MeetupOrganizing\Entity\Meetup;
-use MeetupOrganizing\Entity\MeetupRepository;
 use MeetupOrganizing\Entity\ScheduledDate;
+use MeetupOrganizing\MeetupService;
 use MeetupOrganizing\Session;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -23,18 +22,18 @@ final class ScheduleMeetupController
 
     private RouterInterface $router;
 
-    private MeetupRepository $meetupRepository;
+    private MeetupService $meetupService;
 
     public function __construct(
         Session $session,
         TemplateRendererInterface $renderer,
         RouterInterface $router,
-        MeetupRepository $meetupRepository
+        MeetupService $meetupService
     ) {
         $this->session = $session;
         $this->renderer = $renderer;
         $this->router = $router;
-        $this->meetupRepository = $meetupRepository;
+        $this->meetupService = $meetupService;
     }
 
     public function __invoke(
@@ -68,16 +67,12 @@ final class ScheduleMeetupController
 
             if (empty($formErrors)) {
 
-                $meetup = new Meetup(
-                    $this->session->getLoggedInUser()->userId(),
+                $meetupId = $this->meetupService->scheduleMeetup(
+                    $this->session->getLoggedInUser()->userId()->asInt(),
                     $formData['name'],
                     $formData['description'],
-                    ScheduledDate::fromString(
-                        $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
-                    )
+                    $formData['scheduleForDate'] . ' ' . $formData['scheduleForTime']
                 );
-
-                $this->meetupRepository->save($meetup);
 
                 $this->session->addSuccessFlash('Your meetup was scheduled successfully');
 
@@ -85,7 +80,7 @@ final class ScheduleMeetupController
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetup->getId()
+                            'id' => $meetupId
                         ]
                     )
                 );
