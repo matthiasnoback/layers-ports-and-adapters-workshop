@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing;
+namespace MeetupOrganizing\Application;
 
 use DateTimeImmutable;
-use MeetupOrganizing\Entity\ScheduledDate;
-use MeetupOrganizing\Entity\UserId;
+use MeetupOrganizing\Domain\ScheduledDate;
+use MeetupOrganizing\Domain\UserId;
 
 final class ScheduleMeetup
 {

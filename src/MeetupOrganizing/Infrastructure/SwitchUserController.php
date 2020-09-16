@@ -1,15 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Controller;
+namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
-use MeetupOrganizing\Entity\UserId;
-use RuntimeException;
-use MeetupOrganizing\Entity\UserRepository;
-use MeetupOrganizing\Session;
+use MeetupOrganizing\Domain\UserId;
+use MeetupOrganizing\Domain\UserRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use Zend\Diactoros\Response\RedirectResponse;
 
 final class SwitchUserController
