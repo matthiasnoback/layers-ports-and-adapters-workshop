@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Command;
 
-use Doctrine\DBAL\Connection;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 
@@ -19,7 +18,7 @@ final class ConsoleApplication extends Application
 
         $this->addCommands(
             [
-                new ScheduleMeetupCommand($this->container->get(Connection::class))
+                $this->container->get(ScheduleMeetupCommand::class)
             ]
         );
     }

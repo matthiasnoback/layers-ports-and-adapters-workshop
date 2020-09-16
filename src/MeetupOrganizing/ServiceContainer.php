@@ -7,6 +7,7 @@ use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Command\ConsoleApplication;
+use MeetupOrganizing\Command\ScheduleMeetupCommand;
 use MeetupOrganizing\Controller\CancelMeetupController;
 use MeetupOrganizing\Controller\ListMeetupsController;
 use MeetupOrganizing\Controller\MeetupDetailsController;
@@ -237,6 +238,10 @@ final class ServiceContainer extends Container
          */
         $this[ConsoleApplication::class] = function () {
             return new ConsoleApplication($this);
+        };
+
+        $this[ScheduleMeetupCommand::class] = function () {
+            return new ScheduleMeetupCommand($this[Connection::class]);
         };
 
         $this->bootstrap();
