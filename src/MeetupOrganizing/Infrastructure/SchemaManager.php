@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing;
+namespace MeetupOrganizing\Infrastructure;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;

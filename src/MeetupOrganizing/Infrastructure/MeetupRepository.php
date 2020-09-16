@@ -1,14 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Entity;
+namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
-use MeetupOrganizing\ReadModel\ListMeetupsRepository;
-use MeetupOrganizing\ReadModel\MeetupForList;
+use MeetupOrganizing\Application\ListMeetupsRepository;
+use MeetupOrganizing\Application\MeetupForList;
+use MeetupOrganizing\Domain\Meetup;
+use MeetupOrganizing\Domain\ScheduledDate;
 use PDO;
 
 final class MeetupRepository implements ListMeetupsRepository
