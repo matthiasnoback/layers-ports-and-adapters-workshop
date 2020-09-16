@@ -9,7 +9,7 @@ use MeetupOrganizing\ServiceContainer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\ApplicationTester;
 
-final class ScheduleMeetupConsoleHandlerTest extends TestCase
+final class ScheduleMeetupCommandTest extends TestCase
 {
     /**
      * @test
