@@ -5,6 +5,7 @@ namespace MeetupOrganizing\Command;
 
 use Assert\Assert;
 use MeetupOrganizing\MeetupService;
+use MeetupOrganizing\ScheduleMeetup;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -48,10 +49,12 @@ final class ScheduleMeetupCommand extends Command
         Assert::that($scheduledFor)->string();
 
         $this->meetupService->scheduleMeetup(
-            (int)$organizerId,
-            $name,
-            $description,
-            $scheduledFor
+            new ScheduleMeetup(
+                (int)$organizerId,
+                $name,
+                $description,
+                $scheduledFor
+            )
         );
 
         $output->writeln('<info>Scheduled the meetup successfully</info>');
