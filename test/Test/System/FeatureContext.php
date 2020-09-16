@@ -4,8 +4,8 @@ namespace Test\System;
 
 use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
-use MeetupOrganizing\SchemaManager;
-use MeetupOrganizing\ServiceContainer;
+use MeetupOrganizing\Infrastructure\SchemaManager;
+use MeetupOrganizing\Infrastructure\ServiceContainer;
 use PHPUnit\Framework\Assert;
 use rpkamp\Behat\MailhogExtension\Context\MailhogAwareContext;
 use rpkamp\Mailhog\MailhogClient;
