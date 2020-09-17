@@ -8,7 +8,8 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Application\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupService;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
+use MeetupOrganizing\Domain\MeetupRepository;
+use MeetupOrganizing\Infrastructure\MeetupRepositoryUsingDbal;
 use MeetupOrganizing\Domain\RsvpRepository;
 use MeetupOrganizing\Domain\UserRepository;
 use MeetupOrganizing\Infrastructure\Resources\Views\FlashExtension;
@@ -175,7 +176,7 @@ final class ServiceContainer extends Container
             );
         };
         $this[MeetupRepository::class] = function () {
-            return new MeetupRepository(
+            return new MeetupRepositoryUsingDbal(
                 $this[Connection::class]
             );
         };
