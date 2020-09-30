@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure;
 
-use MeetupOrganizing\Domain\User;
-use MeetupOrganizing\Domain\UserId;
-use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Domain\Model\User\User;
+use MeetupOrganizing\Domain\Model\User\UserId;
+use MeetupOrganizing\Domain\Model\User\UserRepository;
 
 final class Session
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Domain;
+namespace MeetupOrganizing\Domain\Model\Rsvp;
 
 use Assert\Assert;
 use Doctrine\DBAL\Connection;

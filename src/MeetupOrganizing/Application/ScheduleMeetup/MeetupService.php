@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Application;
+namespace MeetupOrganizing\Application\ScheduleMeetup;
 
 use Assert\Assert;
-use MeetupOrganizing\Domain\Meetup;
+use MeetupOrganizing\Domain\Model\Meetup\Meetup;
+use MeetupOrganizing\Domain\Model\User\UserRepository;
 use MeetupOrganizing\Infrastructure\MeetupRepository;
-use MeetupOrganizing\Domain\UserRepository;
 
 final class MeetupService
 {

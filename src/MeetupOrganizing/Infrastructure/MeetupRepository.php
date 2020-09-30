@@ -7,10 +7,10 @@ use Assert\Assert;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
-use MeetupOrganizing\Application\ListMeetupsRepository;
-use MeetupOrganizing\Application\MeetupForList;
-use MeetupOrganizing\Domain\Meetup;
-use MeetupOrganizing\Domain\ScheduledDate;
+use MeetupOrganizing\Application\ListMeetups\ListMeetupsRepository;
+use MeetupOrganizing\Application\ListMeetups\MeetupForList;
+use MeetupOrganizing\Domain\Model\Meetup\Meetup;
+use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
 use PDO;
 
 final class MeetupRepository implements ListMeetupsRepository
