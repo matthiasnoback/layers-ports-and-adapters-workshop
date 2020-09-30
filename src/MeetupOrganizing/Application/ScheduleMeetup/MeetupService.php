@@ -6,7 +6,7 @@ namespace MeetupOrganizing\Application\ScheduleMeetup;
 use Assert\Assert;
 use MeetupOrganizing\Domain\Model\Meetup\Meetup;
 use MeetupOrganizing\Domain\Model\User\UserRepository;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupRepository;
 
 final class MeetupService
 {

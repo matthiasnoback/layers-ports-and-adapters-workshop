@@ -10,10 +10,11 @@ use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Application\ListMeetups\ListMeetupsRepository;
 use MeetupOrganizing\Application\ListMeetups\MeetupForList;
 use MeetupOrganizing\Domain\Model\Meetup\Meetup;
+use MeetupOrganizing\Domain\Model\Meetup\MeetupRepository;
 use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
 use PDO;
 
-final class MeetupRepository implements ListMeetupsRepository
+final class MeetupRepositoryUsingDbal implements ListMeetupsRepository, MeetupRepository
 {
     private Connection $connection;
 
@@ -22,9 +23,6 @@ final class MeetupRepository implements ListMeetupsRepository
         $this->connection = $connection;
     }
 
-    /**
-     * Watch out: saving for now means inserting!
-     */
     public function save(Meetup $meetup): void
     {
         $this->connection->insert('meetups', $meetup->getData());
