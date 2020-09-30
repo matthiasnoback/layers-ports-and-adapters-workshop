@@ -49,7 +49,7 @@ final class MeetupDetailsController
             ->select('*')
             ->from('meetups')
             ->where('meetupId = :meetupId')
-            ->setParameter('meetupId', (int)$request->getAttribute('id'))
+            ->setParameter('meetupId', $request->getAttribute('id'))
             ->execute();
         Assert::that($statement)->isInstanceOf(Statement::class);
 

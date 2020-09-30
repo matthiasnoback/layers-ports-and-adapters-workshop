@@ -10,7 +10,7 @@ use MeetupOrganizing\Domain\Model\User\UserId;
 
 final class Meetup
 {
-    private ?int $meetupId;
+    private MeetupId $meetupId;
 
     private UserId $organizerId;
 
@@ -23,6 +23,7 @@ final class Meetup
     private bool $wasCancelled = false;
 
     public function __construct(
+        MeetupId $meetupId,
         UserId $organizerId,
         string $name,
         string $description,
@@ -35,6 +36,7 @@ final class Meetup
             throw new InvalidArgumentException('A new meetup should be in the future');
         }
 
+        $this->meetupId = $meetupId;
         $this->organizerId = $organizerId;
         $this->name = $name;
         $this->description = $description;
@@ -44,6 +46,7 @@ final class Meetup
     public function getData(): array
     {
         return [
+            'meetupId' => (string)$this->meetupId,
             'organizerId' => $this->organizerId->asInt(),
             'name' => $this->name,
             'description' => $this->description,
@@ -52,15 +55,7 @@ final class Meetup
         ];
     }
 
-    /**
-     * @internal Only to be used by MeetupRepository
-     */
-    public function setId(int $meetupId): void
-    {
-        $this->meetupId = $meetupId;
-    }
-
-    public function getId(): ?int
+    public function getId(): MeetupId
     {
         return $this->meetupId;
     }

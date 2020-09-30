@@ -85,7 +85,7 @@ final class ScheduleMeetupController
                     $this->router->generateUri(
                         'meetup_details',
                         [
-                            'id' => $meetupId
+                            'id' => (string)$meetupId
                         ]
                     )
                 );
