@@ -8,6 +8,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Application\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
 use MeetupOrganizing\Infrastructure\Resources\Views\FlashExtension;
 use MeetupOrganizing\Infrastructure\Resources\Views\TwigTemplates;
@@ -173,10 +174,11 @@ final class ServiceContainer extends Container
             );
         };
         $this[MeetupRepository::class] = function () {
-            return new MeetupRepository(
+            return new MeetupRepositoryUsingSql(
                 $this[Connection::class]
             );
         };
+
         $this[ListMeetupsRepository::class] = function () {
             return $this[MeetupRepository::class];
         };
