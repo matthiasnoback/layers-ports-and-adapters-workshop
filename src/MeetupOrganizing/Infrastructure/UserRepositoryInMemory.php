@@ -1,8 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Domain;
+namespace MeetupOrganizing\Infrastructure;
 
+use MeetupOrganizing\Domain\Model\User\User;
+use MeetupOrganizing\Domain\Model\User\UserId;
+use MeetupOrganizing\Domain\Model\User\UserRepository;
 use RuntimeException;
 
 final class UserRepositoryInMemory implements UserRepository

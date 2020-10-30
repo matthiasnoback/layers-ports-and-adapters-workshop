@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure\Resources\Views;
 
-use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Domain\Model\User\UserRepository;
 use MeetupOrganizing\Infrastructure\Session;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;

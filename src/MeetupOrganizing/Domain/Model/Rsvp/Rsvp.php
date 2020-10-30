@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Domain;
+namespace MeetupOrganizing\Domain\Model\Rsvp;
 
+use MeetupOrganizing\Domain\Model\User\UserId;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 

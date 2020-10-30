@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure;
 
 use DateTimeImmutable;
-use MeetupOrganizing\Application\ListMeetupsRepository;
+use MeetupOrganizing\Application\ListMeetups\ListMeetupsRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

@@ -5,6 +5,9 @@ namespace MeetupOrganizing\Domain;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
+use MeetupOrganizing\Domain\Model\Meetup\Meetup;
+use MeetupOrganizing\Domain\Model\Meetup\ScheduledDate;
+use MeetupOrganizing\Domain\Model\User\UserId;
 use PHPUnit\Framework\TestCase;
 
 final class MeetupTest extends TestCase

@@ -5,8 +5,8 @@ namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
 use DateTimeImmutable;
-use MeetupOrganizing\Application\MeetupService;
-use MeetupOrganizing\Application\ScheduleMeetup;
+use MeetupOrganizing\Application\ScheduleMeetup\MeetupService;
+use MeetupOrganizing\Application\ScheduleMeetup\ScheduleMeetup;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

@@ -2,8 +2,8 @@
 
 namespace MeetupOrganizing;
 
-use MeetupOrganizing\Domain\UserId;
-use MeetupOrganizing\Domain\UserRepositoryInMemory;
+use MeetupOrganizing\Domain\Model\User\UserId;
+use MeetupOrganizing\Infrastructure\UserRepositoryInMemory;
 use MeetupOrganizing\Infrastructure\Session;
 use PHPUnit\Framework\TestCase;
 

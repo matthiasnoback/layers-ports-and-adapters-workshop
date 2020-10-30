@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
-use MeetupOrganizing\Domain\UserId;
-use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Domain\Model\User\UserId;
+use MeetupOrganizing\Domain\Model\User\UserRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;

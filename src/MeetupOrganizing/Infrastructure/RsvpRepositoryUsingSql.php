@@ -6,8 +6,8 @@ namespace MeetupOrganizing\Infrastructure;
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
-use MeetupOrganizing\Domain\Rsvp;
-use MeetupOrganizing\Domain\RsvpRepository;
+use MeetupOrganizing\Domain\Model\Rsvp\Rsvp;
+use MeetupOrganizing\Domain\Model\Rsvp\RsvpRepository;
 use PDO;
 
 final class RsvpRepositoryUsingSql implements RsvpRepository
