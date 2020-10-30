@@ -7,9 +7,10 @@ use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Domain\Rsvp;
+use MeetupOrganizing\Domain\RsvpRepository;
 use PDO;
 
-final class RsvpRepository
+final class RsvpRepositoryUsingSql implements RsvpRepository
 {
     private Connection $connection;
 
@@ -30,9 +31,6 @@ final class RsvpRepository
         );
     }
 
-    /**
-     * @return array<Rsvp> & Rsvp[]
-     */
     public function getByMeetupId(int $meetupId): array
     {
         $statement = $this->connection

@@ -5,17 +5,17 @@ namespace Test\UseCases;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
-use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Domain\UserRepositoryInMemory;
 
 final class FeatureContext implements Context
 {
-    private UserRepository $userRepository;
+    private UserRepositoryInMemory $userRepository;
 
     private ?int $userId = null;
 
     public function __construct()
     {
-        $this->userRepository = new UserRepository();
+        $this->userRepository = new UserRepositoryInMemory();
     }
 
     /**
