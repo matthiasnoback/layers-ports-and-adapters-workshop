@@ -11,6 +11,8 @@ use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\RsvpRepository;
 use MeetupOrganizing\Domain\UserRepository;
+use MeetupOrganizing\Infrastructure\RsvpRepositoryUsingSql;
+use MeetupOrganizing\Domain\UserRepositoryInMemory;
 use MeetupOrganizing\Infrastructure\Resources\Views\FlashExtension;
 use MeetupOrganizing\Infrastructure\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Infrastructure\Resources\Views\UserExtension;
@@ -167,10 +169,10 @@ final class ServiceContainer extends Container
         };
 
         $this[UserRepository::class] = function () {
-            return new UserRepository();
+            return new UserRepositoryInMemory();
         };
         $this[RsvpRepository::class] = function () {
-            return new RsvpRepository(
+            return new RsvpRepositoryUsingSql(
                 $this[Connection::class]
             );
         };
