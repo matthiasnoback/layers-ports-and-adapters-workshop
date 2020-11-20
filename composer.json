@@ -25,9 +25,9 @@
         "doctrine/dbal": "^2.9",
         "ext-pdo": "*",
         "beberlei/assert": "^3.2",
-        "matthiasnoback/naive-serializer": "^0.9.1",
-        "matthiasnoback/php-workshop-tools": "^0.32.0",
-        "symfony/error-handler": "^5.1"
+        "symfony/error-handler": "^5.1",
+        "symfony/debug": "^4.4",
+        "ramsey/uuid": "^4.1"
     },
     "autoload": {
         "psr-4": {
