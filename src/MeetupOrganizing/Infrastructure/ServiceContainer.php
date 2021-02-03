@@ -6,9 +6,10 @@ namespace MeetupOrganizing\Infrastructure;
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
+use MeetupOrganizing\Application\Clock;
 use MeetupOrganizing\Application\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupService;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
+use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\RsvpRepository;
 use MeetupOrganizing\Domain\UserRepository;
 use MeetupOrganizing\Infrastructure\Resources\Views\FlashExtension;
@@ -174,12 +175,17 @@ final class ServiceContainer extends Container
                 $this[Connection::class]
             );
         };
-        $this[MeetupRepository::class] = function () {
-            return new MeetupRepository(
+        $this[MeetupRepositoryUsingDbal::class] = function () {
+            return new MeetupRepositoryUsingDbal(
                 $this[Connection::class]
             );
         };
-        $this[ListMeetupsRepository::class] = $this[MeetupRepository::class];
+        $this[MeetupRepository::class] = function () {
+            return $this[MeetupRepositoryUsingDbal::class];
+        };
+        $this[ListMeetupsRepository::class] = function () {
+            return $this[MeetupRepositoryUsingDbal::class];
+        };
 
         /*
          * Controllers
@@ -252,11 +258,11 @@ final class ServiceContainer extends Container
             return new MeetupService(
                 $this[UserRepository::class],
                 $this[MeetupRepository::class],
-                $this[SystemClock::class]
+                $this[Clock::class]
             );
         };
 
-        $this[SystemClock::class] = function () {
+        $this[Clock::class] = function () {
             return new SystemClock();
         };
 

@@ -5,9 +5,8 @@ namespace MeetupOrganizing\Application;
 
 use Assert\Assert;
 use MeetupOrganizing\Domain\Meetup;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
+use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
-use MeetupOrganizing\Infrastructure\SystemClock;
 
 final class MeetupService
 {
@@ -15,12 +14,12 @@ final class MeetupService
 
     private MeetupRepository $meetupRepository;
 
-    private SystemClock $clock;
+    private Clock $clock;
 
     public function __construct(
         UserRepository $userRepository,
         MeetupRepository $meetupRepository,
-        SystemClock $clock
+        Clock $clock
     ) {
         $this->userRepository = $userRepository;
         $this->meetupRepository = $meetupRepository;
