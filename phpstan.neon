@@ -1,4 +1,5 @@
 parameters:
+    tmpDir: %currentWorkingDirectory%/var/phpstan
     level: max
     paths:
         - src/
