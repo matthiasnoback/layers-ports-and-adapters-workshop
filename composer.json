@@ -5,15 +5,6 @@
             "email": "matthiasnoback@gmail.com"
         }
     ],
-    "require-dev": {
-        "behat/mink-extension": "^2.3",
-        "behat/behat": "^3.7",
-        "phpunit/phpunit": "^9.3",
-        "phpstan/phpstan": "^0.12.42",
-        "phpstan/phpstan-beberlei-assert": "^0.12.3",
-        "phpstan/phpstan-phpunit": "^0.12.16",
-        "symfony/var-dumper": "^5.1"
-    },
     "require": {
         "php": "^7.4",
         "zendframework/zend-expressive": "^1.0",
@@ -27,8 +18,17 @@
         "ext-pdo": "*",
         "beberlei/assert": "^3.2",
         "symfony/error-handler": "^5.1",
-        "symfony/debug": "^4.4",
         "ramsey/uuid": "^4.1"
+    },
+    "require-dev": {
+        "behat/mink-extension": "^2.3",
+        "behat/behat": "^3.7",
+        "phpunit/phpunit": "^9.3",
+        "phpstan/phpstan": "^0.12.42",
+        "phpstan/phpstan-beberlei-assert": "^0.12.3",
+        "phpstan/phpstan-phpunit": "^0.12.16",
+        "symfony/debug": "^4.4",
+        "symfony/var-dumper": "^5.1"
     },
     "autoload": {
         "psr-4": {
