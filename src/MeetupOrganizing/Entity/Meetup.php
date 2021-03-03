@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Entity;
 
+use Assert\Assert;
+use DateTimeImmutable;
+use InvalidArgumentException;
+
 final class Meetup
 {
     private ?int $meetupId;
@@ -21,8 +25,15 @@ final class Meetup
         UserId $organizerId,
         string $name,
         string $description,
-        ScheduledDate $scheduledFor
+        ScheduledDate $scheduledFor,
+        DateTimeImmutable $currentTime
     ) {
+        Assert::that($name)->notEmpty('The name of the meetup should not be empty');
+        Assert::that($description)->notEmpty('The description of the meetup should not be empty');
+        if (!$scheduledFor->isInTheFuture($currentTime)) {
+            throw new InvalidArgumentException('A new meetup should be in the future');
+        }
+
         $this->organizerId = $organizerId;
         $this->name = $name;
         $this->description = $description;
