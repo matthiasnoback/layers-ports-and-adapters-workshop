@@ -7,7 +7,6 @@ use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Domain\Rsvp;
-use MeetupOrganizing\Domain\RsvpRepository;
 use MeetupOrganizing\Domain\UserId;
 use MeetupOrganizing\Domain\UserRepository;
 use PDO;
@@ -24,12 +23,12 @@ final class MeetupDetailsController
 
     private TemplateRendererInterface $renderer;
 
-    private RsvpRepository $rsvpRepository;
+    private RsvpRepositoryUsingDbal $rsvpRepository;
 
     public function __construct(
         Connection $connection,
         UserRepository $userRepository,
-        RsvpRepository $rsvpRepository,
+        RsvpRepositoryUsingDbal $rsvpRepository,
         TemplateRendererInterface $renderer
     ) {
         $this->connection = $connection;
