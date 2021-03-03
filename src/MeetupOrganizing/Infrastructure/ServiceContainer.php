@@ -173,12 +173,12 @@ final class ServiceContainer extends Container
                 $this[Connection::class]
             );
         };
-        $this[MeetupRepository::class] = function () {
-            return new MeetupRepository(
+        $this[MeetupRepositoryUsingDbal::class] = function () {
+            return new MeetupRepositoryUsingDbal(
                 $this[Connection::class]
             );
         };
-        $this[ListMeetupsRepository::class] = $this[MeetupRepository::class];
+        $this[ListMeetupsRepository::class] = $this[MeetupRepositoryUsingDbal::class];
 
         /*
          * Controllers
@@ -250,13 +250,13 @@ final class ServiceContainer extends Container
         $this[MeetupService::class] = function () {
             return new MeetupService(
                 $this[UserRepository::class],
-                $this[MeetupRepository::class],
-                $this[Clock::class]
+                $this[MeetupRepositoryUsingDbal::class],
+                $this[SystemClock::class]
             );
         };
 
-        $this[Clock::class] = function () {
-            return new Clock();
+        $this[SystemClock::class] = function () {
+            return new SystemClock();
         };
 
         $this->bootstrap();
