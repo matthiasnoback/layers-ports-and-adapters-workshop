@@ -5,8 +5,7 @@ namespace MeetupOrganizing\Application;
 
 use Assert\Assert;
 use MeetupOrganizing\Domain\Meetup;
-use MeetupOrganizing\Infrastructure\Clock;
-use MeetupOrganizing\Infrastructure\MeetupRepository;
+use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
 
 final class MeetupService
