@@ -22,7 +22,7 @@ trait AggregateId
      */
     public static function fromString(string $id): self
     {
-        return new self($id);
+        return new static($id);
     }
 
     public function asString(): string
