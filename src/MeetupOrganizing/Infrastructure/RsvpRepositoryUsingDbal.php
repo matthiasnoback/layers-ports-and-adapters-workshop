@@ -6,6 +6,7 @@ namespace MeetupOrganizing\Infrastructure;
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
+use MeetupOrganizing\Domain\MeetupId;
 use MeetupOrganizing\Domain\Rsvp;
 use MeetupOrganizing\Domain\RsvpRepository;
 use PDO;
@@ -25,20 +26,20 @@ final class RsvpRepositoryUsingDbal implements RsvpRepository
             'rsvps',
             [
                 'rsvpId' => $rsvp->rsvpId()->toString(),
-                'meetupId' => $rsvp->meetupId(),
+                'meetupId' => $rsvp->meetupId()->asString(),
                 'userId' => $rsvp->userId()->asInt()
             ]
         );
     }
 
-    public function getByMeetupId(int $meetupId): array
+    public function getByMeetupId(MeetupId $meetupId): array
     {
         $statement = $this->connection
             ->createQueryBuilder()
             ->select('*')
             ->from('rsvps')
             ->where('meetupId = :meetupId')
-            ->setParameter('meetupId', $meetupId)
+            ->setParameter('meetupId', $meetupId->asString())
             ->execute();
 
         Assert::that($statement)->isInstanceOf(Statement::class);

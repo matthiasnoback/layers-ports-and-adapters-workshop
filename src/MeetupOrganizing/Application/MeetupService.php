@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Application;
 
-use Assert\Assert;
 use MeetupOrganizing\Domain\Meetup;
+use MeetupOrganizing\Domain\MeetupId;
 use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
+use Ramsey\Uuid\Uuid;
 
 final class MeetupService
 {
@@ -26,11 +27,12 @@ final class MeetupService
         $this->clock = $clock;
     }
 
-    public function scheduleMeetup(ScheduleMeetup $command): int
+    public function scheduleMeetup(ScheduleMeetup $command): MeetupId
     {
         $user = $this->userRepository->getById($command->organizerId());
 
         $meetup = new Meetup(
+            MeetupId::fromString(Uuid::uuid4()->toString()),
             $user->userId(),
             $command->name(),
             $command->description(),
@@ -39,8 +41,6 @@ final class MeetupService
         );
 
         $this->meetupRepository->save($meetup);
-
-        Assert::that($meetup->getId())->integer();
 
         return $meetup->getId();
     }

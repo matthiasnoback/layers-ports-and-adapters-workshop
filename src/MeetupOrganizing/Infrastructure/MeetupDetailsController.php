@@ -6,8 +6,8 @@ namespace MeetupOrganizing\Infrastructure;
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
+use MeetupOrganizing\Domain\MeetupId;
 use MeetupOrganizing\Domain\Rsvp;
-use MeetupOrganizing\Infrastructure\RsvpRepositoryUsingDbal;
 use MeetupOrganizing\Domain\UserId;
 use MeetupOrganizing\Domain\UserRepository;
 use PDO;
@@ -60,7 +60,7 @@ final class MeetupDetailsController
         }
 
         $organizer = $this->userRepository->getById(UserId::fromInt((int)$meetup['organizerId']));
-        $rsvps = $this->rsvpRepository->getByMeetupId((int)$meetup['meetupId']);
+        $rsvps = $this->rsvpRepository->getByMeetupId(MeetupId::fromString($meetup['meetupId']));
         $users = array_map(
             function (Rsvp $rsvp) {
                 return $this->userRepository->getById($rsvp->userId());

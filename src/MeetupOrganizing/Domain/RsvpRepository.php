@@ -10,5 +10,5 @@ interface RsvpRepository
     /**
      * @return array<Rsvp> & Rsvp[]
      */
-    public function getByMeetupId(int $meetupId): array;
+    public function getByMeetupId(MeetupId $meetupId): array;
 }
