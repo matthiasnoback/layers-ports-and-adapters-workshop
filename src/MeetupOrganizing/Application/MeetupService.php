@@ -7,7 +7,6 @@ use MeetupOrganizing\Domain\Meetup;
 use MeetupOrganizing\Domain\MeetupId;
 use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
-use Ramsey\Uuid\Uuid;
 
 final class MeetupService
 {
@@ -32,7 +31,7 @@ final class MeetupService
         $user = $this->userRepository->getById($command->organizerId());
 
         $meetup = new Meetup(
-            MeetupId::fromString(Uuid::uuid4()->toString()),
+            $this->meetupRepository->nextIdentity(),
             $user->userId(),
             $command->name(),
             $command->description(),
