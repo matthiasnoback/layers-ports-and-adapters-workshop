@@ -17,7 +17,7 @@ use RuntimeException;
  */
 final class FeatureContext extends MinkContext
 {
-    private ?int $scheduledMeetupId = null;
+    private ?string $scheduledMeetupId = null;
 
     private string $projectRootDir;
 
@@ -77,11 +77,11 @@ final class FeatureContext extends MinkContext
 
         $currentUrl = $this->getSession()->getCurrentUrl();
         $matches = [];
-        if (preg_match('#^.+/(\d+)$#', $currentUrl, $matches) === 0) {
+        if (preg_match('#^.+/(.+)$#', $currentUrl, $matches) === 0) {
             throw new RuntimeException('Cannot determine the ID of the meetup');
         }
 
-        $this->scheduledMeetupId = (int)$matches[1];
+        $this->scheduledMeetupId = $matches[1];
     }
 
     /**
