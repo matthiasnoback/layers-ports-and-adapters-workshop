@@ -30,7 +30,7 @@ final class RsvpRepository
     }
 
     /**
-     * @return array<Rsvp> & Rsvp[]
+     * @return array<Rsvp>
      */
     public function getByMeetupId(string $meetupId): array
     {

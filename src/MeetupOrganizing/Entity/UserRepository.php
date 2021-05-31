@@ -16,11 +16,13 @@ final class UserRepository
     private array $records = [
         self::ORGANIZER_ID => [
             'userId' => self::ORGANIZER_ID,
-            'name' => 'Organizer'
+            'name' => 'Organizer',
+            'emailAddress' => 'organizer@example.com'
         ],
         self::REGULAR_USER_ID => [
             'userId' => self::REGULAR_USER_ID,
-            'name' => 'Regular user'
+            'name' => 'Regular user',
+            'emailAddress' => 'user@example.com'
         ]
     ];
 
@@ -34,7 +36,7 @@ final class UserRepository
     }
 
     /**
-     * @return array<User> & User[]
+     * @return array<User>
      */
     public function findAll(): array
     {

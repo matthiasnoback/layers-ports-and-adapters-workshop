@@ -9,6 +9,8 @@ final class User
 
     private string $name;
 
+    private string $emailAddress;
+
     private function __construct()
     {
     }
@@ -19,6 +21,7 @@ final class User
 
         $user->userId = (int)$record['userId'];
         $user->name = $record['name'];
+        $user->emailAddress = $record['emailAddress'];
 
         return $user;
     }
@@ -31,5 +34,10 @@ final class User
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function emailAddress(): string
+    {
+        return $this->emailAddress;
     }
 }
