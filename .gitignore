@@ -3,3 +3,4 @@
 .deptrac.cache
 /.idea/
 /.phpunit.result.cache
+/.env

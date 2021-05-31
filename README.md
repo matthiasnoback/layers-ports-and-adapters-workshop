@@ -1,30 +1,33 @@
-# Code and assignments for the "Layers, Ports & Adapters" workshop module
+# Sandbox project for the "Advanced Web Application Architecture" training
+
+You'll find all the available training programs here: <https://matthiasnoback.nl/training/>
 
 ## Installation
 
-On most machines the best way to install this project will be to use Docker. If you have trouble running Docker, or just want to use the PHP runtime that's installed on your machine already, take a look at option 2 below. 
+On most machines the easiest way to install this project is with Docker. If you have trouble running Docker, or just want to use the PHP runtime that's installed on your machine already, take a look at option 2 below. 
 
 ### Option 1: Docker 
 
 #### Requirements
 
-- [Docker Engine](https://docs.docker.com/engine/installation/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+- Docker Engine
+- Docker Compose
+- Git
+- Bash
 
 #### Getting started
 
-- Make sure the `HOST_UID`, `HOST_GUID` environment variables have been defined:
-
-    ```
-    export HOST_GID=$(id -g)
-    export HOST_UID=$(id -u)
-    ```
-
 - Clone this repository (`git clone git@github.com:matthiasnoback/layers-ports-and-adapters-workshop.git`) and `cd` into it.
-- Run `docker-compose pull`.
-- Run `bin/composer.sh install --prefer-dist` to install the project's dependencies.
-- Run `docker-compose up -d` to start the web server.
-- Open <http://localhost:8080> (adapt the port to your use case) in a browser. You should see the homepage of the meetup application.
+- Run `bin/install`.
+- Open <http://localhost:8080> in a browser. You should see the homepage of the meetup application.
+
+If port 8080 is no longer available on your local machine, modify `docker-compose.yml` to publish to another port:
+
+```yaml
+ports:
+    # To try port 8081:
+    - "8081:8080"
+```
 
 #### Running development tools
 
@@ -35,7 +38,7 @@ On most machines the best way to install this project will be to use Docker. If 
 
 #### Cleaning up after the workshop
 
-- Run `docker-compose down --rmi all -v --remove-orphans` to remove all containers for this project, their images, and their volumes.
+- Run `bin/cleanup` to remove all containers for this project, their images, and their volumes.
 - Remove the project directory.
 - If you don't use Docker normally, you can shut it down or uninstall it too.
 
@@ -45,6 +48,8 @@ On most machines the best way to install this project will be to use Docker. If 
 
 - PHP (>=7.4)
 - Composer
+- Git
+- Bash
 
 #### Getting started
 
@@ -56,7 +61,7 @@ On most machines the best way to install this project will be to use Docker. If 
 
 #### Running development tools
 
-- Run `vendor/bin/phpunit && vendor/bin/behat -v` to run all the tests (make sure that you also still have the webserver running). 
+- Run `./run_tests.sh` to run all the tests (make sure that you also still have the webserver running). 
 - Run `./meetup` to work with the command-line version of this application.
 
 #### Cleaning up after the workshop

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -eu
+
+echo "Cleaning up"
+docker-compose down --rmi all -v --remove-orphans

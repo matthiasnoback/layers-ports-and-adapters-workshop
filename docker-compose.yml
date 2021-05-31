@@ -11,6 +11,8 @@ services:
         expose:
             - 8080
         user: ${HOST_UID}:${HOST_GID}
+        env_file:
+            - .env
 
     php:
         build: docker/php/
@@ -23,9 +25,13 @@ services:
             - web
         working_dir: /app
         user: ${HOST_UID}:${HOST_GID}
+        env_file:
+            - .env
 
     composer:
         image: composer:latest
         volumes:
-          - ./:/app
+            - ./:/app
         user: ${HOST_UID}:${HOST_GID}
+        env_file:
+            - .env
