@@ -15,6 +15,7 @@ use MeetupOrganizing\Controller\RsvpForMeetupController;
 use MeetupOrganizing\Controller\ScheduleMeetupController;
 use MeetupOrganizing\Controller\SwitchUserController;
 use MeetupOrganizing\Entity\RsvpRepository;
+use MeetupOrganizing\Entity\UserHasRsvpd;
 use MeetupOrganizing\Entity\UserRepository;
 use MeetupOrganizing\Resources\Views\FlashExtension;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
@@ -135,6 +136,19 @@ final class ServiceContainer extends Container
         };
         $this[Application::class] = new ApplicationFactory();
 
+        $this[EventDispatcher::class] = function () {
+            $eventDispatcher = new ConfigurableEventDispatcher();
+
+            $eventDispatcher->registerSpecificListener(
+                UserHasRsvpd::class,
+                function () {
+                    $this[Session::class]->addSuccessFlash('You have successfully RSVP-ed to this meetup');
+                }
+            );
+
+            return $eventDispatcher;
+        };
+
         /*
          * Templating
          */
@@ -229,7 +243,8 @@ final class ServiceContainer extends Container
                 $this[Connection::class],
                 $this[Session::class],
                 $this[RsvpRepository::class],
-                $this[RouterInterface::class]
+                $this[RouterInterface::class],
+                $this[EventDispatcher::class]
             );
         };
 

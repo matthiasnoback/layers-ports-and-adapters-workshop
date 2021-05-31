@@ -8,6 +8,8 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Entity\Rsvp;
 use MeetupOrganizing\Entity\RsvpRepository;
+use MeetupOrganizing\Entity\UserHasRsvpd;
+use MeetupOrganizing\EventDispatcher;
 use MeetupOrganizing\Session;
 use PDO;
 use Psr\Http\Message\ResponseInterface;
@@ -25,17 +27,20 @@ final class RsvpForMeetupController
     private RsvpRepository $rsvpRepository;
 
     private RouterInterface $router;
+    private EventDispatcher $eventDispatcher;
 
     public function __construct(
         Connection $connection,
         Session $session,
         RsvpRepository $rsvpRepository,
-        RouterInterface $router
+        RouterInterface $router,
+        EventDispatcher $eventDispatcher
     ) {
         $this->connection = $connection;
         $this->session = $session;
         $this->rsvpRepository = $rsvpRepository;
         $this->router = $router;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function __invoke(
@@ -71,7 +76,9 @@ final class RsvpForMeetupController
         );
         $this->rsvpRepository->save($rsvp);
 
-        $this->session->addSuccessFlash('You have successfully RSVP-ed to this meetup');
+        $this->eventDispatcher->dispatch(
+            new UserHasRsvpd($postData['meetupId'], $this->session->getLoggedInUser()->userId(), $rsvp->rsvpId())
+        );
 
         return new RedirectResponse(
             $this->router->generateUri(
