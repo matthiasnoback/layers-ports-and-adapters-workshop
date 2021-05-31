@@ -12,8 +12,6 @@
         "xtreamwayz/pimple-container-interop": "^1.0",
         "zendframework/zend-expressive-twigrenderer": "^1.1",
         "behat/mink-goutte-driver": "^1.2",
-        "matthiasnoback/convenient-immutability": "^0.2.1",
-        "bunny/bunny": "^0.2.4",
         "doctrine/dbal": "^2.9",
         "ext-pdo": "*",
         "beberlei/assert": "^3.2",
