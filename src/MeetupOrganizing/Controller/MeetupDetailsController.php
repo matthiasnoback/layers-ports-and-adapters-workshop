@@ -60,7 +60,7 @@ final class MeetupDetailsController
         }
 
         $organizer = $this->userRepository->getById(UserId::fromInt((int)$meetup['organizerId']));
-        $rsvps = $this->rsvpRepository->getByMeetupId((int)$meetup['meetupId']);
+        $rsvps = $this->rsvpRepository->getByMeetupId($meetup['meetupId']);
         $users = array_map(
             function (Rsvp $rsvp) {
                 return $this->userRepository->getById($rsvp->userId());

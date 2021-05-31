@@ -46,7 +46,7 @@ final class SchemaManager
 
         $rsvpsTable = $schema->createTable('rsvps');
         $rsvpsTable->addColumn('rsvpId', 'string');
-        $rsvpsTable->addColumn('meetupId', 'integer');
+        $rsvpsTable->addColumn('meetupId', 'string');
         $rsvpsTable->addColumn('userId', 'integer');
         $rsvpsTable->setPrimaryKey(['rsvpId']);
         $rsvpsTable->addUniqueIndex(['meetupId', 'userId']);

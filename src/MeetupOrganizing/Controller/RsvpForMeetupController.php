@@ -55,7 +55,7 @@ final class RsvpForMeetupController
             ->select('*')
             ->from('meetups')
             ->where('meetupId = :meetupId')
-            ->setParameter('meetupId', (int)$postData['meetupId'])
+            ->setParameter('meetupId', $postData['meetupId'])
             ->execute();
         Assert::that($statement)->isInstanceOf(Statement::class);
 
@@ -66,7 +66,7 @@ final class RsvpForMeetupController
         }
 
         $rsvp = Rsvp::create(
-            (int)$postData['meetupId'],
+            $postData['meetupId'],
             $this->session->getLoggedInUser()->userId()
         );
         $this->rsvpRepository->save($rsvp);
@@ -77,7 +77,7 @@ final class RsvpForMeetupController
             $this->router->generateUri(
                 'meetup_details',
                 [
-                    'id' => (int)$postData['meetupId']
+                    'id' => $postData['meetupId']
                 ]
             )
         );

@@ -10,13 +10,13 @@ final class Rsvp
 {
     private UuidInterface $rsvpId;
 
-    private int $meetupId;
+    private string $meetupId;
 
     private UserId $userId;
 
     private function __construct(
         UuidInterface $rsvpId,
-        int $meetupId,
+        string $meetupId,
         UserId $userId
     ) {
         $this->rsvpId = $rsvpId;
@@ -24,7 +24,7 @@ final class Rsvp
         $this->userId = $userId;
     }
 
-    public static function create(int $meetupId, UserId $userId): Rsvp
+    public static function create(string $meetupId, UserId $userId): Rsvp
     {
         return new self(Uuid::uuid4(), $meetupId, $userId);
     }
@@ -33,7 +33,7 @@ final class Rsvp
     {
         return new self(
             Uuid::fromString($record['rsvpId']),
-            (int)$record['meetupId'],
+            $record['meetupId'],
             UserId::fromInt((int)$record['userId'])
         );
     }
@@ -43,7 +43,7 @@ final class Rsvp
         return $this->rsvpId;
     }
 
-    public function meetupId(): int
+    public function meetupId(): string
     {
         return $this->meetupId;
     }
