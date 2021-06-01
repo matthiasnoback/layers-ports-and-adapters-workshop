@@ -16,7 +16,8 @@
         "ext-pdo": "*",
         "beberlei/assert": "^3.2",
         "symfony/error-handler": "^5.1",
-        "ramsey/uuid": "^4.1"
+        "ramsey/uuid": "^4.1",
+        "symfony/mailer": "^5.3"
     },
     "require-dev": {
         "behat/mink-extension": "^2.3",
@@ -26,7 +27,10 @@
         "phpstan/phpstan-beberlei-assert": "^0.12.3",
         "phpstan/phpstan-phpunit": "^0.12.16",
         "symfony/debug": "^4.4",
-        "symfony/var-dumper": "^5.1"
+        "symfony/var-dumper": "^5.1",
+        "rpkamp/mailhog-behat-extension": "^0.6.7",
+        "php-http/guzzle6-adapter": "^2.0",
+        "php-http/message": "^1.11"
     },
     "autoload": {
         "psr-4": {

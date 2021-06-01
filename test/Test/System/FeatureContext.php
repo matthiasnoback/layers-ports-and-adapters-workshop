@@ -2,21 +2,29 @@
 
 namespace Test\System;
 
-use Behat\Behat\Tester\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
 use Behat\Mink\Element\NodeElement;
 use Behat\MinkExtension\Context\MinkContext;
 use MeetupOrganizing\SchemaManager;
 use MeetupOrganizing\ServiceContainer;
 use PHPUnit\Framework\Assert;
+use rpkamp\Behat\MailhogExtension\Context\MailhogAwareContext;
+use rpkamp\Mailhog\MailhogClient;
+use rpkamp\Mailhog\Message\Contact;
 use RuntimeException;
 
 /**
  * Defines application features from the specific context.
  */
-final class FeatureContext extends MinkContext
+final class FeatureContext extends MinkContext implements MailhogAwareContext
 {
+    private MailhogClient $mailhog;
+
+    public function setMailhog(MailhogClient $client): void
+    {
+        $this->mailhog = $client;
+        $this->mailhog->purgeMessages();
+    }
+
     private ?string $scheduledMeetupId = null;
 
     private string $projectRootDir;
@@ -98,6 +106,28 @@ final class FeatureContext extends MinkContext
     public function theListOfAttendeesShouldContain(string $name): void
     {
         $this->findOrFail('.attendees li:contains("' . $name . '")');
+    }
+
+    /**
+     * @Then an email should be sent to :emailAddress with subject :subject
+     */
+    public function anEmailShouldBeSentTo(string $emailAddress, string $subject): void
+    {
+        $lastMessage = $this->mailhog->getLastMessage();
+
+        $actualRecipients = array_map(
+            fn (Contact $contact) => $contact->emailAddress,
+            iterator_to_array($lastMessage->recipients)
+        );
+        Assert::assertContains(
+            $emailAddress,
+            $actualRecipients,
+            sprintf(
+                'Expected to find "%s" in the list of recipients (%s)',
+                $emailAddress, implode(', ' , $actualRecipients)
+            )
+        );
+        Assert::assertStringContainsString($subject, $lastMessage->subject);
     }
 
     private function findOrFail(string $cssLocator): NodeElement

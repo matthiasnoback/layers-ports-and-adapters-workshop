@@ -22,6 +22,9 @@ use MeetupOrganizing\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Resources\Views\UserExtension;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\ErrorHandler\Debug;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport;
 use Xtreamwayz\Pimple\Container;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
@@ -147,6 +150,12 @@ final class ServiceContainer extends Container
             );
 
             return $eventDispatcher;
+        };
+
+        $this[MailerInterface::class] = function () {
+            return new Mailer(
+                Transport::fromDsn('smtp://mailhog:1025')
+            );
         };
 
         /*
