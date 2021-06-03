@@ -32,9 +32,7 @@ final class MeetupService
         $user = $this->userRepository->getById($command->organizerId());
 
         $meetup = new Meetup(
-            MeetupId::fromString(
-                Uuid::uuid4()->toString()
-            ),
+            $this->meetupRepository->nextIdentity(),
             $user->userId(),
             $command->name(),
             $command->description(),

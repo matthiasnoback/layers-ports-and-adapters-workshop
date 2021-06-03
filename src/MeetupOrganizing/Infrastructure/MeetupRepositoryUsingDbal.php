@@ -10,9 +10,11 @@ use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Application\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupForList;
 use MeetupOrganizing\Domain\Meetup;
+use MeetupOrganizing\Domain\MeetupId;
 use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\ScheduledDate;
 use PDO;
+use Ramsey\Uuid\Uuid;
 
 final class MeetupRepositoryUsingDbal implements ListMeetupsRepository, MeetupRepository
 {
@@ -21,6 +23,13 @@ final class MeetupRepositoryUsingDbal implements ListMeetupsRepository, MeetupRe
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+    }
+
+    public function nextIdentity(): MeetupId
+    {
+        return MeetupId::fromString(
+            Uuid::uuid4()->toString()
+        );
     }
 
     public function save(Meetup $meetup): void
