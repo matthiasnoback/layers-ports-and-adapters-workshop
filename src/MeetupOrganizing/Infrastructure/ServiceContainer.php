@@ -9,6 +9,7 @@ use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Application\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Application\ConfigurableEventDispatcher;
+use MeetupOrganizing\Domain\MeetupWasScheduled;
 use MeetupOrganizing\Domain\RsvpRepository;
 use MeetupOrganizing\Domain\UserHasRsvpd;
 use MeetupOrganizing\Domain\UserRepository;
@@ -145,6 +146,13 @@ final class ServiceContainer extends Container
                 }
             );
 
+            $eventDispatcher->registerSpecificListener(
+                MeetupWasScheduled::class,
+                function () {
+                    $this[Session::class]->addSuccessFlash('Your meetup was scheduled successfully');
+                }
+            );
+
             return $eventDispatcher;
         };
 
@@ -277,7 +285,8 @@ final class ServiceContainer extends Container
             return new MeetupService(
                 $this[UserRepository::class],
                 $this[MeetupRepositoryUsingDbal::class],
-                $this[SystemClock::class]
+                $this[SystemClock::class],
+                $this[EventDispatcher::class],
             );
         };
 

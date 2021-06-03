@@ -7,7 +7,6 @@ use MeetupOrganizing\Domain\Meetup;
 use MeetupOrganizing\Domain\MeetupId;
 use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
-use Ramsey\Uuid\Uuid;
 
 final class MeetupService
 {
@@ -17,14 +16,18 @@ final class MeetupService
 
     private Clock $clock;
 
+    private EventDispatcher $eventDispatcher;
+
     public function __construct(
         UserRepository $userRepository,
         MeetupRepository $meetupRepository,
-        Clock $clock
+        Clock $clock,
+        EventDispatcher $eventDispatcher
     ) {
         $this->userRepository = $userRepository;
         $this->meetupRepository = $meetupRepository;
         $this->clock = $clock;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function scheduleMeetup(ScheduleMeetup $command): MeetupId
@@ -41,6 +44,10 @@ final class MeetupService
         );
 
         $this->meetupRepository->save($meetup);
+
+        $this->eventDispatcher->dispatchAll(
+            $meetup->releaseEvents()
+        );
 
         return $meetup->getId();
     }

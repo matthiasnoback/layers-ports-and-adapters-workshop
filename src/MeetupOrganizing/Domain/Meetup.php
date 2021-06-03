@@ -9,6 +9,8 @@ use InvalidArgumentException;
 
 final class Meetup
 {
+    private array $events = [];
+
     private MeetupId $meetupId;
 
     private UserId $organizerId;
@@ -40,6 +42,17 @@ final class Meetup
         $this->name = $name;
         $this->description = $description;
         $this->scheduledFor = $scheduledFor;
+
+        $this->events[] = new MeetupWasScheduled($this->meetupId);
+    }
+
+    public function releaseEvents(): array
+    {
+        $events = $this->events;
+
+        $this->events = [];
+
+        return $events;
     }
 
     public function getData(): array

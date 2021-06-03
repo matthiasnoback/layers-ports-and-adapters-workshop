@@ -77,8 +77,6 @@ final class ScheduleMeetupController
                     )
                 );
 
-                $this->session->addSuccessFlash('Your meetup was scheduled successfully');
-
                 return new RedirectResponse(
                     $this->router->generateUri(
                         'meetup_details',
