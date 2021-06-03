@@ -18,6 +18,7 @@ final class MeetupTest extends TestCase
         $this->expectExceptionMessage('name');
 
         new Meetup(
+            $this->aMeetupId(),
             $this->aUserId(),
             $emptyName = '',
             'A description',
@@ -35,6 +36,7 @@ final class MeetupTest extends TestCase
         $this->expectExceptionMessage('description');
 
         new Meetup(
+            $this->aMeetupId(),
             $this->aUserId(),
             'A name',
             $emptyDescription = '',
@@ -57,6 +59,7 @@ final class MeetupTest extends TestCase
         $currentTime = $scheduledDate->toDateTimeImmutable()->modify('+2 days');
 
         new Meetup(
+            $this->aMeetupId(),
             $this->aUserId(),
             'A name',
             'A description',
@@ -78,5 +81,10 @@ final class MeetupTest extends TestCase
     private function currentTime(): DateTimeImmutable
     {
         return $this->aScheduledDate()->toDateTimeImmutable()->modify('-2 days');
+    }
+
+    private function aMeetupId(): MeetupId
+    {
+        return MeetupId::fromString('0b6f0257-012d-4ca9-bc2c-7b488559dddb');
     }
 }

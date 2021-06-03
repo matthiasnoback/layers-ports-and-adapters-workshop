@@ -36,7 +36,7 @@ final class SchemaManager
         $schema = new Schema();
 
         $meetupsTable = $schema->createTable('meetups');
-        $meetupsTable->addColumn('meetupId', 'integer', ['autoincrement' => true]);
+        $meetupsTable->addColumn('meetupId', 'string');
         $meetupsTable->addColumn('organizerId', 'integer');
         $meetupsTable->addColumn('name', 'string');
         $meetupsTable->addColumn('description', 'string');

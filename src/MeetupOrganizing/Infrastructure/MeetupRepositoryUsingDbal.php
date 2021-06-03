@@ -26,9 +26,6 @@ final class MeetupRepositoryUsingDbal implements ListMeetupsRepository, MeetupRe
     public function save(Meetup $meetup): void
     {
         $this->connection->insert('meetups', $meetup->getData());
-
-        $meetupId = (int)$this->connection->lastInsertId();
-        $meetup->setId($meetupId);
     }
 
     public function upcomingMeetups(DateTimeImmutable $now): array
