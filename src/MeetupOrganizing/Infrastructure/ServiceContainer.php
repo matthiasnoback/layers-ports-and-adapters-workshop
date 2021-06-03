@@ -146,6 +146,14 @@ final class ServiceContainer extends Container
                 }
             );
 
+            /** @var SendEmail $sendEmail */
+            $sendEmail = $this[SendEmail::class];
+
+            $eventDispatcher->registerSpecificListener(
+                UserHasRsvpd::class,
+                [$sendEmail, 'whenUserHasRsvpd']
+            );
+
             $eventDispatcher->registerSpecificListener(
                 MeetupWasScheduled::class,
                 function () {
@@ -263,7 +271,11 @@ final class ServiceContainer extends Container
                 $this[Session::class],
                 $this[RsvpRepository::class],
                 $this[RouterInterface::class],
-                $this[EventDispatcher::class],
+                $this[EventDispatcher::class]
+            );
+        };
+        $this[SendEmail::class] = function () {
+            return new SendEmail(
                 $this[UserRepository::class],
                 $this[MailerInterface::class]
             );
