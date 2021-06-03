@@ -263,7 +263,9 @@ final class ServiceContainer extends Container
                 $this[Session::class],
                 $this[RsvpRepository::class],
                 $this[RouterInterface::class],
-                $this[EventDispatcher::class]
+                $this[EventDispatcher::class],
+                $this[UserRepository::class],
+                $this[MailerInterface::class]
             );
         };
 

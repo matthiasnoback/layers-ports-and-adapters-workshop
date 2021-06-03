@@ -10,10 +10,13 @@ use MeetupOrganizing\Domain\Rsvp;
 use MeetupOrganizing\Domain\RsvpRepository;
 use MeetupOrganizing\Domain\UserHasRsvpd;
 use MeetupOrganizing\Application\EventDispatcher;
+use MeetupOrganizing\Domain\UserRepository;
 use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
 
@@ -27,19 +30,25 @@ final class RsvpForMeetupController
 
     private RouterInterface $router;
     private EventDispatcher $eventDispatcher;
+    private UserRepository $userRepository;
+    private MailerInterface $mailer;
 
     public function __construct(
         Connection $connection,
         Session $session,
         RsvpRepository $rsvpRepository,
         RouterInterface $router,
-        EventDispatcher $eventDispatcher
+        EventDispatcher $eventDispatcher,
+        UserRepository $userRepository,
+        MailerInterface $mailer
     ) {
         $this->connection = $connection;
         $this->session = $session;
         $this->rsvpRepository = $rsvpRepository;
         $this->router = $router;
         $this->eventDispatcher = $eventDispatcher;
+        $this->userRepository = $userRepository;
+        $this->mailer = $mailer;
     }
 
     public function __invoke(
@@ -77,6 +86,14 @@ final class RsvpForMeetupController
 
         $this->eventDispatcher->dispatch(
             new UserHasRsvpd($postData['meetupId'], $this->session->getLoggedInUser()->userId(), $rsvp->rsvpId())
+        );
+
+        $user = $this->userRepository->getById($this->session->getLoggedInUser()->userId());
+        $this->mailer->send(
+            (new Email())->subject('You are attending')
+            ->to($user->emailAddress())
+            ->from('noreply@example.com')
+            ->text('You are attending')
         );
 
         return new RedirectResponse(
