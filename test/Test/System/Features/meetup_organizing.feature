@@ -34,4 +34,4 @@ Feature:
     When I press "RSVP"
     Then I should see "You have successfully RSVP-ed to this meetup"
     And the list of attendees should contain "Regular user"
-#    And an email should be sent to "user@example.com" with subject "You are attending"
+    And an email should be sent to "user@example.com" with subject "You are attending"

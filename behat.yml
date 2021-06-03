@@ -6,8 +6,8 @@ default:
             sessions:
                 default:
                     goutte: ~
-#        rpkamp\Behat\MailhogExtension:
-#            base_url: http://mailhog:8025
+        rpkamp\Behat\MailhogExtension:
+            base_url: http://mailhog:8025
     suites:
         system:
             mink_session: default
