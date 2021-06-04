@@ -23,27 +23,63 @@ final class Meetup
 
     private bool $wasCancelled = false;
 
-    public function __construct(
+    private function __construct(
         MeetupId $meetupId,
         UserId $organizerId,
         string $name,
         string $description,
         ScheduledDate $scheduledFor,
-        DateTimeImmutable $currentTime
+        bool $wasCancelled
     ) {
+        $this->meetupId = $meetupId;
+        $this->organizerId = $organizerId;
+        $this->name = $name;
+        $this->description = $description;
+        $this->scheduledFor = $scheduledFor;
+        $this->wasCancelled = $wasCancelled;
+    }
+
+    public static function schedule(
+            MeetupId $meetupId,
+            UserId $organizerId,
+            string $name,
+            string $description,
+            ScheduledDate $scheduledFor,
+            DateTimeImmutable $currentTime
+        ): self {
         Assert::that($name)->notEmpty('The name of the meetup should not be empty');
         Assert::that($description)->notEmpty('The description of the meetup should not be empty');
         if (!$scheduledFor->isInTheFuture($currentTime)) {
             throw new InvalidArgumentException('A new meetup should be in the future');
         }
 
-        $this->meetupId = $meetupId;
-        $this->organizerId = $organizerId;
-        $this->name = $name;
-        $this->description = $description;
-        $this->scheduledFor = $scheduledFor;
+        $meetup = new self(
+            $meetupId,
+            $organizerId,
+            $name,
+            $description,
+            $scheduledFor,
+            false
+        );
 
-        $this->events[] = new MeetupWasScheduled($this->meetupId);
+        $meetup->events[] = new MeetupWasScheduled($meetup->meetupId);
+
+        return $meetup;
+    }
+
+    /**
+     * @param array<string,string> $record
+     */
+    public static function fromDatabaseRecord(array $record): self
+    {
+        return new self(
+            MeetupId::fromString($record['meetupId']),
+            UserId::fromInt((int)$record['organizerId']),
+            $record['name'],
+            $record['description'],
+            ScheduledDate::fromString($record['scheduledFor']),
+            (bool)$record['wasCancelled']
+        );
     }
 
     public function releaseEvents(): array
@@ -70,5 +106,10 @@ final class Meetup
     public function getId(): MeetupId
     {
         return $this->meetupId;
+    }
+
+    public function cancel(): void
+    {
+        $this->wasCancelled = true;
     }
 }

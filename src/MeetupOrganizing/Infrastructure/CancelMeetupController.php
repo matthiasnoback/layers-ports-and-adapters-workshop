@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
-use Doctrine\DBAL\Connection;
+use MeetupOrganizing\Domain\MeetupId;
+use MeetupOrganizing\Domain\MeetupRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
@@ -13,20 +14,20 @@ use Zend\Expressive\Router\RouterInterface;
 
 final class CancelMeetupController
 {
-    private Connection $connection;
-
     private Session $session;
 
     private RouterInterface $router;
 
+    private MeetupRepository $meetupRepository;
+
     public function __construct(
-        Connection $connection,
         Session $session,
-        RouterInterface $router
+        RouterInterface $router,
+        MeetupRepository $meetupRepository
     ) {
-        $this->connection = $connection;
         $this->session = $session;
         $this->router = $router;
+        $this->meetupRepository = $meetupRepository;
     }
 
     public function __invoke(
@@ -42,20 +43,12 @@ final class CancelMeetupController
         }
         $meetupId = $parsedBody['meetupId'];
 
-        $numberOfAffectedRows = $this->connection->update(
-            'meetups',
-            [
-                'wasCancelled' => 1
-            ],
-            [
-                'meetupId' => $meetupId,
-                'organizerId' => $this->session->getLoggedInUser()->userId()->asInt()
-            ]
-        );
+        $meetup = $this->meetupRepository->getById(MeetupId::fromString($meetupId));
+        $meetup->cancel();
 
-        if ($numberOfAffectedRows > 0) {
-            $this->session->addSuccessFlash('You have cancelled the meetup');
-        }
+        $this->meetupRepository->update($meetup);
+
+        $this->session->addSuccessFlash('You have cancelled the meetup');
 
         return new RedirectResponse(
             $this->router->generateUri('list_meetups')

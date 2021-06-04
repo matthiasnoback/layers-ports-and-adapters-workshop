@@ -34,7 +34,7 @@ final class MeetupService
     {
         $user = $this->userRepository->getById($command->organizerId());
 
-        $meetup = new Meetup(
+        $meetup = Meetup::schedule(
             $this->meetupRepository->nextIdentity(),
             $user->userId(),
             $command->name(),

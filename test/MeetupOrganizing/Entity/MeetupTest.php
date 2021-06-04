@@ -17,7 +17,7 @@ final class MeetupTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('name');
 
-        new Meetup(
+        Meetup::schedule(
             $this->aMeetupId(),
             $this->aUserId(),
             $emptyName = '',
@@ -35,7 +35,7 @@ final class MeetupTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('description');
 
-        new Meetup(
+        Meetup::schedule(
             $this->aMeetupId(),
             $this->aUserId(),
             'A name',
@@ -58,7 +58,7 @@ final class MeetupTest extends TestCase
         // Today is two days after the scheduled date:
         $currentTime = $scheduledDate->toDateTimeImmutable()->modify('+2 days');
 
-        new Meetup(
+        Meetup::schedule(
             $this->aMeetupId(),
             $this->aUserId(),
             'A name',

@@ -6,6 +6,7 @@ namespace MeetupOrganizing\Infrastructure;
 use Assert\Assert;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\Statement;
 use MeetupOrganizing\Application\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupForList;
@@ -35,6 +36,32 @@ final class MeetupRepositoryUsingDbal implements ListMeetupsRepository, MeetupRe
     public function save(Meetup $meetup): void
     {
         $this->connection->insert('meetups', $meetup->getData());
+    }
+
+    public function getById(MeetupId $meetupId): Meetup
+    {
+        $result = $this->connection->executeQuery(
+            'SELECT * FROM meetups WHERE meetupId = ?',
+            [
+                $meetupId->asString()
+            ]
+        );
+        /** @var Result $result */
+        $record = $result->fetchAssociative();
+        assert(is_array($record));
+
+        return Meetup::fromDatabaseRecord($record);
+    }
+
+    public function update(Meetup $meetup): void
+    {
+        $this->connection->update(
+            'meetups',
+            $meetup->getData(),
+            [
+                'meetupId' => $meetup->getId()->asString()
+            ]
+        );
     }
 
     public function upcomingMeetups(DateTimeImmutable $now): array
