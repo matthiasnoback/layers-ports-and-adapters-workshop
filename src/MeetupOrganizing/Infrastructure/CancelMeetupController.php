@@ -5,7 +5,7 @@ namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
 use MeetupOrganizing\Application\CancelMeetup;
-use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Application\MeetupOrganizingInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
@@ -17,16 +17,16 @@ final class CancelMeetupController
     private Session $session;
 
     private RouterInterface $router;
-    private MeetupService $meetupService;
+    private MeetupOrganizingInterface $meetupOrganizing;
 
     public function __construct(
         Session $session,
         RouterInterface $router,
-        MeetupService $meetupService
+        MeetupOrganizingInterface $meetupService
     ) {
         $this->session = $session;
         $this->router = $router;
-        $this->meetupService = $meetupService;
+        $this->meetupOrganizing = $meetupService;
     }
 
     public function __invoke(
@@ -41,7 +41,7 @@ final class CancelMeetupController
             throw new RuntimeException('Bad request');
         }
 
-        $this->meetupService->cancelMeetup(
+        $this->meetupOrganizing->cancelMeetup(
             new CancelMeetup(
                 $this->session->getLoggedInUser()->userId()->asInt(),
                 $parsedBody['meetupId']

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
-use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Application\MeetupOrganizingInterface;
 use MeetupOrganizing\Application\ScheduleMeetup;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,13 +13,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class ScheduleMeetupCommand extends Command
 {
-    private MeetupService $meetupService;
+    private MeetupOrganizingInterface $meetupOrganizing;
 
-    public function __construct(MeetupService $meetupService)
+    public function __construct(MeetupOrganizingInterface $meetupService)
     {
         parent::__construct();
 
-        $this->meetupService = $meetupService;
+        $this->meetupOrganizing = $meetupService;
     }
 
     protected function configure(): void
@@ -48,7 +48,7 @@ final class ScheduleMeetupCommand extends Command
         $scheduledFor = $input->getArgument('scheduledFor');
         Assert::that($scheduledFor)->string();
 
-        $this->meetupService->scheduleMeetup(
+        $this->meetupOrganizing->scheduleMeetup(
             new ScheduleMeetup(
                 (int)$organizerId,
                 $name,

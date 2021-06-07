@@ -5,7 +5,7 @@ namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
 use Exception;
-use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Application\MeetupOrganizingInterface;
 use MeetupOrganizing\Application\ScheduleMeetup;
 use MeetupOrganizing\Domain\ScheduledDate;
 use Psr\Http\Message\ResponseInterface;
@@ -22,18 +22,18 @@ final class ScheduleMeetupController
 
     private RouterInterface $router;
 
-    private MeetupService $meetupService;
+    private MeetupOrganizingInterface $meetupOrganizing;
 
     public function __construct(
         Session $session,
         TemplateRendererInterface $renderer,
         RouterInterface $router,
-        MeetupService $meetupService
+        MeetupOrganizingInterface $meetupOrganizing
     ) {
         $this->session = $session;
         $this->renderer = $renderer;
         $this->router = $router;
-        $this->meetupService = $meetupService;
+        $this->meetupOrganizing = $meetupOrganizing;
     }
 
     public function __invoke(
@@ -67,7 +67,7 @@ final class ScheduleMeetupController
 
             if (empty($formErrors)) {
 
-                $meetupId = $this->meetupService->scheduleMeetup(
+                $meetupId = $this->meetupOrganizing->scheduleMeetup(
                     new ScheduleMeetup(
                         $this->session->getLoggedInUser()->userId()->asInt(),
                         $formData['name'],

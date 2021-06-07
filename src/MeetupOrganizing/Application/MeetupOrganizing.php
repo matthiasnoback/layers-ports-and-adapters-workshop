@@ -9,7 +9,7 @@ use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
 use RuntimeException;
 
-final class MeetupService
+final class MeetupOrganizing implements MeetupOrganizingInterface
 {
     private UserRepository $userRepository;
 
@@ -18,17 +18,20 @@ final class MeetupService
     private Clock $clock;
 
     private EventDispatcher $eventDispatcher;
+    private ListMeetupsRepository $listMeetupsRepository;
 
     public function __construct(
         UserRepository $userRepository,
         MeetupRepository $meetupRepository,
         Clock $clock,
-        EventDispatcher $eventDispatcher
+        EventDispatcher $eventDispatcher,
+        ListMeetupsRepository $listMeetupsRepository
     ) {
         $this->userRepository = $userRepository;
         $this->meetupRepository = $meetupRepository;
         $this->clock = $clock;
         $this->eventDispatcher = $eventDispatcher;
+        $this->listMeetupsRepository = $listMeetupsRepository;
     }
 
     public function scheduleMeetup(ScheduleMeetup $command): MeetupId
@@ -53,6 +56,11 @@ final class MeetupService
         return $meetup->getId();
     }
 
+    public function listUpcomingMeetups(): array
+    {
+        return $this->listMeetupsRepository->upcomingMeetups($this->clock->currentTime());
+    }
+
     public function cancelMeetup(CancelMeetup $command): void
     {
         $meetup = $this->meetupRepository->getById($command->meetupId());
@@ -68,5 +76,10 @@ final class MeetupService
         $this->eventDispatcher->dispatchAll(
             $meetup->releaseEvents()
         );
+    }
+
+    public function listPastMeetups(): array
+    {
+        return $this->listMeetupsRepository->pastMeetups($this->clock->currentTime());
     }
 }

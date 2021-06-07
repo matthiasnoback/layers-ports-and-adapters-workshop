@@ -7,8 +7,9 @@ use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Application\ListMeetupsRepository;
-use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Application\ConfigurableEventDispatcher;
+use MeetupOrganizing\Application\MeetupOrganizing;
+use MeetupOrganizing\Application\MeetupOrganizingInterface;
 use MeetupOrganizing\Application\Notifications;
 use MeetupOrganizing\Application\SendEmail;
 use MeetupOrganizing\Domain\MeetupWasCancelled;
@@ -243,19 +244,19 @@ final class ServiceContainer extends Container
                 $this[Session::class],
                 $this[TemplateRendererInterface::class],
                 $this[RouterInterface::class],
-                $this[MeetupService::class]
+                $this[MeetupOrganizingInterface::class]
             );
         };
         $this[CancelMeetupController::class] = function () {
             return new CancelMeetupController(
                 $this[Session::class],
                 $this[RouterInterface::class],
-                $this[MeetupService::class]
+                $this[MeetupOrganizingInterface::class]
             );
         };
         $this[ListMeetupsController::class] = function () {
             return new ListMeetupsController(
-                $this[ListMeetupsRepository::class],
+                $this[MeetupOrganizingInterface::class],
                 $this[TemplateRendererInterface::class]
             );
         };
@@ -302,18 +303,19 @@ final class ServiceContainer extends Container
         };
 
         $this[ScheduleMeetupCommand::class] = function () {
-            return new ScheduleMeetupCommand($this[MeetupService::class]);
+            return new ScheduleMeetupCommand($this[MeetupOrganizingInterface::class]);
         };
 
         /*
          * Application services
          */
-        $this[MeetupService::class] = function () {
-            return new MeetupService(
+        $this[MeetupOrganizingInterface::class] = function () {
+            return new MeetupOrganizing(
                 $this[UserRepository::class],
                 $this[MeetupRepositoryUsingDbal::class],
                 $this[SystemClock::class],
                 $this[EventDispatcher::class],
+                $this[ListMeetupsRepository::class]
             );
         };
 
