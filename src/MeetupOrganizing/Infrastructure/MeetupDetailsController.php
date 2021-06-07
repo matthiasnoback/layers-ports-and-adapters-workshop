@@ -6,7 +6,6 @@ namespace MeetupOrganizing\Infrastructure;
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
-use MeetupOrganizing\Domain\Rsvp;
 use MeetupOrganizing\Domain\UserId;
 use MeetupOrganizing\Domain\UserRepository;
 use PDO;
@@ -23,18 +22,14 @@ final class MeetupDetailsController
 
     private TemplateRendererInterface $renderer;
 
-    private RsvpRepositoryUsingDbal $rsvpRepository;
-
     public function __construct(
         Connection $connection,
         UserRepository $userRepository,
-        RsvpRepositoryUsingDbal $rsvpRepository,
         TemplateRendererInterface $renderer
     ) {
         $this->connection = $connection;
         $this->renderer = $renderer;
         $this->userRepository = $userRepository;
-        $this->rsvpRepository = $rsvpRepository;
     }
 
     public function __invoke(
@@ -59,12 +54,23 @@ final class MeetupDetailsController
         }
 
         $organizer = $this->userRepository->getById(UserId::fromInt((int)$meetup['organizerId']));
-        $rsvps = $this->rsvpRepository->getByMeetupId($meetup['meetupId']);
+
+        $statement = $this->connection
+            ->createQueryBuilder()
+            ->select('*')
+            ->from('rsvps')
+            ->where('meetupId = :meetupId')
+            ->setParameter('meetupId', $request->getAttribute('id'))
+            ->execute();
+
+        Assert::that($statement)->isInstanceOf(Statement::class);
+        $rsvpRecords = $statement->fetchAll(PDO::FETCH_ASSOC);
+
         $users = array_map(
-            function (Rsvp $rsvp) {
-                return $this->userRepository->getById($rsvp->userId());
+            function (array $rsvpRecord) {
+                return $this->userRepository->getById(UserId::fromInt((int)$rsvpRecord['userId']));
             },
-            $rsvps
+            $rsvpRecords
         );
 
         $response->getBody()->write(

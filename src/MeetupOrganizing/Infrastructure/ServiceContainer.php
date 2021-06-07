@@ -264,7 +264,6 @@ final class ServiceContainer extends Container
             return new MeetupDetailsController(
                 $this[Connection::class],
                 $this[UserRepository::class],
-                $this[RsvpRepository::class],
                 $this[TemplateRendererInterface::class]
             );
         };
