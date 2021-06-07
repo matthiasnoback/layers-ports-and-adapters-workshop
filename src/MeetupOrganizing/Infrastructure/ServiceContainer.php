@@ -6,27 +6,15 @@ namespace MeetupOrganizing\Infrastructure;
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use MeetupOrganizing\Application\ListMeetupsRepository;
-use MeetupOrganizing\Application\ConfigurableEventDispatcher;
-use MeetupOrganizing\Application\MeetupOrganizing;
+use MeetupOrganizing\Infrastructure\DevelopmentContainer;
 use MeetupOrganizing\Application\MeetupOrganizingInterface;
-use MeetupOrganizing\Application\Notifications;
-use MeetupOrganizing\Application\SendEmail;
-use MeetupOrganizing\Domain\MeetupWasCancelled;
-use MeetupOrganizing\Domain\MeetupWasScheduled;
-use MeetupOrganizing\Domain\RsvpRepository;
-use MeetupOrganizing\Domain\UserHasRsvpd;
 use MeetupOrganizing\Domain\UserRepository;
-use MeetupOrganizing\Application\EventDispatcher;
 use MeetupOrganizing\Infrastructure\Resources\Views\FlashExtension;
 use MeetupOrganizing\Infrastructure\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Infrastructure\Resources\Views\UserExtension;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\ErrorHandler\Debug;
-use Symfony\Component\Mailer\Mailer;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mailer\Transport;
 use Throwable;
 use Xtreamwayz\Pimple\Container;
 use Zend\Expressive\Application;
@@ -140,44 +128,6 @@ final class ServiceContainer extends Container
         };
         $this[Application::class] = new ApplicationFactory();
 
-        $this[EventDispatcher::class] = function () {
-            $eventDispatcher = new ConfigurableEventDispatcher();
-
-            $eventDispatcher->registerSpecificListener(
-                UserHasRsvpd::class,
-                function () {
-                    $this[Session::class]->addSuccessFlash('You have successfully RSVP-ed to this meetup');
-                }
-            );
-
-            /** @var SendEmail $sendEmail */
-            $sendEmail = $this[SendEmail::class];
-
-            $eventDispatcher->registerSpecificListener(
-                UserHasRsvpd::class,
-                [$sendEmail, 'whenUserHasRsvpd']
-            );
-
-            $eventDispatcher->registerSpecificListener(
-                MeetupWasScheduled::class,
-                function () {
-                    $this[Session::class]->addSuccessFlash('Your meetup was scheduled successfully');
-                }
-            );
-
-            $eventDispatcher->registerSpecificListener(
-                MeetupWasCancelled::class,
-                [$sendEmail, 'whenMeetupWasCancelled']
-            );
-
-            return $eventDispatcher;
-        };
-
-        $this[MailerInterface::class] = function () {
-            return new Mailer(
-                Transport::fromDsn('smtp://mailhog:1025')
-            );
-        };
 
         /*
          * Templating
@@ -218,17 +168,6 @@ final class ServiceContainer extends Container
         $this[UserRepository::class] = function () {
             return new UserRepository();
         };
-        $this[RsvpRepository::class] = function () {
-            return new RsvpRepositoryUsingDbal(
-                $this[Connection::class]
-            );
-        };
-        $this[MeetupRepositoryUsingDbal::class] = function () {
-            return new MeetupRepositoryUsingDbal(
-                $this[Connection::class]
-            );
-        };
-        $this[ListMeetupsRepository::class] = $this[MeetupRepositoryUsingDbal::class];
 
         /*
          * Controllers
@@ -280,17 +219,6 @@ final class ServiceContainer extends Container
                 $this[MeetupOrganizingInterface::class]
             );
         };
-        $this[SendEmail::class] = function () {
-            return new SendEmail(
-                $this[UserRepository::class],
-                $this[Notifications::class],
-                $this[RsvpRepository::class]
-            );
-        };
-
-        $this[Notifications::class] = function () {
-            return new NotificationsUsingSymfonyMailer($this[MailerInterface::class]);
-        };
 
         /*
          * CLI
@@ -307,18 +235,7 @@ final class ServiceContainer extends Container
          * Application services
          */
         $this[MeetupOrganizingInterface::class] = function () {
-            return new MeetupOrganizing(
-                $this[UserRepository::class],
-                $this[MeetupRepositoryUsingDbal::class],
-                $this[SystemClock::class],
-                $this[EventDispatcher::class],
-                $this[ListMeetupsRepository::class],
-                $this[RsvpRepository::class]
-            );
-        };
-
-        $this[SystemClock::class] = function () {
-            return new SystemClock();
+            return (new DevelopmentContainer($this[Connection::class], $this[Session::class]))->meetupOrganizing();
         };
 
         $this->bootstrap();
