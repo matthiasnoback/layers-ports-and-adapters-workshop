@@ -25,7 +25,7 @@ final class RsvpRepositoryUsingDbal implements RsvpRepository
             'rsvps',
             [
                 'rsvpId' => $rsvp->rsvpId()->toString(),
-                'meetupId' => $rsvp->meetupId(),
+                'meetupId' => $rsvp->meetupId()->asString(),
                 'userId' => $rsvp->userId()->asInt()
             ]
         );

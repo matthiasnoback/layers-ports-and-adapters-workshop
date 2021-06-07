@@ -9,7 +9,7 @@ use InvalidArgumentException;
 
 final class Meetup
 {
-    private array $events = [];
+    use EventRecordingCapabilities;
 
     private MeetupId $meetupId;
 
@@ -62,7 +62,7 @@ final class Meetup
             false
         );
 
-        $meetup->events[] = new MeetupWasScheduled($meetup->meetupId);
+        $meetup->recordThat(new MeetupWasScheduled($meetup->meetupId));
 
         return $meetup;
     }
@@ -80,15 +80,6 @@ final class Meetup
             ScheduledDate::fromString($record['scheduledFor']),
             (bool)$record['wasCancelled']
         );
-    }
-
-    public function releaseEvents(): array
-    {
-        $events = $this->events;
-
-        $this->events = [];
-
-        return $events;
     }
 
     public function getData(): array

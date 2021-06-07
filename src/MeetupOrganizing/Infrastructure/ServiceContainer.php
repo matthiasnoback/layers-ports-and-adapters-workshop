@@ -276,11 +276,9 @@ final class ServiceContainer extends Container
         };
         $this[RsvpForMeetupController::class] = function () {
             return new RsvpForMeetupController(
-                $this[Connection::class],
                 $this[Session::class],
-                $this[RsvpRepository::class],
                 $this[RouterInterface::class],
-                $this[EventDispatcher::class]
+                $this[MeetupOrganizingInterface::class]
             );
         };
         $this[SendEmail::class] = function () {
@@ -315,7 +313,8 @@ final class ServiceContainer extends Container
                 $this[MeetupRepositoryUsingDbal::class],
                 $this[SystemClock::class],
                 $this[EventDispatcher::class],
-                $this[ListMeetupsRepository::class]
+                $this[ListMeetupsRepository::class],
+                $this[RsvpRepository::class]
             );
         };
 

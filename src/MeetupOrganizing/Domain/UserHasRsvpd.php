@@ -7,18 +7,18 @@ use Ramsey\Uuid\UuidInterface;
 
 final class UserHasRsvpd
 {
-    private string $meetupId;
+    private MeetupId $meetupId;
     private UserId $userId;
     private UuidInterface $rsvpId;
 
-    public function __construct(string $meetupId, UserId $userId, UuidInterface $rsvpId)
+    public function __construct(MeetupId $meetupId, UserId $userId, UuidInterface $rsvpId)
     {
         $this->meetupId = $meetupId;
         $this->userId = $userId;
         $this->rsvpId = $rsvpId;
     }
 
-    public function meetupId(): string
+    public function meetupId(): MeetupId
     {
         return $this->meetupId;
     }

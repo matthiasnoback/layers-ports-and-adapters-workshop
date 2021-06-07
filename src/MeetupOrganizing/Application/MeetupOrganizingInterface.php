@@ -14,6 +14,8 @@ interface MeetupOrganizingInterface
      */
     public function listUpcomingMeetups(): array;
 
+    public function rsvpForMeetup(RsvpForMeetup $command): void;
+
     public function cancelMeetup(CancelMeetup $command): void;
 
     /**
