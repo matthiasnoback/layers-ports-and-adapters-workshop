@@ -7,6 +7,7 @@ use MeetupOrganizing\Domain\Meetup;
 use MeetupOrganizing\Domain\MeetupId;
 use MeetupOrganizing\Domain\MeetupRepository;
 use MeetupOrganizing\Domain\UserRepository;
+use RuntimeException;
 
 final class MeetupService
 {
@@ -50,5 +51,22 @@ final class MeetupService
         );
 
         return $meetup->getId();
+    }
+
+    public function cancelMeetup(CancelMeetup $command): void
+    {
+        $meetup = $this->meetupRepository->getById($command->meetupId());
+
+        if (!$command->loggedInUserId()->equals($meetup->organizerId())) {
+            throw new RuntimeException('Only the organizer can cancel the meetup');
+        }
+
+        $meetup->cancel();
+
+        $this->meetupRepository->update($meetup);
+
+        $this->eventDispatcher->dispatchAll(
+            $meetup->releaseEvents()
+        );
     }
 }

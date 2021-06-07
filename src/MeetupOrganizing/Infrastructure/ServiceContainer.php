@@ -242,7 +242,7 @@ final class ServiceContainer extends Container
             return new CancelMeetupController(
                 $this[Session::class],
                 $this[RouterInterface::class],
-                $this[MeetupRepositoryUsingDbal::class]
+                $this[MeetupService::class]
             );
         };
         $this[ListMeetupsController::class] = function () {

@@ -112,4 +112,9 @@ final class Meetup
     {
         $this->wasCancelled = true;
     }
+
+    public function organizerId(): UserId
+    {
+        return $this->organizerId;
+    }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure;
 
 use Assert\Assert;
-use MeetupOrganizing\Domain\MeetupId;
-use MeetupOrganizing\Domain\MeetupRepository;
+use MeetupOrganizing\Application\CancelMeetup;
+use MeetupOrganizing\Application\MeetupService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
@@ -17,17 +17,16 @@ final class CancelMeetupController
     private Session $session;
 
     private RouterInterface $router;
-
-    private MeetupRepository $meetupRepository;
+    private MeetupService $meetupService;
 
     public function __construct(
         Session $session,
         RouterInterface $router,
-        MeetupRepository $meetupRepository
+        MeetupService $meetupService
     ) {
         $this->session = $session;
         $this->router = $router;
-        $this->meetupRepository = $meetupRepository;
+        $this->meetupService = $meetupService;
     }
 
     public function __invoke(
@@ -41,12 +40,13 @@ final class CancelMeetupController
         if (!isset($parsedBody['meetupId'])) {
             throw new RuntimeException('Bad request');
         }
-        $meetupId = $parsedBody['meetupId'];
 
-        $meetup = $this->meetupRepository->getById(MeetupId::fromString($meetupId));
-        $meetup->cancel();
-
-        $this->meetupRepository->update($meetup);
+        $this->meetupService->cancelMeetup(
+            new CancelMeetup(
+                $this->session->getLoggedInUser()->userId()->asInt(),
+                $parsedBody['meetupId']
+            )
+        );
 
         $this->session->addSuccessFlash('You have cancelled the meetup');
 
