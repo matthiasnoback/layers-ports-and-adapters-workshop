@@ -9,6 +9,7 @@ use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Application\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Application\ConfigurableEventDispatcher;
+use MeetupOrganizing\Domain\MeetupWasCancelled;
 use MeetupOrganizing\Domain\MeetupWasScheduled;
 use MeetupOrganizing\Domain\RsvpRepository;
 use MeetupOrganizing\Domain\UserHasRsvpd;
@@ -161,6 +162,11 @@ final class ServiceContainer extends Container
                 }
             );
 
+            $eventDispatcher->registerSpecificListener(
+                MeetupWasCancelled::class,
+                [$sendEmail, 'whenMeetupWasCancelled']
+            );
+
             return $eventDispatcher;
         };
 
@@ -277,7 +283,8 @@ final class ServiceContainer extends Container
         $this[SendEmail::class] = function () {
             return new SendEmail(
                 $this[UserRepository::class],
-                $this[MailerInterface::class]
+                $this[MailerInterface::class],
+                $this[RsvpRepository::class]
             );
         };
 

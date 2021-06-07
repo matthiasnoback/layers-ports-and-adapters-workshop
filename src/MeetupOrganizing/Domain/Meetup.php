@@ -111,6 +111,8 @@ final class Meetup
     public function cancel(): void
     {
         $this->wasCancelled = true;
+
+        $this->events[] = new MeetupWasCancelled($this->meetupId);
     }
 
     public function organizerId(): UserId

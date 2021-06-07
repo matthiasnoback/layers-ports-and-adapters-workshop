@@ -35,3 +35,13 @@ Feature:
     Then I should see "You have successfully RSVP-ed to this meetup"
     And the list of attendees should contain "Regular user"
     And an email should be sent to "user@example.com" with subject "You are attending"
+
+  Scenario: RSVP to a meetup that gets cancelled
+    Given a meetup was scheduled
+    And I am logged in as "Regular user"
+    And I am on the detail page of this meetup
+    And I press "RSVP"
+    When I am logged in as "Organizer"
+    And I am on the detail page of this meetup
+    And I press "Cancel this meetup"
+    Then an email should be sent to "user@example.com" with subject "The meetup was cancelled"
