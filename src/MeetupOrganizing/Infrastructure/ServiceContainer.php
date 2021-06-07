@@ -9,6 +9,8 @@ use Doctrine\DBAL\DriverManager;
 use MeetupOrganizing\Application\ListMeetupsRepository;
 use MeetupOrganizing\Application\MeetupService;
 use MeetupOrganizing\Application\ConfigurableEventDispatcher;
+use MeetupOrganizing\Application\Notifications;
+use MeetupOrganizing\Application\SendEmail;
 use MeetupOrganizing\Domain\MeetupWasCancelled;
 use MeetupOrganizing\Domain\MeetupWasScheduled;
 use MeetupOrganizing\Domain\RsvpRepository;
@@ -283,9 +285,13 @@ final class ServiceContainer extends Container
         $this[SendEmail::class] = function () {
             return new SendEmail(
                 $this[UserRepository::class],
-                $this[MailerInterface::class],
+                $this[Notifications::class],
                 $this[RsvpRepository::class]
             );
+        };
+
+        $this[Notifications::class] = function () {
+            return new NotificationsUsingSymfonyMailer($this[MailerInterface::class]);
         };
 
         /*

@@ -1,25 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace MeetupOrganizing\Infrastructure;
+namespace MeetupOrganizing\Application;
 
 use MeetupOrganizing\Domain\MeetupWasCancelled;
 use MeetupOrganizing\Domain\RsvpRepository;
 use MeetupOrganizing\Domain\UserHasRsvpd;
 use MeetupOrganizing\Domain\UserRepository;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 
 final class SendEmail
 {
     private UserRepository $userRepository;
-    private MailerInterface $mailer;
+    private Notifications $notifications;
     private RsvpRepository $rsvpRepository;
 
-    public function __construct(UserRepository $userRepository, MailerInterface $mailer, RsvpRepository $rsvpRepository)
+    public function __construct(UserRepository $userRepository, Notifications $notifications, RsvpRepository $rsvpRepository)
     {
         $this->userRepository = $userRepository;
-        $this->mailer = $mailer;
+        $this->notifications = $notifications;
         $this->rsvpRepository = $rsvpRepository;
     }
 
@@ -27,12 +25,7 @@ final class SendEmail
     {
         $user = $this->userRepository->getById($event->userId());
 
-        $this->mailer->send(
-            (new Email())->subject('You are attending')
-                ->to($user->emailAddress())
-                ->from('noreply@example.com')
-                ->text('You are attending')
-        );
+        $this->notifications->sendRsvpConfirmationMail($user);
     }
 
     public function whenMeetupWasCancelled(MeetupWasCancelled $event): void
@@ -40,12 +33,8 @@ final class SendEmail
         $rsvps = $this->rsvpRepository->getByMeetupId($event->meetupId()->asString());
         foreach ($rsvps as $rsvp) {
             $user = $this->userRepository->getById($rsvp->userId());
-            $this->mailer->send(
-                (new Email())->subject('The meetup was cancelled')
-                    ->to($user->emailAddress())
-                    ->from('noreply@example.com')
-                    ->text('You have RSVP-ed to a meetup that was just cancelled')
-            );
+
+            $this->notifications->sendMeetupCancellationMail($user);
         }
     }
 }
