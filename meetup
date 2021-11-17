@@ -1,8 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-use MeetupOrganizing\Command\ConsoleApplication;
-use MeetupOrganizing\ServiceContainer;
+use MeetupOrganizing\Infrastructure\Cli\ConsoleApplication;
+use MeetupOrganizing\Infrastructure\ServiceContainer;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
