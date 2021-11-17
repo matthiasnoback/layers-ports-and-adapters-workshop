@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Service;
 
+use MeetupOrganizing\Command\ScheduleMeetup;
 use MeetupOrganizing\Entity\Meetup;
 use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Entity\UserId;
@@ -23,26 +24,22 @@ final class MeetupService
         $this->userRepository = $userRepository;
     }
 
-    public function scheduleMeetup(
-        int $organizerId,
-        string $name,
-        string $description,
-        string $scheduledFor
-    ): int {
-        $this->assertOrganizerExists($organizerId);
+    public function scheduleMeetup(ScheduleMeetup $command): int
+    {
+        $this->assertOrganizerExists($command->organizerId());
 
         $meetup = new Meetup(
-            UserId::fromInt($organizerId),
-            $name,
-            $description,
-            ScheduledDate::fromString($scheduledFor)
+            $command->organizerId(),
+            $command->name(),
+            $command->description(),
+            $command->scheduledFor()
         );
 
         return $this->meetupRepository->save($meetup);
     }
 
-    private function assertOrganizerExists(int $organizerId): void
+    private function assertOrganizerExists(UserId $organizerId): void
     {
-        $this->userRepository->getById(UserId::fromInt($organizerId));
+        $this->userRepository->getById($organizerId);
     }
 }

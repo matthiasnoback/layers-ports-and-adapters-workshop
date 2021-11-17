@@ -49,12 +49,12 @@ final class ScheduleMeetupCommand extends Command
         $scheduledFor = $input->getArgument('scheduledFor');
         Assert::that($scheduledFor)->string();
 
-        $this->meetupService->scheduleMeetup(
+        $this->meetupService->scheduleMeetup(new ScheduleMeetup(
             (int)$organizerId,
             $name,
             $description,
             $scheduledFor
-        );
+        ));
 
         $output->writeln('<info>Scheduled the meetup successfully</info>');
 
