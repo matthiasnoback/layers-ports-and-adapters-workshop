@@ -5,7 +5,6 @@ namespace MeetupOrganizing\Service;
 
 use MeetupOrganizing\Command\ScheduleMeetup;
 use MeetupOrganizing\Entity\Meetup;
-use MeetupOrganizing\Entity\ScheduledDate;
 use MeetupOrganizing\Entity\UserId;
 use MeetupOrganizing\Entity\UserRepository;
 use MeetupOrganizing\Repository\MeetupRepository;
@@ -14,25 +13,29 @@ final class MeetupService
 {
     private MeetupRepository $meetupRepository;
     private UserRepository $userRepository;
+    private Clock $clock;
 
     public function __construct(
         MeetupRepository $meetupRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        Clock $clock
     )
     {
         $this->meetupRepository = $meetupRepository;
         $this->userRepository = $userRepository;
+        $this->clock = $clock;
     }
 
     public function scheduleMeetup(ScheduleMeetup $command): int
     {
         $this->assertOrganizerExists($command->organizerId());
 
-        $meetup = new Meetup(
+        $meetup = Meetup::schedule(
             $command->organizerId(),
             $command->name(),
             $command->description(),
-            $command->scheduledFor()
+            $command->scheduledFor(),
+            $this->clock->currentTime()
         );
 
         return $this->meetupRepository->save($meetup);

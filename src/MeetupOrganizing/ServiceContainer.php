@@ -21,6 +21,7 @@ use MeetupOrganizing\Repository\MeetupRepository;
 use MeetupOrganizing\Resources\Views\FlashExtension;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
 use MeetupOrganizing\Resources\Views\UserExtension;
+use MeetupOrganizing\Service\Clock;
 use MeetupOrganizing\Service\MeetupService;
 use Psr\Http\Message\RequestInterface;
 use Symfony\Component\ErrorHandler\Debug;
@@ -214,7 +215,8 @@ final class ServiceContainer extends Container
         $this[MeetupService::class] = function () {
             return new MeetupService(
                 $this[MeetupRepository::class],
-                $this[UserRepository::class]
+                $this[UserRepository::class],
+                new Clock()
             );
         };
 
