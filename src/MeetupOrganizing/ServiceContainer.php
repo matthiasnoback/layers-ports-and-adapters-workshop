@@ -17,6 +17,8 @@ use MeetupOrganizing\Controller\SwitchUserController;
 use MeetupOrganizing\Entity\RsvpRepository;
 use MeetupOrganizing\Entity\UserHasRsvpd;
 use MeetupOrganizing\Entity\UserRepository;
+use MeetupOrganizing\Repository\ListMeetupsRepository;
+use MeetupOrganizing\Repository\ListMeetupsRepositoryInterface;
 use MeetupOrganizing\Repository\MeetupRepository;
 use MeetupOrganizing\Resources\Views\FlashExtension;
 use MeetupOrganizing\Resources\Views\TwigTemplates;
@@ -211,12 +213,20 @@ final class ServiceContainer extends Container
                 $this[Connection::class]
             );
         };
-
+        $this[ListMeetupsRepositoryInterface::class] = function () {
+            return new ListMeetupsRepository(
+                $this[Connection::class],
+                $this[Clock::class],
+            );
+        };
+        $this[Clock::class] = function () {
+            return new Clock();
+        };
         $this[MeetupService::class] = function () {
             return new MeetupService(
                 $this[MeetupRepository::class],
                 $this[UserRepository::class],
-                new Clock()
+                $this[Clock::class]
             );
         };
 
@@ -246,7 +256,7 @@ final class ServiceContainer extends Container
         };
         $this[ListMeetupsController::class] = function () {
             return new ListMeetupsController(
-                $this[Connection::class],
+                $this[ListMeetupsRepositoryInterface::class],
                 $this[TemplateRendererInterface::class]
             );
         };
