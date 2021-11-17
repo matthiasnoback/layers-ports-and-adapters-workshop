@@ -5,13 +5,13 @@ namespace MeetupOrganizing\Entity;
 
 final class Meetup
 {
-    private int $organizerId;
+    private UserId $organizerId;
     private string $name;
     private string $description;
-    private string $scheduledFor;
+    private ScheduledDate $scheduledFor;
     private bool $wasCancelled = false;
 
-    public function __construct(int $organizerId, string $name, string $description, string $scheduledFor)
+    public function __construct(UserId $organizerId, string $name, string $description, ScheduledDate $scheduledFor)
     {
         $this->organizerId = $organizerId;
         $this->name = $name;
@@ -25,10 +25,10 @@ final class Meetup
     public function asMySqlRecord(): array
     {
         return [
-            'organizerId' => $this->organizerId,
+            'organizerId' => $this->organizerId->asInt(),
             'name' => $this->name,
             'description' => $this->description,
-            'scheduledFor' => $this->scheduledFor,
+            'scheduledFor' => $this->scheduledFor->asString(),
             'wasCancelled' => (int)$this->wasCancelled
         ];
     }
