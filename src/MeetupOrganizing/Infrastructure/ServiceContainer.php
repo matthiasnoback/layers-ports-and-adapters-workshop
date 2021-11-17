@@ -6,37 +6,37 @@ namespace MeetupOrganizing\Infrastructure;
 use Assert\Assert;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use MeetupOrganizing\Infrastructure\ConfigurableEventDispatcher;
+use MeetupOrganizing\Application\ListMeetupsRepositoryInterface;
+use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Domain\Clock;
+use MeetupOrganizing\Domain\Entity\MeetupRepository;
+use MeetupOrganizing\Domain\Entity\RsvpRepository;
+use MeetupOrganizing\Domain\Entity\UserHasRsvpd;
+use MeetupOrganizing\Domain\Entity\UserRepository;
 use MeetupOrganizing\Domain\EventDispatcher;
 use MeetupOrganizing\Infrastructure\Cli\ConsoleApplication;
 use MeetupOrganizing\Infrastructure\Cli\ScheduleMeetupCommand;
+use MeetupOrganizing\Infrastructure\MySql\ListMeetupsRepository;
+use MeetupOrganizing\Infrastructure\MySql\MeetupRepositoryWithDb;
 use MeetupOrganizing\Infrastructure\MySql\SchemaManager;
 use MeetupOrganizing\Infrastructure\Web\CancelMeetupController;
 use MeetupOrganizing\Infrastructure\Web\ListMeetupsController;
 use MeetupOrganizing\Infrastructure\Web\MeetupDetailsController;
-use MeetupOrganizing\Infrastructure\Web\RsvpForMeetupController;
-use MeetupOrganizing\Infrastructure\Web\ScheduleMeetupController;
-use MeetupOrganizing\Infrastructure\Web\SwitchUserController;
-use MeetupOrganizing\Domain\Entity\RsvpRepository;
-use MeetupOrganizing\Domain\Entity\UserHasRsvpd;
-use MeetupOrganizing\Domain\Entity\UserRepository;
-use MeetupOrganizing\Infrastructure\MySql\ListMeetupsRepository;
-use MeetupOrganizing\Application\ListMeetupsRepositoryInterface;
-use MeetupOrganizing\Infrastructure\MySql\MeetupRepository;
 use MeetupOrganizing\Infrastructure\Web\Resources\FlashExtension;
 use MeetupOrganizing\Infrastructure\Web\Resources\TwigTemplates;
 use MeetupOrganizing\Infrastructure\Web\Resources\UserExtension;
-use MeetupOrganizing\Infrastructure\Clock;
-use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Infrastructure\Web\RsvpForMeetupController;
+use MeetupOrganizing\Infrastructure\Web\ScheduleMeetupController;
 use MeetupOrganizing\Infrastructure\Web\Session;
+use MeetupOrganizing\Infrastructure\Web\SwitchUserController;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Transport;
-use Xtreamwayz\Pimple\Container;
-use Psr\Http\Message\ResponseInterface;
 use Throwable;
+use Xtreamwayz\Pimple\Container;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper\ServerUrlHelper;
@@ -213,7 +213,7 @@ final class ServiceContainer extends Container
         };
 
         $this[MeetupRepository::class] = function () {
-            return new MeetupRepository(
+            return new MeetupRepositoryWithDb(
                 $this[Connection::class]
             );
         };
@@ -224,7 +224,7 @@ final class ServiceContainer extends Container
             );
         };
         $this[Clock::class] = function () {
-            return new Clock();
+            return new SystemClock();
         };
         $this[MeetupService::class] = function () {
             return new MeetupService(

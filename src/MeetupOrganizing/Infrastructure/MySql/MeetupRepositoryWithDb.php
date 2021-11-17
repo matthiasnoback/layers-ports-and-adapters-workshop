@@ -5,8 +5,9 @@ namespace MeetupOrganizing\Infrastructure\MySql;
 
 use Doctrine\DBAL\Connection;
 use MeetupOrganizing\Domain\Entity\Meetup;
+use MeetupOrganizing\Domain\Entity\MeetupRepository;
 
-final class MeetupRepository
+final class MeetupRepositoryWithDb implements MeetupRepository
 {
     private Connection $connection;
 

@@ -10,15 +10,15 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use MeetupOrganizing\Application\ListMeetupsRepositoryInterface;
 use MeetupOrganizing\Application\MeetupForList;
 use MeetupOrganizing\Domain\Entity\ScheduledDate;
-use MeetupOrganizing\Infrastructure\Clock;
+use MeetupOrganizing\Infrastructure\SystemClock;
 use PDO;
 
 final class ListMeetupsRepository implements ListMeetupsRepositoryInterface
 {
     private Connection $connection;
-    private Clock $clock;
+    private SystemClock $clock;
 
-    public function __construct(Connection $connection, Clock $clock)
+    public function __construct(Connection $connection, SystemClock $clock)
     {
         $this->connection = $connection;
         $this->clock = $clock;

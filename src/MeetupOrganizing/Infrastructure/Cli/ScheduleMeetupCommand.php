@@ -4,11 +4,8 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure\Cli;
 
 use Assert\Assert;
-use Doctrine\DBAL\Connection;
-use MeetupOrganizing\Application\ScheduleMeetup;
-use MeetupOrganizing\Domain\Entity\Meetup;
-use MeetupOrganizing\Infrastructure\MySql\MeetupRepository;
 use MeetupOrganizing\Application\MeetupService;
+use MeetupOrganizing\Application\ScheduleMeetup;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

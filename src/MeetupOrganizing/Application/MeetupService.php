@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Application;
 
-use MeetupOrganizing\Application\ScheduleMeetup;
 use MeetupOrganizing\Domain\Entity\Meetup;
 use MeetupOrganizing\Domain\Entity\UserId;
 use MeetupOrganizing\Domain\Entity\UserRepository;
-use MeetupOrganizing\Infrastructure\Clock;
-use MeetupOrganizing\Infrastructure\MySql\MeetupRepository;
+use MeetupOrganizing\Domain\Clock;
+use MeetupOrganizing\Domain\Entity\MeetupRepository;
 
 final class MeetupService
 {

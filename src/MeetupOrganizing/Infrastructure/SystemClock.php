@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace MeetupOrganizing\Infrastructure;
 
-final class Clock
+use MeetupOrganizing\Domain\Clock;
+
+final class SystemClock implements Clock
 {
     public function currentTime(): \DateTimeImmutable
     {

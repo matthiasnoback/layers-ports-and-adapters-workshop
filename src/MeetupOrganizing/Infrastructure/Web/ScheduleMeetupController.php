@@ -4,14 +4,10 @@ declare(strict_types=1);
 namespace MeetupOrganizing\Infrastructure\Web;
 
 use Assert\Assert;
-use Doctrine\DBAL\Connection;
 use Exception;
-use MeetupOrganizing\Application\ScheduleMeetup;
-use MeetupOrganizing\Domain\Entity\Meetup;
-use MeetupOrganizing\Domain\Entity\ScheduledDate;
-use MeetupOrganizing\Infrastructure\MySql\MeetupRepository;
 use MeetupOrganizing\Application\MeetupService;
-use MeetupOrganizing\Infrastructure\Web\Session;
+use MeetupOrganizing\Application\ScheduleMeetup;
+use MeetupOrganizing\Domain\Entity\ScheduledDate;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
